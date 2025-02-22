@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 import dynamic from "next/dynamic"
 import { Component, type ErrorInfo, type ReactNode } from "react"
 import ContentSection from "./content-simple"
-import { ContentLayout } from "@/lib/types"
 
 // Dynamically import sections for better performance
 const Hero = dynamic(() => import("./hero"))
@@ -22,17 +21,20 @@ const ServiceList = dynamic(() => import("./services-section"))
 const BlogSection = dynamic(() => import("./blog-section"))
 
 // Add these type definitions at the top of the file
-type HeroLayout = "hero" | "split" | "centered"
-type CTALayout = "full-width" | "banner" | "text-image" | "fullWidthTextImage"
-type BlogLayout = "grid" | "list" | "featured" | "carousel"
-type TestimonialLayout = "grid" | "slider" | "column"
-type TeamLayout = "grid" | "list" | "featured"
-type ServiceLayout = "grid" | "list" | "featured" | "carousel"
-type GalleryLayout = "grid" | "slider" | "masonry"
-type FeatureLayout = "overlay" | "text-below" | "text-only" | "image-only"
-type LogoLayout = "grid" | "slider" | "marquee"
-type DisclosureLayout = "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
-type LeadForm = "twoColumn" | "stacked"
+export type HeroLayout = "hero" | "split" | "centered"
+export type CTALayout = "full-width" | "banner" | "text-image" | "fullWidthTextImage"
+export type BlogLayout = "grid" | "list" | "featured" | "carousel"
+export type TestimonialLayout = "grid" | "slider" | "column"
+export type TeamLayout = "grid" | "carousel" | "list"
+export type ServiceLayout = "grid" | "list" | "featured" | "carousel"
+export type GalleryLayout = "grid" | "slider" | "masonry"
+export type FeatureLayout = "overlay" | "text-below" | "text-only" | "image-only"
+export type LogoLayout = "grid" | "slider" | "marquee"
+export type DisclosureLayout = "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
+export type TextAlign = "left" | "center" | "right"
+export type ColumnLayout = "half" | "twoFifths" | "oneThird"
+export type ContentLayout = "simpleFullWidth" | "twoColumn" | "prose" | "article"
+export type LeadForm = "twoColumn" | "stacked"
 
 // Types
 interface Background {
