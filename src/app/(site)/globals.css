@@ -46,7 +46,7 @@ header.nav-bg-scroll {
 }
 
 .primary-button {
-  @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 uppercase;
+  @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
   background-color: var(--primary-button-background);
   color: var(--primary-button-text);
   border-radius: var(--button-radius);
@@ -56,7 +56,7 @@ header.nav-bg-scroll {
   padding-bottom: var(--button-y-padding);}
 
 .secondary-button {
-  @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 uppercase;
+  @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2;
   background-color: var(--secondary-button-background);
   color: var(--secondary-button-text);
   border-radius: var(--button-radius);

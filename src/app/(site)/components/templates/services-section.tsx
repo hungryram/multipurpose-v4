@@ -15,9 +15,6 @@ export default function ServiceList({
   services,
   content,
   textAlign,
-  backgroundStyles,
-  paddingTop,
-  paddingBottom,
   layout = "grid",
   columns = 3,
   primaryButton,
@@ -169,12 +166,10 @@ export default function ServiceList({
   }
 
   return (
-    <section style={{ ...backgroundStyles, paddingTop, paddingBottom }}>
       <div>
         {renderContent}
         <div className={cn("mx-auto", content && "mt-16")}>{renderServices()}</div>
       </div>
-    </section>
   )
 }
 

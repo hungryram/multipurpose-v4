@@ -29,7 +29,6 @@ export default function ContentSection({
     layout,
     textColor,
     textAlign = "left",
-    style,
     maxWidth = "7xl",
     columnGap = "lg",
     className,
@@ -69,11 +68,9 @@ export default function ContentSection({
     )
 
     return (
-        <div className="w-full" style={style}>
-            <div className={containerClass}>
-                <div className={contentClass}>
-                    {renderContent}
-                </div>
+        <div className={containerClass}>
+            <div className={contentClass}>
+                {renderContent}
             </div>
         </div>
     )

@@ -63,7 +63,7 @@ export default async function LegalSlug({ params }: Props) {
     }
 
     return (
-        <div className="px-6 py-32 lg:px-8">
+        <div className="pt-40 pb-20">
             <div className="mx-auto max-w-3xl content">
                 <h1>{legal?.legal?.title}</h1>
                 <hr />

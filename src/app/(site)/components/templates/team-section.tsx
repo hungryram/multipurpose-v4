@@ -18,7 +18,6 @@ export default function TeamComponent({
   content,
   textAlign,
   layout,
-  buttonLink,
   primaryButton,
   textColor,
   secondaryButton,
@@ -40,7 +39,7 @@ export default function TeamComponent({
   const renderTeam = () => {
     const limitedTeam = team.slice(0, limit === Number.POSITIVE_INFINITY ? team.length : limit)
     switch (layout) {
-      case "slider":
+      case "carousel":
         return (
           <Carousel
             className="w-full mx-auto"
@@ -89,12 +88,10 @@ export default function TeamComponent({
   }
 
   return (
-    <section>
       <div>
         {renderContent}
         <div className={cn("mx-auto", content && "mt-16")}>{renderTeam()}</div>
       </div>
-    </section>
   )
 }
 

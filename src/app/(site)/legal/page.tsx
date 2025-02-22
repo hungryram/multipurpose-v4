@@ -6,7 +6,7 @@ export const revalidate = 0;
 
 // GENERATES SEO
 export async function generateMetadata() {
-    const legal = await client.fetch(legalPage, { next: { revalidate: 60 } })
+    const legal = await client.fetch(legalPage)
 
     const hasLegal = legal?.legal?.length > 0;
 
@@ -46,14 +46,14 @@ export async function generateMetadata() {
 
 export default async function LegalPage() {
 
-    const legal = await client.fetch(legalPage, { next: { revalidate: 60 } })
+    const legal = await client.fetch(legalPage)
 
     const pageSettings = legal?.pageSetting?.legal
 
     return (
-        <div className="px-6 py-24 sm:py-32 lg:px-8">
-            <div className="mx-auto max-w-2xl text-center">
-                <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">{pageSettings?.title}</h1>
+        <div className="pt-40 pb-20">
+            <div className="mx-auto max-w-2xl text-center content">
+                <h1>{pageSettings?.title}</h1>
                 <div className="mt-10">
                     <ContentEditor 
                         content={pageSettings?.content}

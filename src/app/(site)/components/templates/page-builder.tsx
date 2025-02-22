@@ -12,7 +12,7 @@ import { ContentLayout } from "@/lib/types"
 const Hero = dynamic(() => import("./hero"))
 const CtaSection = dynamic(() => import("./call-to-action"))
 const LeadFormSection = dynamic(() => import("./lead-form-section"))
-const GallerySlider = dynamic(() => import("./gallery-swiper"))
+const GallerySlider = dynamic(() => import("./gallery"))
 const FeaturedGrid = dynamic(() => import("./feature-section"))
 const TestimonialSection = dynamic(() => import("./testimonials-section"))
 const TeamComponent = dynamic(() => import("./team-section"))

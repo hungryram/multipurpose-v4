@@ -66,7 +66,7 @@ export type HeroLayout = "hero" | "split" | "centered"
 export type CTALayout = "full-width" | "banner" | "text-image" | "fullWidthTextImage"
 export type BlogLayout = "grid" | "list" | "featured" | "carousel"
 export type TestimonialLayout = "grid" | "slider" | "column"
-export type TeamLayout = "grid" | "list" | "featured"
+export type TeamLayout = "grid" | "carousel" | "list"
 export type ServiceLayout = "grid" | "list" | "featured" | "carousel"
 export type GalleryLayout = "grid" | "slider" | "masonry"
 export type FeatureLayout = "overlay" | "text-below" | "text-only" | "image-only"
@@ -74,7 +74,7 @@ export type LogoLayout = "grid" | "slider" | "marquee"
 export type DisclosureLayout = "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
 export type TextAlign = "left" | "center" | "right"
 export type ColumnLayout = "half" | "twoFifths" | "oneThird"
-export type ContentLayout = "simpleFullWidth" | "narrowContainer" | "twoColumn" | "centered" | "prose" | "article"
+export type ContentLayout = "simpleFullWidth" | "twoColumn" | "prose" | "article"
 
 // Common Types
 export interface RGB {
@@ -377,7 +377,7 @@ export function convertButtonLinking(buttonLinking?: ButtonLink): ButtonProps | 
 // CONTENT FIELD
 
 export interface ContentSectionProps {
-  content: any[]
+  content?: any[]
   layout: ContentLayout
   heading?: string
   textAlign?: "left" | "center" | "right"
@@ -387,8 +387,7 @@ export interface ContentSectionProps {
   children?: ReactNode
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
-  textColor: string
-  style?: React.CSSProperties
+  textColor?: string
 }
 
 // SERVICE SECTION
@@ -411,22 +410,13 @@ export interface Service {
 
 export interface ServiceListProps {
   services: Service[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
+  content?: any[]
+  textAlign?: "left" | "center" | "right"
   layout: "grid" | "list" | "featured" | "carousel"
   columns?: 2 | 3 | 4
   secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
+  primaryButton?: ButtonProps
+  textColor?: string
   limit?: number
 }
 
@@ -434,24 +424,16 @@ export interface ServiceListProps {
 
 export interface TeamComponentProps {
   team: TeamMember[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
-  layout: "grid" | "slider" | "list"
-  buttonLink: any
+  content?: any[]
+  textAlign?: "left" | "center" | "right"
+  paddingTop?: string
+  paddingBottom?: string
+  layout: "grid" | "carousel" | "list"
   secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  columns: 2 | 3 | 4
-  slidesToShow: number
+  textColor?: string
+  primaryButton?: ButtonProps
+  columns?: 2 | 3 | 4
+  slidesToShow?: number
   limit?: number
 }
 
@@ -479,23 +461,15 @@ export interface TeamMember {
 
 export interface TestimonialSectionProps {
   testimonials: Testimonial[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
+  content?: any[]
+  textAlign?: "left" | "center" | "right"
+  paddingTop?: string
+  paddingBottom?: string
   layout: "grid" | "slider" | "column"
-  buttonLink: any
   secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  slidesToShow: number
+  textColor?: string
+  primaryButton?: ButtonProps
+  slidesToShow?: number
 }
 
 
@@ -518,24 +492,14 @@ export interface Testimonial {
 
 export interface LogoCloudSectionProps {
   images: LogoImage[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
+  content?: any[]
+  textAlign?: "left" | "center" | "right"
   layout: "grid" | "slider" | "marquee"
-  buttonLink: any
   secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  columns: 3 | 4 | 5 | 6
-  slidesToShow: number
+  textColor?: string
+  primaryButton?: ButtonProps
+  columns?: 3 | 4 | 5 | 6
+  slidesToShow?: number
 }
 
 export interface LogoImage {
@@ -569,20 +533,15 @@ export interface LeadFormSectionProps {
 // HERO
 
 export interface HeroProps {
-  content: any[]
-  image: string
-  altText: string
+  content?: any[]
+  image?: string
+  altText?: string
   blurData?: string
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
-  primaryButtonText?: string
-  primaryButtonStyle?: React.CSSProperties
-  secondaryButtonLink?: any
-  secondaryButtonText?: string
-  secondaryButtonStyle?: React.CSSProperties
-  textAlign: "left" | "center" | "right"
-  textColor: string
-  height: "large" | "medium" | "small"
+  textAlign?: "left" | "center" | "right"
+  textColor?: string
+  height?: "large" | "medium" | "small"
   imageOverlayColor?: {
     rgb: {
       r: number
@@ -591,7 +550,7 @@ export interface HeroProps {
       a: number
     }
   }
-  layout: "hero" | "split" | "centered" | "fullscreen"
+  layout?: "hero" | "split" | "centered" | "fullscreen"
 }
 
 // HEADER SECTION
@@ -607,9 +566,13 @@ export interface HeaderSectionProps {
 
 export interface GalleryImage {
   src: string
-  alt: string
-  width: number
-  height: number
+  alt?: string | undefined
+  width?: number
+  height?: number
+  asset?: {
+    url: string
+    altText?: string
+  }
 }
 
 export interface GallerySliderProps {
@@ -625,9 +588,11 @@ export interface GallerySliderProps {
   blurData?: string
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
-  buttonLink?: any
   textAlign?: "left" | "center" | "right"
   autoplay?: boolean
+  layout?: "grid" | "masonry" | "slider"
+  columns?: 2 | 3 | 4
+  gap?: "small" | "medium" | "large"
 }
 
 // FORM BUILDER
@@ -703,14 +668,13 @@ export type CardLayout = "overlay" | "text-below" | "text-only" | "image-only"
 
 export interface FeaturedGridProps {
   blocks: FeaturedItem[]
-  columns: 1 | 2 | 3 | 4
-  layout: CardLayout
-  content: any[]
-  buttonLink?: any
-  image: string
-  textColor: string
-  textAlign: "left" | "center" | "right"
-  altText: string
+  columns?: 1 | 2 | 3 | 4
+  layout?: CardLayout
+  content?: any[]
+  image?: string
+  textColor?: string
+  textAlign?: "left" | "center" | "right"
+  altText?: string
   blurData?: string
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
@@ -722,25 +686,15 @@ export interface FeaturedGridProps {
 
 export interface DisclosureSectionProps {
   disclosure: DisclosureItem[]
-  disclosureBackgroundColor: { hex: string }
-  disclosureTextColor: { hex: string }
-  disclosureContentColor: { hex: string }
-  backgroundStyles: React.CSSProperties
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
+  disclosureBackgroundColor?: { hex: string }
+  disclosureTextColor?: { hex: string }
+  disclosureContentColor?: { hex: string }
+  content?: any[]
+  textAlign?: "left" | "center" | "right"
   layout: "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
-  textColor: string
-  buttonLink: any
+  textColor?: string
   contentSide?: "left" | "right"
   sideContent?: React.ReactNode
 }
@@ -805,17 +759,13 @@ export interface ButtonProps {
 
 export interface BlogSectionProps {
   blog: BlogPost[]
-  content: any[]
+  content?: any[]
   textAlign?: "left" | "center" | "right"
-  backgroundStyles: React.CSSProperties
-  paddingTop?: string
-  paddingBottom?: string
-  layout: "grid" | "list" | "featured" | "carousel"
+  layout?: "grid" | "list" | "featured" | "carousel"
   columns?: 2 | 3 | 4
-  buttonLink: any
   secondaryButton?: ButtonProps
-  primaryButton: ButtonProps
-  textColor: string
+  primaryButton?: ButtonProps
+  textColor?: string
   carouselSlidesPerView?: number
   limit?: number
 }

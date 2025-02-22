@@ -16,20 +16,12 @@ export default function TestimonialSection({
     testimonials,
     content,
     textAlign,
-    backgroundStyles,
-    paddingTop,
-    paddingBottom,
     layout,
     primaryButton,
     textColor,
     secondaryButton,
     slidesToShow
 }: TestimonialSectionProps) {
-    const styles = {
-        paddingTop: paddingTop ?? "5rem",
-        paddingBottom: paddingBottom ?? "5rem",
-        ...backgroundStyles,
-    }
 
     const renderContent = (
         <div className="mb-16 content" style={{ color: textColor }}>
@@ -89,12 +81,10 @@ export default function TestimonialSection({
     }
 
     return (
-        <section style={styles}>
-            <div className="container">
+            <div>
                 {renderContent}
                 <div className={cn("mx-auto", content && "mt-10")}>{renderTestimonials()}</div>
             </div>
-        </section>
     )
 }
 

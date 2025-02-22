@@ -1,6 +1,5 @@
 import Image from "next/image"
 import { cn } from "../../../../../lib/utils"
-import { Button } from "@/components/ui/button"
 import HeaderSection from "./header-section"
 import { HeroProps } from "@/lib/types"
 
@@ -17,6 +16,8 @@ export default function Hero({
   layout,
   height
 }: HeroProps) {
+
+
   const imageOverlay = {
     background: `rgba(${imageOverlayColor?.rgb?.r ?? "0"}, ${imageOverlayColor?.rgb?.g ?? "0"}, ${imageOverlayColor?.rgb?.b ?? "0"}, ${imageOverlayColor?.rgb?.a ?? "0.2"})`,
   }
@@ -48,11 +49,11 @@ export default function Hero({
   const imageHeight = (height: "large" | "medium" | "small") => {
     switch (height) {
       case "large":
-        return "lg:py-96";
+        return "py-96";
       case "medium":
-        return "min-h-[70vh]";
+        return "py-60";
       case "small":
-        return "min-h-[50vh]";
+        return "py-40";
       default:
         return "min-h-[50vh]"; // Default to small if no value is provided
     }

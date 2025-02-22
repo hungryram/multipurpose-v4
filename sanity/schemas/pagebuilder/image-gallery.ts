@@ -18,9 +18,8 @@ export default defineType({
       options: {
         list: [
           { title: "Slider", value: "slider" },
-          { title: "Carousel", value: "carousel" },
           { title: "Grid", value: "grid" },
-          { title: "Masonry", value: "masonryGallery" },
+          { title: "Masonry", value: "masonry" },
         ],
       },
       initialValue: "masonryGallery"

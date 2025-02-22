@@ -79,8 +79,8 @@ export default function DisclosureSection({
                     <AccordionTrigger
                         className="px-4 py-3 hover:no-underline"
                         style={{
-                            background: disclosureBackgroundColor?.hex ?? "var(--primary-button-background)",
-                            color: disclosureTextColor?.hex ?? "var(--primary-button-text)",
+                            background: disclosureBackgroundColor?.hex,
+                            color: disclosureTextColor?.hex,
                         }}
                     >
                         {node.heading}
