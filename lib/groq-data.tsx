@@ -508,6 +508,7 @@ export async function blogPage(lastId?: number){
         _id,
         title,
         date,
+        excerpt,
         _updatedAt,
         'slug': slug.current,
         "author": author->{

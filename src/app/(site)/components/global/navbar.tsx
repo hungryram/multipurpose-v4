@@ -17,23 +17,8 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import React from "react" // Import React
+import { NavbarProps } from "@/lib/types"
 
-export interface NavbarProps {
-  company_name: string
-  logo: string
-  navItems: any[]
-  logoWidth: number
-  phone: string
-  email: string
-  office: string
-  backgroundColor: string
-  enableTopHeader: boolean
-  ctaLink: any
-  mobileLogoWidth: number
-  hideCta: boolean
-  enableTransparent: boolean
-  logoOnScroll: string
-}
 
 export function Navbar({
   company_name,
@@ -43,10 +28,8 @@ export function Navbar({
   phone,
   email,
   office,
-  backgroundColor,
   enableTopHeader,
   ctaLink,
-  mobileLogoWidth,
   hideCta,
   enableTransparent,
   logoOnScroll

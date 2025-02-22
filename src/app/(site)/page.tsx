@@ -1,5 +1,5 @@
 import { client } from '../../../sanity/lib/client';
-import Main from './components/templates/main';
+import Main from './components/templates/page-builder';
 import { homePageData } from '../../../lib/groq-data';
 
 export const revalidate = 0;

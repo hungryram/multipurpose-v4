@@ -2,39 +2,7 @@ import Image from "next/image"
 import { cn } from "../../../../../lib/utils"
 import { Button } from "@/components/ui/button"
 import HeaderSection from "./header-section"
-
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
-
-interface Props {
-  content: any[] // Consider defining a more specific type for content
-  image: string
-  altText: string
-  blurData?: string
-  primaryButton?: ButtonProps
-  secondaryButton?: ButtonProps
-  primaryButtonText?: string
-  primaryButtonStyle?: React.CSSProperties
-  secondaryButtonLink?: any
-  buttonLink?: any
-  secondaryButtonText?: string
-  secondaryButtonStyle?: React.CSSProperties
-  textAlign: "left" | "center" | "right"
-  textColor: string
-  height: "large" | "medium" | "small"
-  imageOverlayColor?: {
-    rgb: {
-      r: number
-      g: number
-      b: number
-      a: number
-    }
-  }
-  layout: "hero" | "split" | "centered" | "fullscreen"
-}
+import { HeroProps } from "@/lib/types"
 
 export default function Hero({
   content,
@@ -43,13 +11,12 @@ export default function Hero({
   blurData,
   primaryButton,
   secondaryButton,
-  buttonLink,
   textAlign,
   textColor,
   imageOverlayColor,
   layout,
   height
-}: Props) {
+}: HeroProps) {
   const imageOverlay = {
     background: `rgba(${imageOverlayColor?.rgb?.r ?? "0"}, ${imageOverlayColor?.rgb?.g ?? "0"}, ${imageOverlayColor?.rgb?.b ?? "0"}, ${imageOverlayColor?.rgb?.a ?? "0.2"})`,
   }
@@ -59,7 +26,6 @@ export default function Hero({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />

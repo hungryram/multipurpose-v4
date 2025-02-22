@@ -1,6 +1,6 @@
 import React from 'react'
 import { getServices } from '../../../../../lib/groq-data'
-import PageBuilder from '../../components/templates/main'
+import PageBuilder from '../../components/templates/page-builder'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
 export const revalidate = 0;

@@ -8,52 +8,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ContentEditor from "../util/content-editor"
 import HeaderSection from "./header-section"
+import { DisclosureSectionProps, BlockChild, DisclosureItem, Block } from "@/lib/types"
 
-interface DisclosureSectionProps {
-    disclosure: DisclosureItem[]
-    disclosureBackgroundColor: { hex: string }
-    disclosureTextColor: { hex: string }
-    disclosureContentColor: { hex: string }
-    backgroundStyles: React.CSSProperties
-    content: any[]
-    textAlign: "left" | "center" | "right"
-    primaryButtonLink: string
-    primaryButtonText: string
-    primaryButtonStyle: React.CSSProperties
-    secondaryButtonText: string
-    secondaryButtonLink: string
-    secondaryButtonStyle: React.CSSProperties
-    paddingTop: string
-    paddingBottom: string
-    layout: "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
-    primaryButton?: ButtonProps
-    secondaryButton?: ButtonProps
-    textColor: string
-    buttonLink: any
-    contentSide?: "left" | "right"
-    sideContent?: React.ReactNode
-}
-
-interface DisclosureItem {
-    _key: string
-    heading: string
-    content: Block[]
-}
-
-interface Block {
-    _type: string
-    children?: BlockChild[]
-}
-
-interface BlockChild {
-    text: string
-}
-
-interface ButtonProps {
-    text: string
-    link: string
-    style?: React.CSSProperties
-}
 
 export default function DisclosureSection({
     disclosure,
@@ -65,7 +21,6 @@ export default function DisclosureSection({
     secondaryButton,
     primaryButton,
     textColor,
-    buttonLink,
     layout = "default",
     contentSide = "left",
     sideContent,
@@ -111,7 +66,6 @@ export default function DisclosureSection({
             <HeaderSection
                 content={content}
                 textAlign={textAlign}
-                buttonLink={buttonLink}
                 primaryButton={primaryButton}
                 secondaryButton={secondaryButton}
             />

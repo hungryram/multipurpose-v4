@@ -2,54 +2,18 @@
 
 import type React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "./header-section"
+import { LogoCloudSectionProps, LogoImage } from "@/lib/types"
 
-interface LogoCloudSectionProps {
-  images: LogoImage[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
-  layout: "grid" | "slider" | "marquee"
-  buttonLink: any
-  secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  columns: 3 | 4 | 5 | 6
-  slidesToShow: number
-}
 
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
-
-interface LogoImage {
-  asset: {
-    url: string
-    altText: string
-    lqip: string
-  }
-}
 
 export default function LogoCloudSection({
   images,
   content,
   textAlign,
   layout,
-  buttonLink,
   primaryButton,
   textColor,
   secondaryButton,
@@ -62,7 +26,6 @@ export default function LogoCloudSection({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />

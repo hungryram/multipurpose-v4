@@ -2,56 +2,15 @@
 
 import type React from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { FaStar } from "react-icons/fa6"
 import ContentEditor from "../util/content-editor"
 import HeaderSection from "./header-section"
+import { Testimonial, TestimonialSectionProps } from "@/lib/types"
 
-interface TestimonialSectionProps {
-    testimonials: Testimonial[]
-    content: any[]
-    textAlign: "left" | "center" | "right"
-    primaryButtonLink: string
-    primaryButtonText: string
-    primaryButtonStyle: React.CSSProperties
-    secondaryButtonText: string
-    secondaryButtonLink: string
-    secondaryButtonStyle: React.CSSProperties
-    backgroundStyles: React.CSSProperties
-    paddingTop: string
-    paddingBottom: string
-    layout: "grid" | "slider" | "column"
-    buttonLink: any
-    secondaryButton?: ButtonProps
-    textColor: string
-    primaryButton: ButtonProps
-    slidesToShow: number
-}
 
-interface ButtonProps {
-    text: string
-    link: string
-    style?: React.CSSProperties
-}
-
-interface Testimonial {
-    _id: string
-    stars: number
-    testimonial: any
-    name: string
-    position: string
-    image: {
-        asset: {
-            url: string
-            altText: string
-            lqip: string
-        }
-    }
-}
 
 export default function TestimonialSection({
     testimonials,
@@ -61,7 +20,6 @@ export default function TestimonialSection({
     paddingTop,
     paddingBottom,
     layout,
-    buttonLink,
     primaryButton,
     textColor,
     secondaryButton,
@@ -78,7 +36,6 @@ export default function TestimonialSection({
             <HeaderSection
                 content={content}
                 textAlign={textAlign}
-                buttonLink={buttonLink}
                 primaryButton={primaryButton}
                 secondaryButton={secondaryButton}
             />
@@ -133,7 +90,7 @@ export default function TestimonialSection({
 
     return (
         <section style={styles}>
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="container">
                 {renderContent}
                 <div className={cn("mx-auto", content && "mt-10")}>{renderTestimonials()}</div>
             </div>

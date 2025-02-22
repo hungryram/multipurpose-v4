@@ -3,30 +3,9 @@ import { cn } from "@/lib/utils"
 import FormBuilder from "./form-builder"
 import HeaderSection from "./header-section"
 import ContentEditor from "../util/content-editor"
+import { LeadFormSectionProps } from "@/lib/types"
 
-interface LeadFormSectionProps {
-  layout: "twoColumn" | "stacked"
-  content: any // This should match the type of your content structure
-  formSchema: any // This should match the FormSchema type from FormBuilder
-  backgroundColor?: string
-  textColor?: string
-  textAlign: "left" | "center" | "right"
-  buttonLink?: any
-  primaryButtonText?: string
-  primaryButtonStyle?: React.CSSProperties
-  primaryButton?: ButtonProps
-  secondaryButton?: ButtonProps
-  alignContent: boolean
-  formBackgroundColor?: string
-  labelColor?: string
-  formContent: any;
-}
 
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
 
 const LeadFormSection: React.FC<LeadFormSectionProps> = ({
   layout,
@@ -35,7 +14,6 @@ const LeadFormSection: React.FC<LeadFormSectionProps> = ({
   backgroundColor,
   textColor,
   textAlign,
-  buttonLink,
   primaryButton,
   secondaryButton,
   alignContent = false,
@@ -48,7 +26,6 @@ const LeadFormSection: React.FC<LeadFormSectionProps> = ({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />

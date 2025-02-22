@@ -1,46 +1,81 @@
-import ContentEditor from "../util/content-editor"
+import type React from "react"
+import classNames from "classnames"
+import HeaderSection from "./header-section"
+import { ContentSectionProps } from "@/lib/types"
 
-interface Props {
-    content: any,
-    layoutType: string,
-    heading: string,
-    backgroundStyles: any,
-    paddingTop?: string,
-    paddingBottom?: string
+
+const maxWidthClasses = {
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+    "3xl": "max-w-3xl",
+    "4xl": "max-w-4xl",
+    "5xl": "max-w-5xl",
+    "6xl": "max-w-6xl",
+    "7xl": "max-w-7xl",
 }
 
-export default function ContentSimple({
+const columnGapClasses = {
+    sm: "gap-4",
+    md: "gap-6",
+    lg: "gap-8",
+    xl: "gap-12",
+}
+
+export default function ContentSection({
     content,
-    layoutType,
-    heading,
-    backgroundStyles,
-    paddingTop,
-    paddingBottom,
-}: Props) {
+    layout,
+    textColor,
+    textAlign = "left",
+    style,
+    maxWidth = "7xl",
+    columnGap = "lg",
+    className,
+    primaryButton,
+    secondaryButton,
+}: ContentSectionProps) {
+    const containerClass = classNames(
+        "mx-auto",
+        maxWidthClasses[maxWidth],
+        {
+            "md:columns-2": layout === "twoColumn",
+            [columnGapClasses[columnGap]]: layout === "twoColumn",
+            "prose prose-gray dark:prose-invert": layout === "prose" || layout === "article",
+            "max-w-3xl": layout === "article",
+        },
+        className,
+    )
 
-    const styles = {
-        paddingTop: paddingTop ?? '5rem',
-        paddingBottom: paddingBottom ?? '5rem',
-    }
+    const contentClass = classNames(
+        "prose prose-gray dark:prose-invert",
+        {
+            "max-w-none": layout === "twoColumn",
+            "mx-auto": layout === "centered",
+        },
+        textAlign && `text-${textAlign}`,
+    )
 
-    const allStyles = {...backgroundStyles, ...styles}
+    const renderContent = (
+        <div className="py-16" style={{ color: textColor }}>
+            <HeaderSection
+                content={content}
+                textAlign={textAlign}
+                primaryButton={primaryButton}
+                secondaryButton={secondaryButton}
+            />
+        </div>
+    )
 
     return (
-        <div className="content" style={allStyles}>
-            <div className={`${layoutType === 'twoColumn' && 'container'}`}>
-                {layoutType === 'twoColumn' &&
-                    <h2>{heading}</h2>
-                }
-                <div className={`mx-auto 
-                ${layoutType === 'simpleFullWidth' && 'container'}
-                ${layoutType === 'narrowContainer' && 'max-w-3xl'}
-                ${layoutType === 'twoColumn' && 'md:columns-2'}
-            `}>
-                    <ContentEditor
-                        content={content}
-                    />
+        <div className="w-full" style={style}>
+            <div className={containerClass}>
+                <div className={contentClass}>
+                    {renderContent}
                 </div>
             </div>
         </div>
     )
 }
+

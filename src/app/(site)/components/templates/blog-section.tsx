@@ -8,52 +8,8 @@ import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "./header-section"
+import { BlogSectionProps, BlogPost } from "@/lib/types"
 
-interface BlogPost {
-  _id: string
-  title: string
-  slug: {
-    current: string
-  }
-  date: string
-  imageData: {
-    asset: {
-      url: string
-      altText: string
-      lqip: string
-    }
-  }
-  excerpt?: string
-}
-
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
-
-interface BlogSectionProps {
-  blog: BlogPost[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop?: string
-  paddingBottom?: string
-  layout: "grid" | "list" | "featured" | "carousel"
-  columns?: 2 | 3 | 4
-  buttonLink: any
-  secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  carouselSlidesPerView?: number
-  limit?: number
-}
 
 function BlogCard({
   title,
@@ -105,18 +61,8 @@ export default function BlogSection({
   blog,
   content,
   textAlign,
-  primaryButtonLink,
-  primaryButtonText,
-  primaryButtonStyle,
-  secondaryButtonLink,
-  secondaryButtonText,
-  secondaryButtonStyle,
-  backgroundStyles,
-  paddingTop,
-  paddingBottom,
   layout = "grid",
   columns = 3,
-  buttonLink,
   primaryButton,
   textColor,
   secondaryButton,
@@ -130,7 +76,6 @@ export default function BlogSection({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />
@@ -236,7 +181,7 @@ export default function BlogSection({
 
   return (
     <section>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
         {renderContent}
         <div className={cn("mx-auto", content && "mt-16")}>{renderBlogPosts()}</div>
       </div>

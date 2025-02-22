@@ -136,7 +136,7 @@ export default async function TeamSection() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
-      <div className={team?.appearances?.header?.enableTransparent ? "pt-40 pb-20" : "section"}>
+      <div className="pt-40 pb-20">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <div className="content">

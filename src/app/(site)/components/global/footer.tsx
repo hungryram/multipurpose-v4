@@ -3,44 +3,7 @@ import Image from "next/image"
 import ContentEditor from "../util/content-editor"
 import Social from "../templates/social"
 import { cn } from "@/lib/utils"
-
-interface FooterProps {
-  layout: "default" | "single-column" | "minimal" | "two-column" | "grid"
-  footerBackgroundColor?: string
-  footerHeaderColor?: string
-  footerTextColor?: string
-  footerText?: any
-  company_name: string
-  image?: string
-  quickLinksHeading?: string
-  quickLinksTwoHeading?: string
-  altText?: string
-  blurData?: string
-  email?: string
-  phone_number?: string
-  office_number?: string
-  address?: string
-  city?: string
-  state?: string
-  zip_code?: string
-  footerDisclaimer?: any
-  shortText?: string
-  legal?: any[]
-  links?: any[]
-  secondLinks?: any[]
-  googleBusiness?: string
-  facebook?: string
-  youtube?: string
-  instagram?: string
-  twitter?: string
-  reddit?: string
-  linkedin?: string
-  yelp?: string
-  pinterest?: string
-  tiktok?: string
-  zillow?: string
-  size?: string
-}
+import { FooterProps } from "@/lib/types"
 
 export default function Footer({
   layout = "default",

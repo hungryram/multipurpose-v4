@@ -1,23 +1,8 @@
 import Image from "next/image"
 import HeaderSection from "./header-section"
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import type React from "react" // Import React
+import { CtaSectionProps } from "@/lib/types"
 
-interface CtaSectionProps {
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButton?: any
-  secondaryButton?: any
-  layout: "full-width" | "banner" | "text-image" | "fullWidthTextImage"
-  style?: React.CSSProperties
-  image?: string
-  altText?: string
-  reverseColumn?: boolean
-  columnLayout?: "half" | "twoFifths" | "oneThird"
-  subtitle?: string
-  backgroundColor?: string
-}
 
 export default function CtaSection({
   content,

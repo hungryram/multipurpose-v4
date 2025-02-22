@@ -8,45 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import ContentEditor from "../util/content-editor"
-
-interface FormField {
-  name: string
-  label: string
-  placeholder: string
-  type: string
-  _key: string
-  radioValue: string[]
-  selectValue: string[]
-  checkBoxValue: string[]
-  required: boolean
-  stacked: boolean
-  inlineEmail: boolean
-  hideLabel: boolean
-  half: boolean
-}
-
-interface FormSchema {
-  subject: string
-  fields: FormField[]
-  emailCc: string
-  emailBcc: string
-  sendTo: string
-  sendFrom: string
-  redirectTo: string
-  buttonLabel: string
-  buttonBackgroundColor: { hex: string }
-  buttonTextColor: { hex: string }
-  formDisclaimer: any
-  makeStacked: boolean
-  spreadsheetId?: string
-  sheetName?: string
-  
-}
-
-interface FormBuilderProps {
-  formSchema: FormSchema
-  labelColor?: string
-}
+import { FormField, FormBuilderProps } from "@/lib/types"
 
 export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps) {
 

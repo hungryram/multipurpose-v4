@@ -6,37 +6,9 @@ import Autoplay from "embla-carousel-autoplay"
 import { Card, CardContent } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "./header-section"
+import { GallerySliderProps, GalleryImage } from "@/lib/types"
 
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
 
-interface GalleryImage {
-  src: string
-  alt: string
-  width: number
-  height: number
-}
-
-interface GallerySliderProps {
-  images: GalleryImage[]
-  showArrows?: boolean
-  showPagination?: boolean
-  slidesToShow?: number
-  textColor?: string
-  effect?: "slide" | "fade"
-  content?: any[]
-  image?: string
-  altText?: string
-  blurData?: string
-  primaryButton?: ButtonProps
-  secondaryButton?: ButtonProps
-  buttonLink?: any
-  textAlign?: "left" | "center" | "right"
-  autoplay?: boolean
-}
 
 export default function GallerySlider({
   images,
@@ -45,10 +17,6 @@ export default function GallerySlider({
   slidesToShow = 3,
   effect = "slide",
   content,
-  buttonLink,
-  image,
-  altText,
-  blurData,
   textAlign = "left",
   primaryButton,
   secondaryButton,
@@ -62,7 +30,6 @@ export default function GallerySlider({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />

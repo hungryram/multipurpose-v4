@@ -2,13 +2,8 @@ import type React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { ButtonProps } from "@/lib/types"
 
-interface ButtonProps {
-  text?: string
-  link: string
-  style?: React.CSSProperties
-  variant: "primary" | "secondary"
-}
 
 const CustomButton: React.FC<ButtonProps> = ({ text, link, style, variant }) => {
   const className = cn(

@@ -8,51 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "./header-section"
+import { ServiceListProps, Service } from "@/lib/types"
 
-interface Service {
-  _id: string
-  title: string
-  detail: string
-  slug: {
-    current: string
-  }
-  imageData: {
-    asset: {
-      url: string
-      altText: string
-      lqip: string
-    }
-  }
-}
-
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
-
-interface ServiceListProps {
-  services: Service[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
-  layout: "grid" | "list" | "featured" | "carousel"
-  columns?: 2 | 3 | 4
-  buttonLink: any
-  secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  carouselSlidesPerView?: number
-  limit?: number
-}
 
 export default function ServiceList({
   services,
@@ -63,11 +20,9 @@ export default function ServiceList({
   paddingBottom,
   layout = "grid",
   columns = 3,
-  buttonLink,
   primaryButton,
   textColor,
   secondaryButton,
-  carouselSlidesPerView = 1,
   limit = 6,
 }: ServiceListProps) {
   const renderContent = (
@@ -75,7 +30,6 @@ export default function ServiceList({
       <HeaderSection
         content={content}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />
@@ -216,7 +170,7 @@ export default function ServiceList({
 
   return (
     <section style={{ ...backgroundStyles, paddingTop, paddingBottom }}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
         {renderContent}
         <div className={cn("mx-auto", content && "mt-16")}>{renderServices()}</div>
       </div>

@@ -5,68 +5,18 @@ import { cn } from "@/lib/utils"
 import HeaderSection from "./header-section"
 import ContentEditor from "../util/content-editor"
 import { baseEncode } from "../../../../../lib/utils"
-import CustomButton from "./CustomButton"
+import CustomButton from "./custom-button"
+import { BlockLinking, FeaturedGridProps, FeaturedItem } from "@/lib/types"
 
-interface BlockLinking {
-    internalLink?: {
-        _type: "pages" | "blog" | "legal" | "services" | "team"
-        slug: string
-    }
-    externalUrl?: string
-}
 
-interface FeaturedItem {
-    heading: string
-    content?: any
-    image?: {
-        src: string
-        alt: string
-        asset?: {
-            url: string
-            altText: string
-            lqip?: string
-        }
-    }
-    blockLinking?: BlockLinking
-    button?: {
-        text?: string
-    }
-}
-
-interface ButtonProps {
-    text: string
-    link: string
-    style?: React.CSSProperties
-}
-
-type CardLayout = "overlay" | "text-below" | "text-only" | "image-only"
-
-interface FeaturedGridProps {
-    blocks: FeaturedItem[]
-    columns: 1 | 2 | 3 | 4
-    layout: "grid" | "masonry"
-    cardLayout: CardLayout
-    content: any[]
-    buttonLink?: any
-    image: string
-    textColor: string
-    textAlign: "left" | "center" | "right"
-    altText: string
-    blurData?: string
-    primaryButton?: ButtonProps
-    secondaryButton?: ButtonProps
-    imageHeight?: 'small' | 'medium' | 'large'
-}
 
 const FeaturedGrid: React.FC<FeaturedGridProps> = ({
     blocks,
     columns,
     layout,
-    cardLayout,
     textAlign,
     textColor,
     content,
-    buttonLink,
     secondaryButton,
     primaryButton,
     imageHeight = 'large'
@@ -90,7 +40,6 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
             <HeaderSection
                 content={content}
                 textAlign={textAlign}
-                buttonLink={buttonLink}
                 primaryButton={primaryButton}
                 secondaryButton={secondaryButton}
             />
@@ -124,7 +73,7 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
     const renderCard = (item: FeaturedItem, index: number) => {
         const linkUrl = getLinkUrl(item.blockLinking)
 
-        switch (cardLayout) {
+        switch (layout) {
             case "overlay":
                 return (
                     <Card key={index} className="relative overflow-hidden h-64">

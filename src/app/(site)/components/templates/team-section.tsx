@@ -10,55 +10,8 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import ContentEditor from "../util/content-editor"
 import { FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa6"
 import HeaderSection from "./header-section"
+import { TeamComponentProps, TeamMember } from "@/lib/types"
 
-interface TeamComponentProps {
-  team: TeamMember[]
-  content: any[]
-  textAlign: "left" | "center" | "right"
-  primaryButtonLink: string
-  primaryButtonText: string
-  primaryButtonStyle: React.CSSProperties
-  secondaryButtonText: string
-  secondaryButtonLink: string
-  secondaryButtonStyle: React.CSSProperties
-  backgroundStyles: React.CSSProperties
-  paddingTop: string
-  paddingBottom: string
-  layout: "grid" | "slider" | "list"
-  buttonLink: any
-  secondaryButton?: ButtonProps
-  textColor: string
-  primaryButton: ButtonProps
-  columns: 2 | 3 | 4
-  slidesToShow: number
-  limit?: number
-}
-
-interface ButtonProps {
-  text: string
-  link: string
-  style?: React.CSSProperties
-}
-
-interface TeamMember {
-  _id: string
-  name: string
-  position: string
-  bio: any
-  imageData: {
-    asset: {
-      url: string
-      altText: string
-      lqip: string
-    }
-  }
-  slug: {
-    current: string
-  }
-  linkedin?: string
-  twitter?: string
-  email?: string
-}
 
 export default function TeamComponent({
   team,
@@ -78,7 +31,6 @@ export default function TeamComponent({
       <HeaderSection
         content={Array.isArray(content) ? content : []}
         textAlign={textAlign}
-        buttonLink={buttonLink}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
       />
@@ -138,7 +90,7 @@ export default function TeamComponent({
 
   return (
     <section>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
         {renderContent}
         <div className={cn("mx-auto", content && "mt-16")}>{renderTeam()}</div>
       </div>

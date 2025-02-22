@@ -1,6 +1,14 @@
 import { urlForImage } from "../../../../../sanity/lib/image"
 import getYouTubeID from 'get-youtube-id'
 import Youtube from "react-youtube"
+import slugify from 'slugify'
+import {toPlainText} from '@portabletext/react'
+
+const LinkableHeader = ({children, value}) => {
+    // `value` is the single Portable Text block of this header
+    const slug = slugify(toPlainText(value).toLowerCase())
+    return <h2 id={slug}>{children}</h2>
+  }
 
 const serializers = {
     types: {
@@ -29,6 +37,15 @@ const serializers = {
                 </div>
             )
         },
+    },
+    block: {
+        code: ({ children }) => {
+            return (
+                <code>{children}</code>
+            )
+        },
+        h2: LinkableHeader,
+
     },
     marks: {
         link: ({ value, children }) => {

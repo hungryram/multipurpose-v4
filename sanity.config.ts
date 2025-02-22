@@ -47,7 +47,6 @@ import formBuilderObject from './sanity/schemas/objects/form-builder'
 
 //  PAGEBUILDER
 import heroBuilder from './sanity/schemas/pagebuilder/hero'
-import contactBuilder from './sanity/schemas/pagebuilder/contact'
 import bannerBuilder from './sanity/schemas/pagebuilder/call-to-action'
 import disclosureBuilder from './sanity/schemas/pagebuilder/disclosure'
 import codeBuilder from './sanity/schemas/pagebuilder/code'
@@ -55,7 +54,6 @@ import testimonialsBuilder from './sanity/schemas/pagebuilder/testimonials'
 import imageGalleryBuilder from './sanity/schemas/pagebuilder/image-gallery'
 import featuredGridBuilder from './sanity/schemas/pagebuilder/featured-grid'
 import leadFormBuilder from './sanity/schemas/pagebuilder/lead-form'
-import pricingBuilder from './sanity/schemas/pagebuilder/pricing'
 import logosBuilder from './sanity/schemas/pagebuilder/logos'
 import teamSectionBuilder from './sanity/schemas/pagebuilder/team-section'
 import blogSectionBuilder from './sanity/schemas/pagebuilder/blog-section'
@@ -108,10 +106,8 @@ export default defineConfig({
       codeBuilder,
       testimonialsBuilder,
       imageGalleryBuilder,
-      pricingBuilder,
       teamSectionBuilder,
       blogSectionBuilder,
-      contactBuilder,
       bannerBuilder,
       disclosureBuilder,
       leadFormBuilder,
