@@ -1,106 +1,130 @@
-import { defineType } from "sanity"
-import { AiOutlineFontColors } from "react-icons/ai"
-/**
- * This is the schema definition for the rich text fields used for
- * for this blog studio. When you import it in schemas.js it can be
- * reused in other parts of the studio with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
- export default  defineType({
-    title: 'Content Editor',
-    name: 'contentEditor',
-    type: 'array',
-    of: [
-      {
-        title: 'Block',
-        type: 'block',
-        // Styles let you set what your user can mark up blocks with. These
-        // correspond with HTML tags, but you can set any title or value
-        // you want and decide how you want to deal with it where you want to
-        // use your content.
-        styles: [
-          {title: 'Normal', value: 'normal'},
-          {title: 'H1', value: 'h1'},
-          {title: 'H2', value: 'h2'},
-          {title: 'H3', value: 'h3'},
-          {title: 'H4', value: 'h4'},
-          {title: 'Quote', value: 'blockquote'},
-        ],
-        lists: [
-          {title: 'Bullet', value: 'bullet'},
-          {title: 'Number', value: 'number'},
-        ],
-        // Marks let you mark up inline text in the block editor.
-        marks: {
-          // Decorators usually describe a single property – e.g. a typographic
-          // preference or highlighting by editors.
-          decorators: [
-            { "title": "Strong", "value": "strong" },
-            { "title": "Emphasis", "value": "em" },
-            { "title": "Underline", "value": "underline" },
-            { "title": "Strike", "value": "strike-through" },
-          ],
-          // Annotations can be any object structure – e.g. a link or a footnote.
-          annotations: [
-            {name: 'color', title: 'Color', type: 'color', icon: AiOutlineFontColors},
-            {
-              title: 'URL',
-              name: 'link',
-              type: 'object',
-              fields: [
-                {
-                  title: 'URL',
-                  name: 'href',
-                  type: 'string',
-                },
-                {
-                  title: 'Open in New Tab',
-                  name: 'newTab',
-                  type: 'boolean'
-                }
-              ],
-            },
-          ],
-        },
-      },
-      // You can add additional types here. Note that you can't use
-      // primitive types such as 'string' and 'number' in the same array
-      // as a block type.
+import { defineType } from "sanity";
+import { AiOutlineFontColors, AiOutlineFontSize } from "react-icons/ai";
 
-      {
-        type: 'image',
-        fields: [
+export default defineType({
+  title: "Content Editor",
+  name: "contentEditor",
+  type: "array",
+  of: [
+    {
+      title: "Block",
+      type: "block",
+      styles: [
+        { title: "Normal", value: "normal" },
+        { title: "H1", value: "h1" },
+        { title: "H2", value: "h2" },
+        { title: "H3", value: "h3" },
+        { title: "H4", value: "h4" },
+        { title: "Quote", value: "blockquote" },
+      ],
+      lists: [
+        { title: "Bullet", value: "bullet" },
+        { title: "Number", value: "number" },
+      ],
+      marks: {
+        decorators: [
+          { title: "Strong", value: "strong" },
+          { title: "Emphasis", value: "em" },
+          { title: "Underline", value: "underline" },
+          { title: "Strike", value: "strike-through" },
+        ],
+        annotations: [
+          { name: "color", title: "Color", type: "color", icon: AiOutlineFontColors },
           {
-            title: 'Image Width',
-            name: 'imageWidth',
-            type: 'number'
+            title: "Font Size",
+            name: "fontSize",
+            type: "object",
+            icon: AiOutlineFontSize,
+            fields: [
+              {
+                title: "Size (px)",
+                name: "size",
+                type: "string",
+                options: {
+                  list: Array.from({ length: 16 }, (_, i) => {
+                    const pxValue = (i * 2) + 10; // Generates 10px, 12px, ..., 40px
+                    return { title: `${pxValue}px`, value: `${pxValue}px` };
+                  }),
+                },
+              },
+            ],
           },
           {
-            title: 'Image Align',
-            name: 'imageAlign',
-            type: 'string',
-            options: {
-              list: [
-                  {title: 'Left', value: 'left'},
-                  {title: 'Center', value: 'center'},
-                  {title: 'Right', value: 'right'},
-              ]
+            title: "URL",
+            name: "link",
+            type: "object",
+            fields: [
+              { title: "URL", name: "href", type: "string" },
+              { title: "Open in New Tab", name: "newTab", type: "boolean" },
+            ],
           },
-          },
-          {
-            title: 'Alt Tag',
-            name: 'altTag',
-            type: 'string',
-            description: 'Describe your image',
-            validation: (Rule) => Rule.required().error('Required for accessibility')
-          },
-        ]
+        ],
       },
-      {type: 'youtube'},
-      {type: 'coding'},
-    ],
-  })
+    },
+    {
+      type: "image",
+      fields: [
+        {
+          title: "Image Width",
+          name: "imageWidth",
+          type: "number",
+          validation: (Rule) => Rule.min(50).max(2000).error("Width must be between 50px and 2000px"),
+        },
+        {
+          title: "Image Align",
+          name: "imageAlign",
+          type: "string",
+          options: {
+            list: [
+              { title: "Left", value: "left" },
+              { title: "Center", value: "center" },
+              { title: "Right", value: "right" },
+            ],
+          },
+        },
+        {
+          title: "Alt Tag",
+          name: "altTag",
+          type: "string",
+          description: "Describe your image",
+          validation: (Rule) => Rule.required().error("Alt tag is required for accessibility"),
+        },
+      ],
+    },
+    { type: "youtube" },
+    { type: "coding" },
+    {
+      title: "Icon Text Link",
+      name: "iconTextLink",
+      type: "object",
+      fields: [
+        {
+          title: "Text",
+          name: "text",
+          type: "string",
+          validation: (Rule) => Rule.required().error("Text is required"),
+        },
+        {
+          title: "Link",
+          name: "link",
+          type: "string",
+          validation: (Rule) => Rule.uri().error("Must be a valid URL"),
+        },
+        {
+          title: "Icon",
+          name: "icon",
+          type: "string",
+          options: {
+            list: [
+              { title: "Phone", value: "phone" },
+              { title: "Pin", value: "pin" },
+              { title: "Envelope", value: "envelope" },
+              { title: "Right Caret", value: "rightCaret" },
+              { title: "Left Caret", value: "leftCaret" },
+            ],
+          },
+        },
+      ],
+    },
+  ],
+});
