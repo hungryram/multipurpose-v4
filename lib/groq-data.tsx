@@ -43,6 +43,10 @@ export const appearance = groq`
       'topHeaderBarBgColor': topHeaderBarBgColor.hex,
       'topHeaderBarTextColor': topHeaderBarTextColor.hex
     },
+        mobileMenu {
+    'mobileBgDrawer': mobileBgDrawer.hex,
+    'mobileNavColor': mobileNavColor.hex,
+    },
     'header': header {
       hideCta,
       enableTransparent,

@@ -354,6 +354,9 @@ export interface HeroProps {
   image?: string
   altText?: string
   blurData?: string
+  backgroundImage?: string
+  images?: any
+  backgroundColor?: string
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
   textAlign?: "left" | "center" | "right"
@@ -367,7 +370,7 @@ export interface HeroProps {
       a: number
     }
   }
-  layout?: "hero" | "split" | "centered" | "fullscreen"
+  layout?: "hero" | "split" | "centered" | "fullscreen" | "sideBysideCarousel"
 }
 
 // HEADER SECTION

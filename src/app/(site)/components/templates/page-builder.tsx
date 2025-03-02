@@ -256,6 +256,7 @@ export default function PageBuilder({
         (section: BaseSection) => {
             // Special cases for full-width sections
 
+
             const commonProps = {
                 content: section.content,
                 textAlign: section.textAlign as "left" | "center" | "right",
@@ -270,7 +271,9 @@ export default function PageBuilder({
                         image={section.imageData?.asset?.url}
                         layout={section.layoutType as HeroLayout}
                         height={section?.imageHeight}
+                        images={section.childImage}
                         textColor={section?.textColor?.hex}
+                        backgroundColor={section?.backgroundColor?.hex}
                         {...commonProps}
                     />
                 )
@@ -420,7 +423,7 @@ export default function PageBuilder({
                 )
 
                 // Special case for full-width sections
-                if (section._type === "hero" && section.layoutType === "hero") {
+                if (section._type === "hero" && section.layoutType === "hero" || section.layoutType === "sideBysideCarousel") {
                     return (
                         <SectionErrorBoundary key={section._key || section.id} sectionName={section._type}>
                             {renderSection(section)}

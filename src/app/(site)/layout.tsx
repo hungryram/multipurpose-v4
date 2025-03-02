@@ -124,7 +124,6 @@ export default async function RootLayout({
     enableTopHeader: data?.appearances?.topHeaderBar?.enableTopHeaderBar,
     ctaLink: data?.appearances?.header?.ctaLink,
     hideCta: data?.appearances?.header?.hideCta,
-    enableTransparent: data?.appearances?.header?.enableTransparent,
   }
 
 
@@ -166,14 +165,17 @@ export default async function RootLayout({
                   --header-scroll-background-color: ${data.appearances?.navBgScrollColor ? data.appearances?.navBgScrollColor : 'transparent'};
                   --header-navigation-color: ${data.appearances?.navColor ?? '#ffffff'};
                   --header-navigation-scroll-color: ${data.appearances?.navScrollColor};
+
                   --mobile-icon-color: ${data.appearances?.mobileIconColor ?? '#ffffff'};
+                  --mobile-bg-color: ${data?.appearances?.mobileMenu?.mobileBgDrawer};
+                  --mobile-nav-color: ${data?.appearances?.mobileMenu?.mobileNavColor};
 
                   --loading-background-color: ${data.appearances?.loaderColor ?? '#0e0e0e'};
                   --loading-image: url(${data.appearances?.loaderImage});
 
                   --website-body-color: ${data.appearances?.websiteBodyColor ?? '#fff'};
                   --website-text-color: ${data.appearances?.websiteTextColor ?? '#222'};
-                  --website-heading-color: ${data.appearances?.websiteHeadingColor};
+                  --website-heading-color: ${data.appearances?.websiteHeadingColor ?? '#000'};
 
                   --button-radius: ${`${data.appearances?.buttonRadius ?? 6}px`};
                   --button-y-padding: ${`${data.appearances?.buttonYPadding ?? 8}px`};

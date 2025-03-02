@@ -18,7 +18,7 @@ export default defineType({
                 list: [
                     { title: "Hero", value: "hero" },
                     { title: "Container", value: "container" },
-                    { title: "Side by Side", value: "sideByside" },
+                    { title: "Side by Side Carousel", value: "sideBysideCarousel" },
                     { title: "Basic", value: "basic" },
                 ],
             },
@@ -36,6 +36,7 @@ export default defineType({
                 ],
             },
         },
+
         {
             title: 'Content',
             name: 'content',
@@ -55,7 +56,7 @@ export default defineType({
             title: 'Images',
             name: 'images',
             type: 'array',
-            hidden: ({ parent }) => parent?.layoutType !== 'heroSwiper',
+            hidden: ({ parent }) => parent.layoutType !== 'sideBysideCarousel',
             of: [
                 {
                     title: 'Image',
@@ -110,6 +111,11 @@ export default defineType({
             type: 'color',
         },
         {
+            title: 'Background Color',
+            name: 'backgroundColor',
+            type: 'color'
+        },
+        {
             title: 'Primary Button',
             name: 'button',
             type: 'buttonSettings',
@@ -144,14 +150,14 @@ export default defineType({
     ],
     preview: {
         select: {
-          content: 'content',
+            content: 'content',
         },
         prepare({ content }) {
-          const hasContent = content && content[0]?.children?.length > 0;
-      
-          return {
-            title: hasContent ? content[0].children[0].text : 'Hero Section',
-          };
+            const hasContent = content && content[0]?.children?.length > 0;
+
+            return {
+                title: hasContent ? content[0].children[0].text : 'Hero Section',
+            };
         },
-      },
+    },
 })

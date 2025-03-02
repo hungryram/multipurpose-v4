@@ -7,6 +7,7 @@ export default defineType({
     groups: [
         {title: 'Branding', name: 'branding'},
         {title: 'Header', name: 'header'},
+        {title: 'Mobile Menu', name: 'mobileMenu'},
         {title: 'Colors and Buttons', name: 'colors'},
         {title: 'Footer', name: 'footer'},
     ],
@@ -63,6 +64,28 @@ export default defineType({
             name: 'header',
             type: 'headerMenu',
             group: 'header'
+        },
+        {
+            title: 'Mobile Menu',
+            name: 'mobileMenu',
+            type: 'object',
+            group: 'mobileMenu',
+            options: {
+                collapsible: true,
+                collapsed: true
+            },
+            fields: [
+                {
+                    title: 'Mobile Background Drawer Color',
+                    name: 'mobileBgDrawer',
+                    type: 'color'
+                },
+                {
+                    title: 'Mobile Navigation Color',
+                    name: 'mobileNavColor',
+                    type: 'color'
+                }
+          ]
         },
         {
             title: 'Colors',
