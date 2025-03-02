@@ -66,6 +66,19 @@ header.nav-bg-scroll {
   padding-bottom: var(--button-y-padding);
 }
 
+
+/* NAVBAR */
+
+.mobileBg {
+  background-color: var(--mobile-bg-color)
+}
+
+.mobileNavItem {
+  color: var(--mobile-nav-color);
+  font-family: var(--heading-font)!important;
+  @apply text-4xl uppercase tracking-wide
+}
+
 /* CONTENT */
 body .content h1, 
 body .content h2, 

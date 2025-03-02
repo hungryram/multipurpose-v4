@@ -17,8 +17,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import React from "react" // Import React
-import { NavbarProps } from "@/lib/types"
-
+import type { NavbarProps } from "@/lib/types"
 
 export function Navbar({
   company_name,
@@ -31,8 +30,7 @@ export function Navbar({
   enableTopHeader,
   ctaLink,
   hideCta,
-  enableTransparent,
-  logoOnScroll
+  logoOnScroll,
 }: NavbarProps) {
   const [scroll, setScroll] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -60,7 +58,7 @@ export function Navbar({
       className={cn(
         "fixed w-full z-50 transition-all duration-700 ease-in-out nav-bg-fixed",
         scroll ? "shadow-md" : "top-0",
-        scroll || !enableTransparent ? 'nav-bg-scroll' : "bg-transparent",
+        scroll ? "nav-bg-scroll" : "bg-transparent",
         isLoaded ? "opacity-100" : "opacity-0",
       )}
     >
@@ -93,20 +91,20 @@ export function Navbar({
               width={logoScroll}
               height={10}
               alt={company_name}
-              className={logoOnScroll && scroll ? 'hidden' : 'block h-auto'}
+              className={logoOnScroll && scroll ? "hidden" : "block h-auto"}
             />
           ) : (
             <h1 className="text-xl font-bold">{company_name}</h1>
           )}
-          {scroll && logoOnScroll &&
+          {scroll && logoOnScroll && (
             <Image
-              src={logoOnScroll}
+              src={logoOnScroll || "/placeholder.svg"}
               width={logoScroll}
               height={10}
               alt={company_name}
               className="h-auto"
             />
-          }
+          )}
         </Link>
         <div className="hidden lg:flex items-center space-x-8">
           <NavigationMenu>
@@ -136,9 +134,9 @@ export function Navbar({
             </NavigationMenuList>
           </NavigationMenu>
           {!hideCta && ctaLinking && (
-            <Button asChild>
-              <Link href={ctaLinking}>
-                {ctaLink?.text} <span aria-hidden="true">&rarr;</span>
+            <Button asChild variant={"primary"}>
+              <Link href={ctaLinking} className="uppercase heading-font text-xl tracking-wider">
+                {ctaLink?.text}
               </Link>
             </Button>
           )}
@@ -160,21 +158,21 @@ export function Navbar({
               </Button>
             </SheetTrigger>
             <SheetContent>
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 mt-20">
                 {navItems?.map((item) => (
-                  <MobileNavItem key={item._key} item={item} />
+                  <MobileNavItem key={item._key} item={item} closeMenu={() => setIsMobileMenuOpen(false)} />
                 ))}
                 {!hideCta && ctaLinking && (
-                  <Button asChild className="w-full">
+                  <Button asChild className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
                     <Link href={ctaLinking}>
                       {ctaLink?.text} <span aria-hidden="true">&rarr;</span>
                     </Link>
                   </Button>
                 )}
                 <div className="pt-4 border-t border-gray-200">
-                  {email && <p className="text-sm">{email}</p>}
-                  {phone && <p className="text-sm">Direct: {phone}</p>}
-                  {office && <p className="text-sm">Office: {office}</p>}
+                  {email && <p className="text-2xl heading-font uppercase tracking-wide"><a href={`mailto${email}`}>{email}</a></p>}
+                  {phone && <p className="text-2xl heading-font uppercase tracking-wide mt-4">Direct: <a href={`tel:${phone}`}>{phone}</a></p>}
+                  {office && <p className="text-2xl">Office: {office}</p>}
                 </div>
               </div>
             </SheetContent>
@@ -215,7 +213,7 @@ function NavItem({ item }: { item: any }) {
   }
 }
 
-function MobileNavItem({ item }: { item: any }) {
+function MobileNavItem({ item, closeMenu }: { item: any; closeMenu: () => void }) {
   const hasSubMenu = item?.subMenu && item.subMenu.length > 0
   const menuLink = getMenuLink(item)
 
@@ -229,8 +227,9 @@ function MobileNavItem({ item }: { item: any }) {
               <Link
                 key={subItem._key}
                 href={getMenuLink(subItem)}
-                className="block py-2"
+                className="block py-2 mobileNavItem"
                 target={subItem.newTab ? "_blank" : undefined}
+                onClick={closeMenu}
               >
                 {subItem.text}
               </Link>
@@ -241,7 +240,7 @@ function MobileNavItem({ item }: { item: any }) {
     )
   } else {
     return (
-      <Link href={menuLink} className="block py-2" target={item.newTab ? "_blank" : undefined}>
+      <Link href={menuLink} className="block py-2 mobileNavItem" target={item.newTab ? "_blank" : undefined} onClick={closeMenu}>
         {item.text}
       </Link>
     )
