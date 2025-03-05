@@ -27,7 +27,7 @@ export default defineType({
             title: "Column Layout",
             name: "columnLayout",
             type: "string",
-            hidden: ({ parent }) => parent?.layoutType !== "textAndImage",
+            hidden: ({ parent }) => parent?.layoutType !== "text-image",
             options: {
                 list: [
                     { title: "1/2 Columns", value: "half" },

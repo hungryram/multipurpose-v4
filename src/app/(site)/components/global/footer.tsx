@@ -4,6 +4,7 @@ import ContentEditor from "../util/content-editor"
 import Social from "../templates/social"
 import { cn } from "@/lib/utils"
 import { FooterProps } from "@/lib/types"
+import { baseEncode } from "../../../../../lib/utils"
 
 export default function Footer({
   layout = "default",
@@ -64,8 +65,8 @@ export default function Footer({
           height={50}
           alt={altText || company_name}
           className="mb-6"
-          placeholder={blurData ? "blur" : "empty"}
-          blurDataURL={blurData}
+          placeholder={"blur"}
+          blurDataURL={blurData || baseEncode}
         />
       </div>
     ) : (

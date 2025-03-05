@@ -484,7 +484,7 @@ export interface FeaturedItem {
   }
 }
 
-export type CardLayout = "overlay" | "text-below" | "text-only" | "image-only"
+export type CardLayout = "text-overlay" | "text-below" | "text-only" | "image-only"
 
 export interface FeaturedGridProps {
   blocks: FeaturedItem[]

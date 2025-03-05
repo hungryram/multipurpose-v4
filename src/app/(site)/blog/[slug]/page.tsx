@@ -15,6 +15,7 @@ import ShareSocial from "../../components/templates/share-social"
 import ContentEditor from "../../components/util/content-editor"
 import Breadcrumb from "../../components/templates/breadcrumbs"
 import { BlogCard } from "../blog-pagination"
+import { baseEncode } from "../../../../../lib/utils"
 
 interface BlogPost {
     _id: string
@@ -193,6 +194,8 @@ export default async function BlogPost({ params }: Props) {
                                                     width={24}
                                                     height={24}
                                                     className="rounded-full"
+                                                    placeholder="blur"
+                                                    blurDataURL={baseEncode}
                                                 />
                                             )}
                                             <span>{post.blog.author.name}</span>
@@ -211,8 +214,6 @@ export default async function BlogPost({ params }: Props) {
                                 height={900}
                                 priority
                             />
-
-
                             <div className="mt-8">
                                 <ContentEditor content={post.blog.content} />
                             </div>

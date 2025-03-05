@@ -7,6 +7,7 @@ import ContentEditor from "../util/content-editor"
 import { baseEncode } from "../../../../../lib/utils"
 import CustomButton from "./custom-button"
 import { BlockLinking, FeaturedGridProps, FeaturedItem } from "@/lib/types"
+import Link from "next/link"
 
 
 
@@ -74,20 +75,37 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
         const linkUrl = getLinkUrl(item.blockLinking)
 
         switch (layout) {
-            case "overlay":
+            case "text-overlay":
                 return (
-                    <Card key={index} className="relative overflow-hidden h-64">
-                        {item.image && (
-                            <Image src={item.image.src || "/placeholder.svg"} alt={item.image.alt} fill className="object-cover" />
+                    <Card
+                        key={index}
+                        className="relative overflow-hidden h-64 group"
+                    >
+                        {item.image?.asset?.url && (
+                            <Image
+                                src={item.image?.asset?.url || "/placeholder.svg"}
+                                alt={item.image?.asset?.altText}
+                                fill
+                                className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                placeholder="blur"
+                                blurDataURL={item?.image?.asset?.lqip ?? baseEncode}
+                            />
                         )}
-                        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-4">
-                            <CardTitle className="text-white mb-2">{item.heading}</CardTitle>
+
+                        <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-500 flex flex-col justify-end p-4">
+                            <CardTitle className="text-white mb-2">
+                                <h3 className="heading-font">{item.heading}</h3>
+                            </CardTitle>
+
                             {item?.content && (
-                                <CardDescription className="text-white text-sm">
+                                <CardDescription className="text-white">
                                     <ContentEditor content={item?.content} />
                                 </CardDescription>
                             )}
-                            {linkUrl && item.button.text && <CustomButton text={item.button?.text} link={linkUrl} variant="secondary" />}
+
+                            {linkUrl && (
+                                <Link href={linkUrl ?? '/'} className="absolute inset-0"><span className="sr-only">view {item?.heading}</span></Link>
+                            )}
                         </div>
                     </Card>
                 )
@@ -112,7 +130,7 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
                                 </CardDescription>
                             )}
                         </CardHeader>
-                        {linkUrl && item.button.text &&
+                        {linkUrl &&
                             <CardContent>
                                 <CustomButton text={item.button?.text} link={linkUrl} variant="secondary" />
                             </CardContent>
@@ -140,7 +158,12 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
             case "image-only":
                 return (
                     <Card key={index} className={`overflow-hidden relative ${imageHeightClass}`}>
-                        <Image src={item?.image?.asset?.url || "/placeholder.svg"} alt={item?.image?.asset?.url} fill className="object-cover" placeholder="blur" blurDataURL={item?.image?.asset?.lqip || baseEncode} />
+                        <Image
+                            src={item?.image?.asset?.url || "/placeholder.svg"}
+                            alt={item?.image?.asset?.altText} fill className="object-cover"
+                            placeholder="blur"
+                            blurDataURL={item?.image?.asset?.lqip || baseEncode}
+                        />
                     </Card>
                 )
             default:
@@ -151,7 +174,7 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
     return (
         <div>
             {renderContent}
-            <div className={cn("grid gap-6", gridClass, layout === "masonry" && "masonry")}>
+            <div className={cn("grid gap-6", gridClass)}>
                 {blocks?.map((item, index) => renderCard(item, index))}
             </div>
         </div>

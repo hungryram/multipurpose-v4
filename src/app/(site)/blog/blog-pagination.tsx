@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
 import { CalendarIcon, ArrowRight, Loader2 } from "lucide-react"
+import { baseEncode } from "../../../../lib/utils"
 
 interface BlogPost {
     _id: string
@@ -46,7 +47,7 @@ export function BlogCard({ title, slug, date, image, blurData, altText, excerpt 
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                         placeholder={blurData ? "blur" : "empty"}
-                        blurDataURL={blurData}
+                        blurDataURL={blurData ?? baseEncode}
                     />
                 </div>
                 <CardHeader className="space-y-2">

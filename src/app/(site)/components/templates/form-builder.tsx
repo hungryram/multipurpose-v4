@@ -79,7 +79,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
   }
 
   return (
-    <div className="py-2">
+    <div>
       <form action={(data) => submitForm(data, formSchema?.spreadsheetId, formSchema?.sheetName)}>
         <input type="hidden" name="name-honey" />
         <input type="hidden" name="bcc" value={formSchema?.emailBcc} />

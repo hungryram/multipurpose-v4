@@ -88,6 +88,11 @@ body .content h5,
 body .content h6 {
   @apply leading-snug font-medium mb-6 mt-2;
   color: var(--website-heading-color, #000);
+  font-family: var(--heading-font);
+}
+
+.heading-font {
+  font-family: var(--heading-font);
 }
 
 .content h1 {

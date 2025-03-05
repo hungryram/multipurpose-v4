@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "./header-section"
 import { BlogSectionProps, BlogPost } from "@/lib/types"
+import { baseEncode } from "../../../../../lib/utils"
 
 
 function BlogCard({
@@ -19,6 +20,7 @@ function BlogCard({
   blurData,
   altText,
   hideTitle = false,
+  hideContent = false
 }: {
   title: string
   slug: string
@@ -27,6 +29,7 @@ function BlogCard({
   blurData?: string
   altText?: string
   hideTitle?: boolean
+  hideContent?: boolean
 }) {
   return (
     <Card className="h-full flex flex-col">
@@ -37,8 +40,8 @@ function BlogCard({
             alt={altText || title}
             fill
             className="object-cover rounded-t-lg"
-            placeholder={blurData ? "blur" : "empty"}
-            blurDataURL={blurData}
+            placeholder={"blur"}
+            blurDataURL={blurData || baseEncode}
           />
         )}
       </div>
@@ -47,12 +50,16 @@ function BlogCard({
           <CardTitle>{title}</CardTitle>
         </CardHeader>
       )}
-      <CardContent className="px-2 flex-grow">{date && <p className="text-sm text-gray-500">{date}</p>}</CardContent>
-      <CardFooter className="px-2">
-        <Link href={slug} className="text-primary hover:underline">
-          Read More
-        </Link>
-      </CardFooter>
+      {!hideContent && (
+        <>
+          <CardContent className="px-2 flex-grow">{date && <p className="text-sm text-gray-500">{date}</p>}</CardContent>
+          <CardFooter className="px-2">
+            <Link href={slug} className="text-primary hover:underline">
+              Read More
+            </Link>
+          </CardFooter>
+        </>
+      )}
     </Card>
   )
 }
@@ -82,7 +89,7 @@ export default function BlogSection({
     </div>
   )
 
-  const renderBlogCard = (post: BlogPost, hideTitle = false) => {
+  const renderBlogCard = (post: BlogPost, hideTitle = false, hideContent = false) => {
     const parsedDate = parseISO(post.date)
     const postImage = post.imageData?.asset
 
@@ -96,6 +103,7 @@ export default function BlogSection({
         blurData={postImage?.lqip}
         altText={postImage?.altText}
         hideTitle={hideTitle}
+        hideContent={hideContent}
       />
     )
   }
@@ -109,7 +117,7 @@ export default function BlogSection({
           <div className="space-y-8 max-w-3xl mx-auto">
             {limitedBlog.map((post) => (
               <div key={post._id} className="flex flex-col md:flex-row gap-6">
-                <div className="md:w-1/3">{renderBlogCard(post, true)}</div>
+                <div className="md:w-1/3">{renderBlogCard(post, true, true)}</div>
                 <div className="md:w-2/3">
                   <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                   <p>{post.excerpt}</p>

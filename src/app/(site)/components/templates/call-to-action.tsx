@@ -2,6 +2,7 @@ import Image from "next/image"
 import HeaderSection from "./header-section"
 import { cn } from "@/lib/utils"
 import { CtaSectionProps } from "@/lib/types"
+import { baseEncode } from "../../../../../lib/utils"
 
 
 export default function CtaSection({
@@ -70,6 +71,8 @@ export default function CtaSection({
                 width={800}
                 height={600}
                 className="object-cover"
+                placeholder="blur"
+                blurDataURL={baseEncode}
               />
             </div>
             <div className={getSecondColumnLayoutClasses()}>
@@ -83,9 +86,9 @@ export default function CtaSection({
 
   if (layout === "banner") {
     return (
-      <div className={cn("", { "py-12 sm:py-16": layout === "banner" })} style={style}>
+      <div style={style}>
         <div className={cn("mx-auto max-w-7xl px-6 sm:px-8")}>
-          <div className={cn("px-6 py-16 sm:px-8 sm:py-24")}>
+          <div>
             {renderContent}
           </div>
         </div>
@@ -108,6 +111,8 @@ export default function CtaSection({
             layout="fill"
             objectFit="cover"
             className="mix-blend-multiply saturate-0"
+            placeholder="blur"
+            blurDataURL={baseEncode}
           />
         </div>
         <div className="relative mx-auto py-24 sm:py-32 lg:px-8 lg:py-40">
