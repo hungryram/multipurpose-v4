@@ -51,7 +51,7 @@ export default function LogoCloudSection({
       case "slider":
         return (
           <Carousel
-            className="w-full mx-auto"
+            className="w-full mx-auto overflow-hidden"
             opts={{
               align: "start",
               loop: true,

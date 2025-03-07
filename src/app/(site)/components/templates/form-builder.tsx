@@ -1,26 +1,26 @@
 "use client"
-import { submitForm } from "./_formActions"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import ContentEditor from "../util/content-editor"
-import { FormField, FormBuilderProps } from "@/lib/types"
+import { useState } from "react";
+import { submitForm } from "./_formActions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ContentEditor from "../util/content-editor";
+import { FormField, FormBuilderProps } from "@/lib/types";
 
 export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track form submission state
 
   const renderField = (field: FormField, index: number) => {
-
     const commonProps = {
       id: `${field._key}-${index}`,
       name: field.label,
       placeholder: field?.placeholder,
       required: field.required,
-    }
-
+    };
 
     const fieldComponents = {
       text: <Input type="text" {...commonProps} />,
@@ -63,7 +63,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
           </SelectContent>
         </Select>
       ),
-    }
+    };
 
     return (
       <div key={field._key} className={`${field.half ? "col-span-2" : "col-span-4"} space-y-2`}>
@@ -75,12 +75,29 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         )}
         {fieldComponents[field.type as keyof typeof fieldComponents]}
       </div>
-    )
-  }
+    );
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return; // Prevent multiple submissions
+
+    setIsSubmitting(true); // Set loading state
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      await submitForm(formData, formSchema?.spreadsheetId, formSchema?.sheetName);
+      // Handle success (e.g., show a success message, redirect)
+    } catch (error) {
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false); // Reset button state
+    }
+  };
 
   return (
-    <div>
-      <form action={(data) => submitForm(data, formSchema?.spreadsheetId, formSchema?.sheetName)}>
+    <div className="py-2">
+      <form onSubmit={handleSubmit}>
         <input type="hidden" name="name-honey" />
         <input type="hidden" name="bcc" value={formSchema?.emailBcc} />
         <input type="hidden" name="cc" value={formSchema?.emailCc} />
@@ -100,15 +117,16 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         <div className="mt-6">
           <Button
             type="submit"
+            disabled={isSubmitting}
             style={{
               backgroundColor: formSchema?.buttonBackgroundColor?.hex,
               color: formSchema?.buttonTextColor?.hex,
             }}
           >
-            {formSchema?.buttonLabel || "SUBMIT"}
+            {isSubmitting ? "Submitting..." : formSchema?.buttonLabel || "SUBMIT"}
           </Button>
         </div>
       </form>
     </div>
-  )
+  );
 }

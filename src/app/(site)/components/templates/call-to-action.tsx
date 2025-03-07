@@ -11,7 +11,6 @@ export default function CtaSection({
   primaryButton,
   secondaryButton,
   layout,
-  style,
   image,
   altText,
   reverseColumn,
@@ -54,15 +53,14 @@ export default function CtaSection({
     />
   )
 
+  const style = {
+    backgroundColor: backgroundColor
+  }
+
   if (layout === "text-image") {
     return (
-      <div style={style}>
-        <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          {subtitle && (
-            <div className="w-full border-b border-gray-200 pb-1 mb-8">
-              <h5 className="uppercase text-gray-600">{subtitle}</h5>
-            </div>
-          )}
+      <div>
+        <div className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className={cn("flex flex-col lg:flex-row items-center gap-8", { "lg:flex-row-reverse": reverseColumn })}>
             <div className={getColumnLayoutClasses()}>
               <Image
@@ -86,7 +84,7 @@ export default function CtaSection({
 
   if (layout === "banner") {
     return (
-      <div style={style}>
+      <div>
         <div className={cn("mx-auto max-w-7xl px-6 sm:px-8")}>
           <div>
             {renderContent}
@@ -101,7 +99,7 @@ export default function CtaSection({
       <div className={cn("relative", backgroundColor)} style={style}>
         <div
           className={cn(
-            "relative h-80 overflow-hidden md:absolute md:h-full md:w-1/3 lg:w-1/2",
+            "relative h-96 overflow-hidden md:absolute md:h-full md:w-1/3 lg:w-1/2",
             reverseColumn ? "md:right-0" : "md:left-0",
           )}
         >
@@ -110,12 +108,11 @@ export default function CtaSection({
             alt={altText || "CTA Image"}
             layout="fill"
             objectFit="cover"
-            className="mix-blend-multiply saturate-0"
             placeholder="blur"
             blurDataURL={baseEncode}
           />
         </div>
-        <div className="relative mx-auto py-24 sm:py-32 lg:px-8 lg:py-40">
+        <div className="relative mx-auto py-24 sm:py-32 lg:px-8 lg:py-52">
           <div
             className={cn(
               "pl-6 pr-6 md:w-2/3 lg:w-1/2 lg:pr-0 xl:pl-32",
@@ -131,7 +128,7 @@ export default function CtaSection({
 
   // Default to full-width layout
   return (
-    <div className={cn("py-24 sm:py-32", backgroundColor)} style={style}>
+    <div className={cn("py-24 sm:py-32", backgroundColor)}>
       <div className="px-6 sm:px-8">
         <div className="mx-auto max-w-2xl text-center">
           {renderContent}

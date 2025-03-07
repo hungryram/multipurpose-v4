@@ -155,11 +155,9 @@ export default function Gallery({
   }
 
   return (
-    <div className="section">
-      <div className="w-full">
-        {renderContent}
-        {renderGallery()}
-      </div>
+    <div className="w-full overflow-hidden">
+      {renderContent}
+      {renderGallery()}
     </div>
   )
 }

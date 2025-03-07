@@ -274,6 +274,7 @@ export default function PageBuilder({
                         images={section.childImage}
                         textColor={section?.textColor?.hex}
                         backgroundColor={section?.backgroundColor?.hex}
+                        imageOverlayColor={section?.imageOverlayColor}
                         {...commonProps}
                     />
                 )

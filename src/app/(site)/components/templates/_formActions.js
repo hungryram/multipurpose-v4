@@ -59,12 +59,20 @@ export const submitForm = async (data, spreadsheetId, sheetName) => {
     });
 
     const htmlBody = `
-    <h2>Contact Form Submission</h2>
-    <table>
-      <tbody>
-        ${tableRows.join('')}
-      </tbody>
-    </table>
+    <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+        <h2 style="color: #2C3E50; text-align: center;">📩 Contact Form Submission</h2>
+        <hr style="border: none; border-top: 2px solid #ddd; margin: 10px 0;">
+        
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <tbody>
+                ${tableRows.join('')}
+            </tbody>
+        </table>
+
+        <p style="text-align: center; font-size: 14px; color: #777; margin-top: 20px;">
+            <em>This email was automatically generated from a form submission.</em>
+        </p>
+    </div>
   `;
 
     if (honeypot.length === 0) {
