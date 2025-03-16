@@ -97,6 +97,7 @@ export interface InternalLink {
 export interface ButtonLink {
   internalLink?: InternalLink
   externalUrl?: string
+  internalPath?: string
   buttonText: string
 }
 
@@ -464,6 +465,7 @@ export interface BlockLinking {
       slug: string
   }
   externalUrl?: string
+  internalPath?: string
 }
 
 export interface FeaturedItem {

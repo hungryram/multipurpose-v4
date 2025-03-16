@@ -1,5 +1,6 @@
 import { defineType } from "sanity";
 import { BsLink } from "react-icons/bs"
+import { internalPath } from "../lib/classes";
 
 export default defineType({
     name: 'navigationItem',
@@ -44,6 +45,16 @@ export default defineType({
                 { type: 'team' },
                 { type: 'homeDesign' },
             ],
+        },
+        {
+            title: "Manual Internal Path",
+            name: "internalPath",
+            type: "string",
+            description: "Select a predefined internal route",
+            hidden: ({ parent }) => parent?.linkType !== "internal",
+            options: {
+                list: internalPath
+            },
         },
         {
             name: 'externalUrl',

@@ -48,28 +48,31 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
     )
 
     const getLinkUrl = (blockLinking: BlockLinking | undefined) => {
-        if (!blockLinking) return ""
-
-        const { internalLink, externalUrl } = blockLinking
-
-        if (externalUrl) return externalUrl
-
+        if (!blockLinking) return "";
+    
+        const { internalLink, externalUrl, internalPath } = blockLinking;
+    
+        if (externalUrl) return externalUrl;
+    
+        if (internalPath) return internalPath;
+    
         if (internalLink) {
             switch (internalLink._type) {
                 case "pages":
-                    return `/${internalLink.slug}`
+                    return `/${internalLink.slug}`;
                 case "blog":
                 case "legal":
                 case "services":
                 case "team":
-                    return `/${internalLink._type}/${internalLink.slug}`
+                    return `/${internalLink._type}/${internalLink.slug}`;
                 default:
-                    return ""
+                    return "";
             }
         }
-
-        return ""
-    }
+    
+        return "";
+    };
+    
 
     const renderCard = (item: FeaturedItem, index: number) => {
         const linkUrl = getLinkUrl(item.blockLinking)

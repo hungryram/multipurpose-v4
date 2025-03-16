@@ -8,6 +8,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import HeaderSection from "./header-section"
 import { cn } from "@/lib/utils"
 import type { GallerySliderProps, GalleryImage } from "@/lib/types"
+import { baseEncode } from "../../../../../lib/utils"
 
 const GalleryGrid = ({
   images,
@@ -40,6 +41,8 @@ const GalleryGrid = ({
               alt={image?.asset?.altText}
               fill={true}
               className="object-cover rounded-lg"
+              placeholder="blur"
+              blurDataURL={image?.asset?.lqip ?? baseEncode}
             />
           </div>
         </Card>
@@ -60,6 +63,8 @@ const GalleryMasonry = ({ images }: { images: GalleryImage[] }) => {
               width={500}
               height={Math.floor(Math.random() * (800 - 400) + 400)} // Random height for masonry effect
               className="object-cover w-full rounded-lg"
+              placeholder="blur"
+              blurDataURL={image?.asset?.lqip ?? baseEncode}
             />
           </div>
         </Card>
@@ -101,6 +106,8 @@ const GallerySlider = ({
                   alt={image.alt}
                   fill={true}
                   className="object-cover rounded-lg"
+                  placeholder="blur"
+                  blurDataURL={image?.asset?.lqip ?? baseEncode}
                 />
               </div>
             </Card>

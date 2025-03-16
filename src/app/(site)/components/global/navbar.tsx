@@ -273,6 +273,7 @@ ListItem.displayName = "ListItem"
 function getMenuLink(item: any) {
   if (!item) return "/"
   if (item.externalUrl) return item.externalUrl
+  if (item.internalPath) return item.internalPath;
   if (!item.internalLink) return "/"
 
   const { _type, slug } = item.internalLink
@@ -296,6 +297,7 @@ function getMenuLink(item: any) {
 
 function getCTALink(ctaLink: any) {
   if (!ctaLink) return "/"
+  if (ctaLink.internalPath) return ctaLink.internalPath;
   if (ctaLink?.externalUrl) return ctaLink.externalUrl
   if (!ctaLink?.internalLink) return "/"
 

@@ -12,6 +12,7 @@ import { HeaderSectionProps, ButtonProps } from "@/lib/types"
 // Update getButtonLink to use the new type
 const getButtonLink = (button: ButtonProps["link"]) => {
   if (button.externalUrl) return button.externalUrl
+  if (button.internalPath) return button.internalPath
   if (!button.internalLink) return ""
 
   switch (button.internalLink._type) {

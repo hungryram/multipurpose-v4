@@ -57,6 +57,7 @@ export const appearance = groq`
         linkType,
         externalUrl,
         text,
+        internalPath,
         internalLink->{
           title,
           'slug': slug.current,
@@ -71,6 +72,7 @@ export const appearance = groq`
             linkType,
             externalUrl,
             text,
+            internalPath,
             internalLink->{
               title,
               'slug': slug.current,
@@ -82,6 +84,8 @@ export const appearance = groq`
           text,
           _key,
           newTab,
+            internalPath,
+
           internalLink->{
             title,
             'slug': slug.current,
@@ -111,6 +115,7 @@ export const appearance = groq`
         linkType,
         externalUrl,
         text,
+            internalPath,
         internalLink->{
           title,
           name,
@@ -124,6 +129,7 @@ export const appearance = groq`
         linkType,
         externalUrl,
         text,
+        internalPath,
         internalLink->{
           title,
           name,
@@ -179,6 +185,7 @@ export const pageBuilderData = groq`
     externalUrl,
     linkType,
     newTab,
+    internalPath,
     internalLink->{
       title,
       'slug': slug.current,
@@ -208,6 +215,7 @@ export const pageBuilderData = groq`
       linkType,
       externalUrl,
       newTab,
+      internalPath,
       internalLink->{
         title,
         'slug': slug.current,
@@ -227,6 +235,7 @@ export const pageBuilderData = groq`
       linkType,
       externalUrl,
       newTab,
+      internalPath,
       internalLink->{
         title,
         'slug': slug.current,
@@ -245,6 +254,7 @@ export const pageBuilderData = groq`
   linkType,
   externalUrl,
   newTab,
+  internalPath,
   internalLink->{
     title,
     'slug': slug.current,
@@ -256,6 +266,7 @@ export const pageBuilderData = groq`
   linkType,
   externalUrl,
   newTab,
+  internalPath,
   internalLink->{
     title,
     'slug': slug.current,

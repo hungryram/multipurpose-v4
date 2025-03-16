@@ -56,3 +56,8 @@ export const pageBuilder = [
     {type: 'servicesDisplay'},
     {type: 'leadForm'},
 ]
+
+export const internalPath = [
+    { title: "Blog", value: "/blog" },
+    { title: "Services", value: "/services" }, // Fixed duplicate title
+];

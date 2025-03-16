@@ -1,4 +1,5 @@
 import { defineType } from "sanity";
+import { internalPath } from "../lib/classes";
 
 export default defineType({
     title: 'Links',
@@ -35,6 +36,16 @@ export default defineType({
                 { type: 'services' },
                 { type: 'homeDesign' },
             ],
+        },
+        {
+            title: "Manual Internal Path",
+            name: "internalPath",
+            type: "string",
+            description: "Select a predefined internal route",
+            hidden: ({ parent }) => parent?.linkType !== "internal",
+            options: {
+                list: internalPath
+            },
         },
         {
             name: 'externalUrl',
