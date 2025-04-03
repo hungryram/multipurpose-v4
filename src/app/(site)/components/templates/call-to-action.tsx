@@ -17,6 +17,7 @@ export default function CtaSection({
   columnLayout = "half",
   subtitle,
   backgroundColor,
+  blurData
 }: CtaSectionProps) {
   const getColumnLayoutClasses = () => {
     switch (columnLayout) {
@@ -70,7 +71,7 @@ export default function CtaSection({
                 height={600}
                 className="object-cover"
                 placeholder="blur"
-                blurDataURL={baseEncode}
+                blurDataURL={blurData ?? baseEncode}
               />
             </div>
             <div className={getSecondColumnLayoutClasses()}>

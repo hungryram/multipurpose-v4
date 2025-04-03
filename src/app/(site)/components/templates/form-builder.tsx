@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { submitForm } from "./_formActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,9 +10,22 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ContentEditor from "../util/content-editor";
 import { FormField, FormBuilderProps } from "@/lib/types";
+import { usePathname } from "next/navigation";
 
 export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps) {
   const [isSubmitting, setIsSubmitting] = useState(false); // Track form submission state
+
+  const path = usePathname();
+  const [fullPath, setFullPath] = useState("");
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = `${window.location.origin}${path}`;
+      setFullPath(url);
+      console.log("Full Path Updated:", url); // ✅ Logs when updated
+    }
+  }, [path]);
+  
 
   const renderField = (field: FormField, index: number) => {
     const commonProps = {
@@ -30,7 +43,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
       file: <Input type="file" {...commonProps} />,
       textarea: <Textarea {...commonProps} />,
       radio: (
-        <RadioGroup>
+        <RadioGroup {...commonProps}>
           {field.radioValue?.map((value, i) => (
             <div key={i} className="flex items-center space-x-2">
               <RadioGroupItem value={value} id={`${commonProps.id}-${i}`} />
@@ -43,14 +56,14 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         <div className="space-y-2">
           {field.checkBoxValue?.map((value, i) => (
             <div key={i} className="flex items-center space-x-2">
-              <Checkbox id={`${commonProps.id}-${i}`} />
+              <Checkbox id={`${commonProps.id}-${i}`} name={commonProps.name} />
               <Label htmlFor={`${commonProps.id}-${i}`}>{value}</Label>
             </div>
           ))}
         </div>
       ),
       select: (
-        <Select>
+        <Select {...commonProps}>
           <SelectTrigger>
             <SelectValue placeholder={field.placeholder || field.label} />
           </SelectTrigger>
@@ -95,6 +108,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
     }
   };
 
+
   return (
     <div className="py-2">
       <form onSubmit={handleSubmit}>
@@ -105,6 +119,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         <input type="hidden" name="sendTo" value={formSchema?.sendTo} />
         <input type="hidden" name="subject" value={formSchema?.subject} />
         <input type="hidden" name="redirectTo" value={formSchema?.redirectTo} />
+        <input type="hidden" name="fullPath" value={fullPath} />
 
         <div className="grid grid-cols-4 gap-4">{formSchema?.fields?.map(renderField)}</div>
 

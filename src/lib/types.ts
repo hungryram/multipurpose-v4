@@ -76,17 +76,19 @@ export interface Asset {
 
 export interface Background {
   backgroundType: "color" | "image"
-  color?: { hex: string }
+  color?: { hex?: string }
   imageOverlayColor?: {
-    rgb: RGB
+      rgb?: { r?: number; g?: number; b?: number; a?: number }
   }
 }
 
 // Button Types
 export interface ButtonStyle {
-  buttonBackground: { rgb: RGB }
-  buttonTextColor: { hex: string }
-  buttonBorderColor: { hex: string }
+  buttonBackground?: {
+      rgb?: { r?: number; g?: number; b?: number; a?: number }
+  }
+  buttonTextColor?: { hex?: string }
+  buttonBorderColor?: { hex?: string }
 }
 
 export interface InternalLink {
@@ -104,9 +106,12 @@ export interface ButtonLink {
 export interface ButtonProps {
   text: string
   link: ButtonLink
-  style?: React.CSSProperties
+  style?: {
+      backgroundColor?: string
+      color?: string
+      border?: string
+  }
 }
-
 // Form Types
 export interface FormField {
   name: string
@@ -547,6 +552,7 @@ export interface CtaSectionProps {
   style?: React.CSSProperties
   image?: string
   altText?: string
+  blurData?: string
   reverseColumn?: boolean
   columnLayout?: "half" | "twoFifths" | "oneThird"
   subtitle?: string
@@ -565,9 +571,9 @@ export interface BlogPost {
   date: string
   imageData: {
     asset: {
-      url: string
-      altText: string
-      lqip: string
+      url?: string
+      altText?: string
+      lqip?: string
     }
   }
   excerpt?: string
@@ -590,4 +596,97 @@ export interface BlogSectionProps {
   textColor?: string
   carouselSlidesPerView?: number
   limit?: number
+}
+
+
+
+
+// Update the BaseSection interface
+export interface BaseSection {
+  _type: string
+  _key?: string
+  id?: string
+  background?: {
+      background: Background
+      contentColor?: { hex?: string }
+  }
+  backgroundImage?: {
+      image?: {
+          asset?: {
+              url: string
+          }
+      }
+  }
+  content?: any
+  textAlign?: "left" | "center" | "right"
+  textColor?: { hex?: string }
+  paddingTop?: string
+  paddingBottom?: string
+  button?: ButtonStyle
+  secondaryButton?: ButtonStyle
+  buttonLinking?: ButtonLink
+  secondButtonLinking?: ButtonLink
+  layoutType: string
+  imageData?: {
+      asset?: {
+          url: string
+          lqip?: string
+          altText?: string
+      }
+  }
+  // Add specific layout types based on section type
+  layout?:
+  | HeroLayout
+  | CTALayout
+  | BlogLayout
+  | TestimonialLayout
+  | TeamLayout
+  | ServiceLayout
+  | GalleryLayout
+  | FeatureLayout
+  | LogoLayout
+  | DisclosureLayout
+  | LeadForm
+  [key: string]: any
+}
+
+// Add these type definitions at the top of the file
+export type HeroLayout = "hero" | "split" | "centered"
+export type CTALayout = "full-width" | "banner" | "text-image" | "fullWidthTextImage"
+export type BlogLayout = "grid" | "list" | "featured" | "carousel"
+export type TestimonialLayout = "grid" | "slider" | "column"
+export type TeamLayout = "grid" | "carousel" | "list"
+export type ServiceLayout = "grid" | "list" | "featured" | "carousel"
+export type GalleryLayout = "grid" | "slider" | "masonry"
+export type FeatureLayout = "text-overlay" | "text-below" | "text-only" | "image-only"
+export type LogoLayout = "grid" | "slider" | "marquee"
+export type DisclosureLayout = "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
+export type TextAlign = "left" | "center" | "right"
+export type ColumnLayout = "half" | "twoFifths" | "oneThird"
+export type ContentLayout = "simpleFullWidth" | "twoColumn" | "prose" | "article"
+export type LeadForm = "twoColumn" | "stacked"
+
+export interface PageBuilderProps {
+  pageBuilder: BaseSection[]
+  allTestimonials: any[]
+  allServices: any[]
+  allTeam: any[]
+  allBlog: any[]
+  email?: string
+  phone_number?: string
+  office_number?: string
+  address?: string
+  city?: string
+  state?: string
+  zip_code?: string
+  facebook?: string
+  youtube?: string
+  instagram?: string
+  twitter?: string
+  reddit?: string
+  linkedin?: string
+  yelp?: string
+  pinterest?: string
+  tiktok?: string
+  zillow?: string
 }

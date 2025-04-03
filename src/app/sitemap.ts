@@ -2,6 +2,8 @@ import { MetadataRoute } from 'next';
 import { getAllPages } from '../../lib/groq-data';
 import { client } from '../../sanity/lib/client';
 
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = await client.fetch(getAllPages);
 

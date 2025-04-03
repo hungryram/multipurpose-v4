@@ -5,11 +5,30 @@ import { useCallback } from "react"
 import { cn } from "@/lib/utils"
 import dynamic from "next/dynamic"
 import { Component, type ErrorInfo, type ReactNode } from "react"
-import ContentSection from "./content-simple"
+import {
+    Background,
+    BaseSection,
+    BlogLayout,
+    ButtonProps,
+    ButtonStyle,
+    CTALayout,
+    ContentLayout,
+    DisclosureLayout,
+    FeatureLayout,
+    GalleryLayout,
+    HeroLayout,
+    LeadForm,
+    LogoLayout,
+    ServiceLayout,
+    TeamLayout,
+    TestimonialLayout,
+    PageBuilderProps
+} from "@/lib/types"
 
 // Dynamically import sections for better performance
 const Hero = dynamic(() => import("./hero"))
 const CtaSection = dynamic(() => import("./call-to-action"))
+const ContentSection = dynamic(() => import("./content-simple"))
 const LeadFormSection = dynamic(() => import("./lead-form-section"))
 const GallerySlider = dynamic(() => import("./gallery"))
 const FeaturedGrid = dynamic(() => import("./feature-section"))
@@ -19,126 +38,6 @@ const LogoCloudSection = dynamic(() => import("./logo-cloud-section"))
 const DisclosureSection = dynamic(() => import("./disclosure-section"))
 const ServiceList = dynamic(() => import("./services-section"))
 const BlogSection = dynamic(() => import("./blog-section"))
-
-// Add these type definitions at the top of the file
-export type HeroLayout = "hero" | "split" | "centered"
-export type CTALayout = "full-width" | "banner" | "text-image" | "fullWidthTextImage"
-export type BlogLayout = "grid" | "list" | "featured" | "carousel"
-export type TestimonialLayout = "grid" | "slider" | "column"
-export type TeamLayout = "grid" | "carousel" | "list"
-export type ServiceLayout = "grid" | "list" | "featured" | "carousel"
-export type GalleryLayout = "grid" | "slider" | "masonry"
-export type FeatureLayout = "overlay" | "text-below" | "text-only" | "image-only"
-export type LogoLayout = "grid" | "slider" | "marquee"
-export type DisclosureLayout = "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
-export type TextAlign = "left" | "center" | "right"
-export type ColumnLayout = "half" | "twoFifths" | "oneThird"
-export type ContentLayout = "simpleFullWidth" | "twoColumn" | "prose" | "article"
-export type LeadForm = "twoColumn" | "stacked"
-
-// Types
-interface Background {
-    backgroundType: "color" | "image"
-    color?: { hex?: string }
-    imageOverlayColor?: {
-        rgb?: { r?: number; g?: number; b?: number; a?: number }
-    }
-}
-
-interface ButtonStyle {
-    buttonBackground?: {
-        rgb?: { r?: number; g?: number; b?: number; a?: number }
-    }
-    buttonTextColor?: { hex?: string }
-    buttonBorderColor?: { hex?: string }
-}
-
-interface ButtonLink {
-    buttonText: string
-    link: string
-}
-
-interface ButtonProps {
-    text: string
-    link: ButtonLink
-    style: {
-        backgroundColor: string
-        color: string
-        border: string
-    }
-}
-
-// Update the BaseSection interface
-interface BaseSection {
-    _type: string
-    _key?: string
-    id?: string
-    background?: {
-        background: Background
-        contentColor?: { hex?: string }
-    }
-    backgroundImage?: {
-        image?: {
-            asset?: {
-                url: string
-            }
-        }
-    }
-    content?: any
-    textAlign?: "left" | "center" | "right"
-    textColor?: { hex?: string }
-    paddingTop?: string
-    paddingBottom?: string
-    button?: ButtonStyle
-    secondaryButton?: ButtonStyle
-    buttonLinking?: ButtonLink
-    secondButtonLinking?: ButtonLink
-    layoutType: string
-    imageData?: {
-        asset?: {
-            url: string
-        }
-    }
-    // Add specific layout types based on section type
-    layout?:
-    | HeroLayout
-    | CTALayout
-    | BlogLayout
-    | TestimonialLayout
-    | TeamLayout
-    | ServiceLayout
-    | GalleryLayout
-    | FeatureLayout
-    | LogoLayout
-    | DisclosureLayout
-    | LeadForm
-    [key: string]: any
-}
-
-interface PageBuilderProps {
-    pageBuilder: BaseSection[]
-    allTestimonials: any[]
-    allServices: any[]
-    allTeam: any[]
-    allBlog: any[]
-    email?: string
-    phone_number?: string
-    office_number?: string
-    address?: string
-    city?: string
-    state?: string
-    zip_code?: string
-    facebook?: string
-    youtube?: string
-    instagram?: string
-    twitter?: string
-    reddit?: string
-    linkedin?: string
-    yelp?: string
-    pinterest?: string
-    tiktok?: string
-    zillow?: string
-}
 
 // Simple Error Boundary Component
 class SectionErrorBoundary extends Component<{ children: ReactNode; sectionName: string }, { hasError: boolean }> {
@@ -269,6 +168,8 @@ export default function PageBuilder({
                 return (
                     <Hero
                         image={section.imageData?.asset?.url}
+                        blurData={section.imageData?.asset?.lqip}
+                        altText={section.imageData?.asset?.altText}
                         layout={section.layoutType as HeroLayout}
                         height={section?.imageHeight}
                         images={section.childImage}
@@ -285,7 +186,8 @@ export default function PageBuilder({
                     <CtaSection
                         layout={section.layoutType as CTALayout}
                         image={section.imageData?.asset?.url}
-                        altText={section?.props?.altText}
+                        blurData={section.imageData?.asset?.lqip}
+                        altText={section.imageData?.asset?.altText}
                         reverseColumn={section.reverseColumn}
                         columnLayout={section.columnLayout}
                         subtitle={section.subtitle}

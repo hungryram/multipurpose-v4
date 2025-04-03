@@ -38,7 +38,7 @@ export function Navbar({
 
   useEffect(() => {
     const handleScroll = () => {
-      setScroll(window.scrollY > 300)
+      setScroll(window.scrollY > 100)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -157,7 +157,7 @@ export function Navbar({
                 </svg>
               </Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="overflow-y-scroll">
               <div className="flex flex-col space-y-4 mt-20">
                 {navItems?.map((item) => (
                   <MobileNavItem key={item._key} item={item} closeMenu={() => setIsMobileMenuOpen(false)} />
@@ -169,10 +169,10 @@ export function Navbar({
                     </Link>
                   </Button>
                 )}
-                <div className="pt-4 border-t border-gray-200">
-                  {email && <p className="text-2xl heading-font uppercase tracking-wide"><a href={`mailto${email}`}>{email}</a></p>}
-                  {phone && <p className="text-2xl heading-font uppercase tracking-wide mt-4">Direct: <a href={`tel:${phone}`}>{phone}</a></p>}
-                  {office && <p className="text-2xl">Office: {office}</p>}
+                <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
+                  {email && <p><a href={`mailto:${email}`}>{email}</a></p>}
+                  {phone && <p>Direct: <a href={`tel:${phone}`}>{phone}</a></p>}
+                  {office && <p>Office: {office}</p>}
                 </div>
               </div>
             </SheetContent>

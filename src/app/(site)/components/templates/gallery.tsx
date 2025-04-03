@@ -103,7 +103,7 @@ const GallerySlider = ({
               <div className="relative h-80">
                 <Image
                   src={image?.asset?.url || "/placeholder.svg"}
-                  alt={image.alt}
+                  alt={image.asset?.altText}
                   fill={true}
                   className="object-cover rounded-lg"
                   placeholder="blur"

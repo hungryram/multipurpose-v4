@@ -18,7 +18,8 @@ export const submitForm = async (data, spreadsheetId, sheetName) => {
             name !== 'sendTo' &&
             name !== 'sendFrom' &&
             name !== 'subject' &&
-            name !== 'redirectTo'
+            name !== 'redirectTo' &&
+            name !== 'fullPath'
         ) {
             if (name === 'Email') {
                 email = value;
@@ -70,7 +71,7 @@ export const submitForm = async (data, spreadsheetId, sheetName) => {
         </table>
 
         <p style="text-align: center; font-size: 14px; color: #777; margin-top: 20px;">
-            <em>This email was automatically generated from a form submission.</em>
+            <em>This email was automatically generated from a form submission on ${data.get('fullPath')}</em>
         </p>
     </div>
   `;

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import type { HeroProps } from "@/lib/types"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import type { CarouselApi } from "@/components/ui/carousel"
+import { baseEncode } from "../../../../../lib/utils"
 
 export default function Hero({
   content,
@@ -73,7 +74,7 @@ export default function Hero({
       src={image || "/placeholder.svg"}
       alt={altText}
       placeholder={blurData ? "blur" : "empty"}
-      blurDataURL={blurData}
+      blurDataURL={blurData ?? baseEncode}
       className="object-cover"
       fill={true}
       sizes="100vw"
@@ -156,11 +157,11 @@ export default function Hero({
   const imageHeight = (height: "large" | "medium" | "small") => {
     switch (height) {
       case "large":
-        return "py-96"
+        return "min-h-screen"
       case "medium":
-        return "py-60"
+        return "min-h-[60vh]"
       case "small":
-        return "py-40"
+        return "min-h-[40vh]"
       default:
         return "min-h-[50vh]"
     }
