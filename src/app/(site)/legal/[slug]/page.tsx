@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getLegal } from "../../../../../lib/groq-data"
 import { Metadata } from 'next';
 import ContentEditor from "../../components/util/content-editor";
+import Hero from "../../components/templates/hero";
 export const revalidate = 0;
 
 interface Props {
@@ -62,9 +63,19 @@ export default async function LegalSlug({ params }: Props) {
         notFound()
     }
 
+    console.log(legal.pageSetting)
+
     return (
-        <div className="pt-40 pb-20">
-            <div className="mx-auto max-w-3xl content">
+        <div>
+            <Hero
+                image={legal.pageSetting.legal.imageData.asset.url}
+                imageOverlayColor={{ rgb: { r: 0, g: 0, b: 0, a: 0.4 } }}
+                textColor="#fff"
+                enableBreadcrumbs={false}
+                textAlign="left"
+                layout="hero"
+            />
+            <div className="mx-auto max-w-3xl content py-20">
                 <h1>{legal?.legal?.title}</h1>
                 <hr />
                 <ContentEditor

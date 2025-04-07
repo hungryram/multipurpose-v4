@@ -62,7 +62,7 @@ export default function DisclosureSection({
     }
 
     const renderContent = (
-        <div className="py-16" style={{ color: textColor }}>
+        <div className="mb-12" style={{ color: textColor }}>
             <HeaderSection
                 content={content}
                 textAlign={textAlign}

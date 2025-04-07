@@ -41,7 +41,7 @@ export default defineType({
                 name: "size",
                 type: "string",
                 options: {
-                  list: Array.from({ length: 16 }, (_, i) => {
+                  list: Array.from({ length: 32 }, (_, i) => {
                     const pxValue = (i * 2) + 10; // Generates 10px, 12px, ..., 40px
                     return { title: `${pxValue}px`, value: `${pxValue}px` };
                   }),

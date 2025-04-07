@@ -16,7 +16,6 @@ export interface NavbarProps {
   ctaLink: any
   mobileLogoWidth: number
   hideCta: boolean
-  enableTransparent: boolean
   logoOnScroll: string
 }
 
@@ -361,6 +360,7 @@ export interface HeroProps {
   altText?: string
   blurData?: string
   backgroundImage?: string
+  enableBreadcrumbs?: boolean
   images?: any
   backgroundColor?: string
   primaryButton?: ButtonProps

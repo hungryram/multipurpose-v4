@@ -7,6 +7,7 @@ import type { HeroProps } from "@/lib/types"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import type { CarouselApi } from "@/components/ui/carousel"
 import { baseEncode } from "../../../../../lib/utils"
+import Breadcrumb from "./breadcrumbs"
 
 export default function Hero({
   content,
@@ -21,8 +22,9 @@ export default function Hero({
   textColor,
   imageOverlayColor,
   layout,
-  height,
+  height = 'large',
   backgroundImage,
+  enableBreadcrumbs
 }: HeroProps) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
@@ -72,9 +74,9 @@ export default function Hero({
   const renderImage = () => (
     <Image
       src={image || "/placeholder.svg"}
-      alt={altText}
+      alt={altText || 'Hero Image'}
       placeholder={blurData ? "blur" : "empty"}
-      blurDataURL={blurData ?? baseEncode}
+      blurDataURL={blurData || baseEncode}
       className="object-cover"
       fill={true}
       sizes="100vw"
@@ -105,7 +107,7 @@ export default function Hero({
       className="w-full"
     >
       <CarouselContent className={cn(getCarouselHeight(height))}>
-        {images.map((slide : any, index: number) => (
+        {images.map((slide: any, index: number) => (
           <CarouselItem key={slide._key} className="h-full">
             <div className="grid md:grid-cols-12 h-full items-center gap-8">
               <div className="md:col-span-5">
@@ -171,6 +173,7 @@ export default function Hero({
     case "hero":
       return (
         <div className={cn("relative isolate flex items-center", imageHeight(height))}>
+          {enableBreadcrumbs && <Breadcrumb textAlign={textAlign} color={textColor} />}
           {renderImage()}
           <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
           <div className="container relative z-10">{renderContent}</div>
@@ -212,13 +215,13 @@ export default function Hero({
           style={
             backgroundImage
               ? {
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
               : {
-                  backgroundColor,
-                }
+                backgroundColor,
+              }
           }
         >
           <div className="container relative z-10">{renderCarousel()}</div>

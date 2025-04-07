@@ -61,22 +61,20 @@ export default function CtaSection({
   if (layout === "text-image") {
     return (
       <div>
-        <div className="px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-          <div className={cn("flex flex-col lg:flex-row items-center gap-8", { "lg:flex-row-reverse": reverseColumn })}>
-            <div className={getColumnLayoutClasses()}>
-              <Image
-                src={image || "/placeholder.svg"}
-                alt={altText || "CTA Image"}
-                width={800}
-                height={600}
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={blurData ?? baseEncode}
-              />
-            </div>
-            <div className={getSecondColumnLayoutClasses()}>
-              {renderContent}
-            </div>
+        <div className={cn("flex flex-col lg:flex-row items-center gap-8", { "lg:flex-row-reverse": reverseColumn })}>
+          <div className={getColumnLayoutClasses()}>
+            <Image
+              src={image || "/placeholder.svg"}
+              alt={altText || "CTA Image"}
+              width={800}
+              height={600}
+              className="object-cover"
+              placeholder="blur"
+              blurDataURL={blurData ?? baseEncode}
+            />
+          </div>
+          <div className={getSecondColumnLayoutClasses()}>
+            {renderContent}
           </div>
         </div>
       </div>
@@ -129,11 +127,9 @@ export default function CtaSection({
 
   // Default to full-width layout
   return (
-    <div className={cn("py-24 sm:py-32", backgroundColor)}>
-      <div className="px-6 sm:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          {renderContent}
-        </div>
+    <div className={cn(backgroundColor)}>
+      <div className="mx-auto max-w-2xl">
+        {renderContent}
       </div>
     </div>
   )

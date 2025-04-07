@@ -37,7 +37,7 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
     }[imageHeight]
 
     const renderContent = (
-        <div className="py-16" style={{ color: textColor }}>
+        <div className="mb-12" style={{ color: textColor }}>
             <HeaderSection
                 content={content}
                 textAlign={textAlign}
@@ -49,13 +49,13 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
 
     const getLinkUrl = (blockLinking: BlockLinking | undefined) => {
         if (!blockLinking) return "";
-    
+
         const { internalLink, externalUrl, internalPath } = blockLinking;
-    
+
         if (externalUrl) return externalUrl;
-    
+
         if (internalPath) return internalPath;
-    
+
         if (internalLink) {
             switch (internalLink._type) {
                 case "pages":
@@ -69,10 +69,10 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
                     return "";
             }
         }
-    
+
         return "";
     };
-    
+
 
     const renderCard = (item: FeaturedItem, index: number) => {
         const linkUrl = getLinkUrl(item.blockLinking)
@@ -97,7 +97,9 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
 
                         <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-500 flex flex-col justify-end p-4">
                             <CardTitle className="text-white mb-2">
-                                <h3 className="heading-font">{item.heading}</h3>
+                                <h3 className="heading-font" style={{
+                                    color: item.headingColor?.hex
+                                }}>{item.heading}</h3>
                             </CardTitle>
 
                             {item?.content && (
@@ -126,7 +128,11 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
                             />
                         </div>
                         <CardHeader>
-                            <CardTitle>{item.heading}</CardTitle>
+                            <CardTitle>
+                                <h3 className="!text-2xl !mt-0" style={{
+                                    color: item.headingColor?.hex
+                                }}>{item?.heading}</h3>
+                            </CardTitle>
                             {item?.content && (
                                 <CardDescription>
                                     <ContentEditor content={item?.content} />
@@ -144,7 +150,11 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
                 return (
                     <Card key={index}>
                         <CardHeader>
-                            <CardTitle>{item.heading}</CardTitle>
+                            <CardTitle>
+                                <h3 className="!text-2xl !mt-0" style={{
+                                    color: item.headingColor?.hex
+                                }}>{item?.heading}</h3>
+                            </CardTitle>
                             {item?.content && (
                                 <CardDescription>
                                     <ContentEditor content={item?.content} />
@@ -176,7 +186,9 @@ const FeaturedGrid: React.FC<FeaturedGridProps> = ({
 
     return (
         <div>
-            {renderContent}
+            {content &&
+                renderContent
+            }
             <div className={cn("grid gap-6", gridClass)}>
                 {blocks?.map((item, index) => renderCard(item, index))}
             </div>

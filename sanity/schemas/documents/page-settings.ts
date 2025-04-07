@@ -41,6 +41,11 @@ export default defineType({
             },
             fields: [
                 {
+                    title: 'Image',
+                    name: 'image',
+                    type: 'image'
+                },
+                {
                     title: 'Title',
                     name: 'title',
                     type: 'string'
@@ -92,6 +97,11 @@ export default defineType({
                 collapsed: true,
             },
             fields: [
+                {
+                    title: 'Image',
+                    name: 'image',
+                    type: 'image'
+                },
                 {
                     title: 'Title',
                     name: 'title',

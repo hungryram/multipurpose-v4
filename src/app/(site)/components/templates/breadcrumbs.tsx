@@ -1,10 +1,11 @@
 'use client'
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { ChevronRight } from 'lucide-react';
 import { useEffect } from 'react';
+import { cn } from '@/lib/utils';
 
-function Breadcrumb({ centered }: { centered?: boolean }) {
+function Breadcrumb({ textAlign, color }: { textAlign?: string, color?: string }) {
     const pathname = usePathname();
 
     if (!pathname) {
@@ -55,7 +56,15 @@ function Breadcrumb({ centered }: { centered?: boolean }) {
     }, [pathname]); // Re-run when pathname changes
 
     return (
-        <ol role="list" className={`${centered ? 'justify-center' : ''} !list-none flex items-center !ml-0`}>
+        <ol role="list"
+              className={cn("content list-none flex items-center !ml-0", {
+                "text-left": textAlign === "left",
+                "mx-auto text-center justify-center": textAlign === "center",
+                "text-right justify-end": textAlign === "right",
+              })}
+        style={{
+            color: color
+        }}>
             <li className="inline-block">
                 <div className="flex items-center">
                     <Link href="/">
@@ -69,7 +78,7 @@ function Breadcrumb({ centered }: { centered?: boolean }) {
                 return (
                     <li key={index} className="inline-block">
                         <div className="flex items-center">
-                            <ChevronRightIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                            <ChevronRight className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                             <Link
                                 href={href}
                                 className="capitalize"

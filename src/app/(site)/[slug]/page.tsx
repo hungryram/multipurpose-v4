@@ -95,25 +95,6 @@ export default async function Page({ params }: Props) {
             />
             <PageBuilder
                 pageBuilder={page?.pages?.pageBuilder}
-                // CONTACT
-                email={page?.profileSettings?.contact_information?.email}
-                phone_number={page?.profileSettings?.contact_information?.phone_number}
-                office_number={page?.profileSettings?.contact_information?.office_number}
-                address={page?.profileSettings?.address?.address}
-                city={page?.profileSettings?.address?.city}
-                state={page?.profileSettings?.address?.state}
-                zip_code={page?.profileSettings?.address?.zip_code}
-                // SOCIAL
-                facebook={page?.profileSettings?.social?.facebook}
-                youtube={page?.profileSettings?.social?.youtube}
-                instagram={page?.profileSettings?.social?.instagram}
-                twitter={page?.profileSettings?.social?.twitter}
-                reddit={page?.profileSettings?.social?.reddit}
-                linkedin={page?.profileSettings?.social?.linkedin}
-                yelp={page?.profileSettings?.social?.yelp}
-                pinterest={page?.profileSettings?.social?.pinterest}
-                tiktok={page?.profileSettings?.social?.tiktok}
-                zillow={page?.profileSettings?.social?.zillow}
                 // PAGE FOLDERS
                 allServices={page?.allServices}
                 allTestimonials={page?.allTestimonial}

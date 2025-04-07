@@ -78,94 +78,100 @@ export default defineType({
                     name: 'formField',
                     fields: [
                         {
-                            title: 'Label',
-                            name: 'label',
-                            type: 'string',
-                            description: 'The label for the form field',
-                            validation: (Rule) => Rule.required().error('Name your input field'),
+                          title: 'Label',
+                          name: 'label',
+                          type: 'string',
+                          description: 'The label for the form field',
+                          validation: (Rule) =>
+                            Rule.custom((val, context) => {
+                              if (context.parent?.type !== 'description' && !val) {
+                                return 'Label is required';
+                              }
+                              return true;
+                            }),
                         },
                         {
-                            title: 'Placeholder',
-                            name: 'placeholder',
-                            type: 'string'
+                          title: 'Description Text',
+                          name: 'descriptionText',
+                          type: 'text',
+                          rows: 3,
+                          hidden: ({ parent }) => parent?.type !== 'description',
                         },
                         {
-                            title: 'Make Half Width',
-                            name: 'half',
-                            type: 'boolean'
+                          title: 'Placeholder',
+                          name: 'placeholder',
+                          type: 'string',
+                          hidden: ({ parent }) => parent?.type === 'description',
                         },
                         {
-                            title: 'Type',
-                            name: 'type',
-                            type: 'string',
-                            description: 'The type of form field (e.g., text, email, checkbox, etc.)',
-                            options: {
-                                list: [
-                                    { title: 'Text', value: 'text' },
-                                    { title: 'Email', value: 'email' },
-                                    { title: 'Phone', value: 'phone' },
-                                    { title: 'Checkbox', value: 'checkbox' },
-                                    { title: 'Select', value: 'select' },
-                                    { title: 'Radio Buttons', value: 'radio' },
-                                    { title: 'Textarea', value: 'textarea' },
-                                    { title: 'State', value: 'state' },
-                                    // { title: 'File Attachments', value: 'file' }
-                                    // Add more field types as needed
-                                ],
-                            },
-                        },
-                        // {
-                        //     title: 'Display Inline',
-                        //     description: 'Makes button display next to field. Useful for newsletter or signups',
-                        //     name: 'inlineEmail',
-                        //     type: 'boolean',
-                        //     hidden: ({ parent }) => parent?.type !== "email",
-                        // },
-                        {
-                            title: 'Hide Label',
-                            name: 'hideLabel',
-                            type: 'boolean',
+                          title: 'Make Half Width',
+                          name: 'half',
+                          type: 'boolean',
+                          hidden: ({ parent }) => parent?.type === 'description',
                         },
                         {
-                            title: 'Required',
-                            name: 'required',
-                            type: 'boolean'
+                          title: 'Type',
+                          name: 'type',
+                          type: 'string',
+                          description: 'The type of form field (e.g., text, email, checkbox, etc.)',
+                          options: {
+                            list: [
+                              { title: 'Text', value: 'text' },
+                              { title: 'Email', value: 'email' },
+                              { title: 'Phone', value: 'phone' },
+                              { title: 'Checkbox', value: 'checkbox' },
+                              { title: 'Select', value: 'select' },
+                              { title: 'Radio Buttons', value: 'radio' },
+                              { title: 'Textarea', value: 'textarea' },
+                              { title: 'State', value: 'state' },
+                              { title: 'Description Text', value: 'description' },
+                              { title: 'Date', value: 'date' },
+                            ],
+                          },
                         },
                         {
-                            title: 'Display Stacked',
-                            name: 'stacked',
-                            type: 'boolean',
-                            description: 'Enable this to show stacked a stacked layout',
-                            hidden: ({ parent }) => parent?.type !== "radio" && parent?.type !== "checkbox",
+                          title: 'Hide Label',
+                          name: 'hideLabel',
+                          type: 'boolean',
+                          hidden: ({ parent }) => parent?.type === 'description',
                         },
                         {
-                            title: 'Checkbox Values',
-                            name: 'checkBoxValue',
-                            type: 'array',
-                            hidden: ({ parent }) => parent?.type !== "checkbox",
-                            of: [
-                                { type: 'string' }
-                            ]
+                          title: 'Required',
+                          name: 'required',
+                          type: 'boolean',
+                          hidden: ({ parent }) => parent?.type === 'description',
                         },
                         {
-                            title: 'Radio Values',
-                            name: 'radioValue',
-                            type: 'array',
-                            hidden: ({ parent }) => parent?.type !== "radio",
-                            of: [
-                                { type: 'string' }
-                            ]
+                          title: 'Display Stacked',
+                          name: 'stacked',
+                          type: 'boolean',
+                          description: 'Enable this to show a stacked layout',
+                          hidden: ({ parent }) =>
+                            parent?.type !== 'radio' && parent?.type !== 'checkbox',
                         },
                         {
-                            title: 'Select Dropdown Values',
-                            name: 'selectValue',
-                            type: 'array',
-                            hidden: ({ parent }) => parent?.type !== "select",
-                            of: [
-                                { type: 'string' }
-                            ]
+                          title: 'Checkbox Values',
+                          name: 'checkBoxValue',
+                          type: 'array',
+                          of: [{ type: 'string' }],
+                          hidden: ({ parent }) => parent?.type !== 'checkbox',
                         },
-                    ],
+                        {
+                          title: 'Radio Values',
+                          name: 'radioValue',
+                          type: 'array',
+                          of: [{ type: 'string' }],
+                          hidden: ({ parent }) => parent?.type !== 'radio',
+                        },
+                        {
+                          title: 'Select Dropdown Values',
+                          name: 'selectValue',
+                          type: 'array',
+                          of: [{ type: 'string' }],
+                          hidden: ({ parent }) => parent?.type !== 'select',
+                        },
+                      ],
+                      
                 },
             ],
         },

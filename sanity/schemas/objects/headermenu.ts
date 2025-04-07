@@ -59,10 +59,5 @@ export default defineType({
             name: "hideCta",
             type: "boolean",
         },
-        {
-            title: "Enable Transparent Header",
-            name: "enableTransparent",
-            type: "boolean",
-        },
     ]
 })

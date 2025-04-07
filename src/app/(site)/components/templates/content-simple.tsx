@@ -57,7 +57,7 @@ export default function ContentSection({
     )
 
     const renderContent = (
-        <div className="py-16" style={{ color: textColor }}>
+        <div style={{ color: textColor }}>
             <HeaderSection
                 content={content}
                 textAlign={textAlign}

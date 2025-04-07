@@ -49,7 +49,6 @@ export const appearance = groq`
     },
     'header': header {
       hideCta,
-      enableTransparent,
       menuLayout,
       'ctaLink': cta {
         newTab,
@@ -281,7 +280,7 @@ export const pageBuilderData = groq`
 `
 
 const homeOtherDocumentSections = groq`
-'allServices': *[_type == 'services']{
+'allServices': *[_type == 'services'] | order(sortOrder asc){
   _id,
   title,
   slug,
@@ -475,9 +474,6 @@ const metaDataProfile = groq`
   },
 },
 'appearances': *[_type == "appearances"][0]{
-  header {
-    enableTransparent
-  },
   branding {
     favicon {
       asset->{
@@ -592,11 +588,20 @@ export const servicesPage = groq`
     ${metaDataProfile}
     'pageSetting': *[_type == 'pageSetting'][0]{
       services {
-        ...
+        ...,
+      'imageData': image {
+        asset-> {
+          altText,
+          'lqip':metadata.lqip,
+          url
+        }
+      },
       }
     },
-    'services': *[_type == 'services']{
-      ...,
+    'services': *[_type == 'services'] | order(sortOrder asc){
+      title,
+      detail,
+      slug,
       'imageData': featuredImage {
         asset-> {
           altText,
@@ -644,13 +649,15 @@ export const legalPage = groq`
     ${metaDataProfile}
     'pageSetting': *[_type == 'pageSetting'][0]{
       legal {
-        ...
-      }
-    },
-    'pageSetting': *[_type == 'pageSetting'][0]{
-      legal {
         title,
         content,
+        'imageData': image {
+        asset-> {
+                  altText,
+          'lqip':metadata.lqip,
+          url
+        }
+        },
         seo {
           ...
         }
@@ -729,6 +736,13 @@ export async function getServices(slug: string) {
     'services': *[_type == "services" && slug.current == $slug][0]{
       _id,
       title,
+      bannerText,
+      cardHeading,
+      columns,
+      programsOffered,
+      ctaText,
+      textListHeading,
+      textList,
       'imageData': featuredImage {
         asset->{
           url,
@@ -833,6 +847,17 @@ export async function getLegal(slug: string) {
   return client.fetch(groq`
 {
   ${metaDataProfile}
+  'pageSetting': *[_type == 'pageSetting'][0]{
+        legal {
+          'imageData': image {
+          asset-> {
+                      url,
+            altText,
+            'lqip': metadata.lqip
+            }
+          }
+        }
+      },
   'legal': *[_type == "legal" && slug.current == $slug][0]{
     _id,
     title,
