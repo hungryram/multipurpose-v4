@@ -180,7 +180,9 @@ export default function DisclosureSection({
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
             <section>
-                {layout !== "contentSide" && renderContent}
+                {layout !== "contentSide" && renderContent && (
+                    renderContent
+                )}
                 <div
                     className={cn("mx-auto", {
                         "max-w-2xl": layout === "default",
