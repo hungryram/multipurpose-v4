@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPage } from "../../../../lib/groq-data";
 import PageBuilder from "../components/templates/page-builder";
 import { Metadata } from 'next';
+export const revalidate = 0
 
 type Props = {
     params: {
