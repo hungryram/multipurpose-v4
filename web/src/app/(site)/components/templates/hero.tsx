@@ -82,8 +82,9 @@ export default function Hero({ section }: { section: HeroProps }) {
       blurDataURL={imageData?.asset?.lqip || baseEncode}
       className="object-cover"
       fill={true}
-      sizes="100vw"
+      sizes="(max-width: 768px) 100vw, 50vw"
       priority={true}
+
     />
   )
 
