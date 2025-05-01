@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         console.log("Revalidated legal index")
         break
 
-      case "service":
+      case "services":
         if (slugValue) {
           await revalidatePath(`/services/${slugValue}`)
           console.log(`Revalidated service page: ${slugValue}`)
