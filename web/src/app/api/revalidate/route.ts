@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
     // Targeted revalidation based on content type
     switch (_type) {
-      case "post":
+      case "blog":
         if (slugValue) {
           await revalidatePath(`/blog/${slugValue}`)
           console.log(`Revalidated blog post: ${slugValue}`)
@@ -36,9 +36,9 @@ export async function POST(req: NextRequest) {
         console.log("Revalidated blog listings")
         break
 
-      case "site":
+      case "pages":
         if (slugValue) {
-          await revalidatePath(`/site/${slugValue}`)
+          await revalidatePath(`/${slugValue}`)
           console.log(`Revalidated site page: ${slugValue}`)
         }
         break
