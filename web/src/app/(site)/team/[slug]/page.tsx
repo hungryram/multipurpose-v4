@@ -1,7 +1,7 @@
 import { getTeam } from '../../../../../lib/groq-data'
 import ContentEditor from "../../components/util/content-editor"
 import Image from "next/image"
-import { PhoneIcon, MailIcon } from "lucide-react"
+import { FaMobileAlt,FaRegEnvelope } from "react-icons/fa";
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Social from "../../components/templates/social"
@@ -95,7 +95,7 @@ export default async function TeamSlug({ params }: Props) {
                     href={`tel:${data?.contactInformation?.phoneNumber}`}
                     className="flex items-center gap-2 hover:text-primary"
                   >
-                    <PhoneIcon className="h-4 w-4" />
+                    <FaMobileAlt className="h-4 w-4" />
                     {data?.contactInformation?.phoneNumber}
                   </a>
                 )}
@@ -104,7 +104,7 @@ export default async function TeamSlug({ params }: Props) {
                     href={`mailto:${data?.contactInformation?.email}`}
                     className="flex items-center gap-2 hover:text-primary"
                   >
-                    <MailIcon className="h-4 w-4" />
+                    <FaRegEnvelope className="h-4 w-4" />
                     {data?.contactInformation?.email}
                   </a>
                 )}

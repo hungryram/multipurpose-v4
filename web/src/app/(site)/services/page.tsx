@@ -6,8 +6,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import ContentEditor from "../components/util/content-editor"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { ArrowRight, Settings, Code, PenTool, BarChart, Megaphone } from "lucide-react"
+import { ArrowRight, Settings} from "lucide-react"
 
 export const revalidate = 0
 

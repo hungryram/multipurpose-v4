@@ -1,7 +1,7 @@
 'use client'
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
+import { IoChevronForwardOutline } from "react-icons/io5";
 import { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -78,7 +78,7 @@ function Breadcrumb({ textAlign, color }: { textAlign?: string, color?: string }
                 return (
                     <li key={index} className="inline-block">
                         <div className="flex items-center">
-                            <ChevronRight className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                            <IoChevronForwardOutline className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
                             <Link
                                 href={href}
                                 className="capitalize"
