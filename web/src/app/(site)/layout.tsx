@@ -9,6 +9,8 @@ import { bodyFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
 export const revalidate = 0
 
+console.log(`Last built at: ${new Date().toLocaleString()}`)
+
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
   const data = await client.fetch(mainLayoutProfile)
