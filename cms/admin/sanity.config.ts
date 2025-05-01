@@ -54,9 +54,6 @@ import servicesSectionBuilder from '../admin/schemas/pagebuilder/service-section
 import contentBuilder from '../admin/schemas/pagebuilder/content'
 
 export default defineConfig({
-  name: 'default',
-  title: 'admin',
-
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET!,
   schema: {
