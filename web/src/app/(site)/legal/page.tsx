@@ -1,4 +1,4 @@
-import { client } from '../../../../sanity/lib/client'
+import { client } from "../../../../lib/sanity"
 import { legalPage } from '../../../../lib/groq-data'
 import ContentEditor from '../components/util/content-editor'
 import Link from 'next/link'

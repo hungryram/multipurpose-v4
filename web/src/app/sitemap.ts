@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getAllPages } from '../../lib/groq-data';
-import { client } from '../../sanity/lib/client';
+import { client } from '../../lib/sanity';
 
 export const revalidate = 0;
 

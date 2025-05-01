@@ -1,4 +1,4 @@
-import { client } from "../../../../sanity/lib/client"
+import { client } from "../../../../lib/sanity"
 import { teamPage } from "../../../../lib/groq-data"
 import { notFound } from "next/navigation"
 import ContentEditor from "../components/util/content-editor"

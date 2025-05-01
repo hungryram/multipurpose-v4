@@ -1,5 +1,5 @@
 import type React from "react"
-import { client } from "../../../../sanity/lib/client"
+import { client } from "../../../../lib/sanity"
 import { servicesPage } from "../../../../lib/groq-data"
 import Image from "next/image"
 import Link from "next/link"
