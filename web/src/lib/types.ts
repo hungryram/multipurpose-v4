@@ -4,59 +4,13 @@ import type { ReactNode } from "react"
 // NAVBAR
 
 export interface NavbarProps {
-  company_name: string
-  logo: string
-  navItems: any[]
-  logoWidth: number
-  phone: string
-  email: string
-  office: string
-  backgroundColor: string
-  enableTopHeader: boolean
-  ctaLink: any
-  mobileLogoWidth: number
-  hideCta: boolean
-  logoOnScroll: string
+  navbarData?: any
 }
 
 // FOOTER
 
 export interface FooterProps {
-  layout: "default" | "single-column" | "minimal" | "two-column" | "grid"
-  footerBackgroundColor?: string
-  footerHeaderColor?: string
-  footerTextColor?: string
-  footerText?: any
-  company_name: string
-  image?: string
-  quickLinksHeading?: string
-  quickLinksTwoHeading?: string
-  altText?: string
-  blurData?: string
-  email?: string
-  phone_number?: string
-  office_number?: string
-  address?: string
-  city?: string
-  state?: string
-  zip_code?: string
-  footerDisclaimer?: any
-  shortText?: string
-  legal?: any[]
-  links?: any[]
-  secondLinks?: any[]
-  googleBusiness?: string
-  facebook?: string
-  youtube?: string
-  instagram?: string
-  twitter?: string
-  reddit?: string
-  linkedin?: string
-  yelp?: string
-  pinterest?: string
-  tiktok?: string
-  zillow?: string
-  size?: string
+  footerData?: any
 }
 
 // Common Types
@@ -200,7 +154,7 @@ export function convertButtonLinking(buttonLinking?: ButtonLink): ButtonProps | 
 
 export interface ContentSectionProps {
   content?: any[]
-  layout: ContentLayout
+  layoutType: ContentLayout
   heading?: string
   textAlign?: "left" | "center" | "right"
   maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl"
@@ -234,8 +188,8 @@ export interface ServiceListProps {
   services: Service[]
   content?: any[]
   textAlign?: "left" | "center" | "right"
-  layout: "grid" | "list" | "featured" | "carousel"
-  columns?: 2 | 3 | 4
+  layoutType: "grid" | "list" | "featured" | "carousel"
+  columnNumber?: 2 | 3 | 4
   secondaryButton?: ButtonProps
   primaryButton?: ButtonProps
   textColor?: string
@@ -250,12 +204,11 @@ export interface TeamComponentProps {
   textAlign?: "left" | "center" | "right"
   paddingTop?: string
   paddingBottom?: string
-  layout: "grid" | "carousel" | "list"
+  layoutType: "grid" | "carousel" | "list"
   secondaryButton?: ButtonProps
   textColor?: string
   primaryButton?: ButtonProps
-  columns?: 2 | 3 | 4
-  slidesToShow?: number
+  columnNumber?: number
   limit?: number
 }
 
@@ -287,11 +240,11 @@ export interface TestimonialSectionProps {
   textAlign?: "left" | "center" | "right"
   paddingTop?: string
   paddingBottom?: string
-  layout: "grid" | "slider" | "column"
+  layoutType: "grid" | "slider" | "column"
   secondaryButton?: ButtonProps
   textColor?: string
   primaryButton?: ButtonProps
-  slidesToShow?: number
+  slideNumber?: number
 }
 
 
@@ -313,15 +266,15 @@ export interface Testimonial {
 // LOGO CLOUD
 
 export interface LogoCloudSectionProps {
-  images: LogoImage[]
+  childImage: LogoImage[]
   content?: any[]
   textAlign?: "left" | "center" | "right"
-  layout: "grid" | "slider" | "marquee"
+  layoutType: "grid" | "slider" | "marquee"
   secondaryButton?: ButtonProps
   textColor?: string
   primaryButton?: ButtonProps
   columns?: 3 | 4 | 5 | 6
-  slidesToShow?: number
+  columnNumber?: number
 }
 
 export interface LogoImage {
@@ -335,9 +288,9 @@ export interface LogoImage {
 // LEAD FORM SECTION
 
 export interface LeadFormSectionProps {
-  layout: "twoColumn" | "stacked"
+  layoutType: "twoColumn" | "stacked"
   content: any // This should match the type of your content structure
-  formSchema: any // This should match the FormSchema type from FormBuilder
+  formBuilder: any // This should match the FormSchema type from FormBuilder
   backgroundColor?: string
   textColor?: string
   textAlign: "left" | "center" | "right"
@@ -346,7 +299,7 @@ export interface LeadFormSectionProps {
   primaryButtonStyle?: React.CSSProperties
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
-  alignContent: boolean
+  alignContentCenter: boolean
   formBackgroundColor?: string
   labelColor?: string
   formContent: any;
@@ -356,9 +309,7 @@ export interface LeadFormSectionProps {
 
 export interface HeroProps {
   content?: any[]
-  image?: string
-  altText?: string
-  blurData?: string
+  imageData?: string
   backgroundImage?: string
   enableBreadcrumbs?: boolean
   images?: any
@@ -376,7 +327,7 @@ export interface HeroProps {
       a: number
     }
   }
-  layout?: "hero" | "split" | "centered" | "fullscreen" | "sideBysideCarousel"
+  layoutType?: "hero" | "split" | "centered" | "fullscreen" | "sideBysideCarousel"
 }
 
 // HEADER SECTION
@@ -416,7 +367,7 @@ export interface GallerySliderProps {
   secondaryButton?: ButtonProps
   textAlign?: "left" | "center" | "right"
   autoplay?: boolean
-  layout?: "grid" | "masonry" | "slider"
+  layoutType?: "grid" | "masonry" | "slider"
   columns?: 2 | 3 | 4
   gap?: "small" | "medium" | "large"
 }
@@ -494,9 +445,9 @@ export interface FeaturedItem {
 export type CardLayout = "text-overlay" | "text-below" | "text-only" | "image-only"
 
 export interface FeaturedGridProps {
-  blocks: FeaturedItem[]
-  columns?: 1 | 2 | 3 | 4
-  layout?: CardLayout
+  childBlocks: FeaturedItem[]
+  columnNumber?: 1 | 2 | 3 | 4
+  layoutType?: CardLayout
   content?: any[]
   image?: string
   textColor?: string
@@ -512,13 +463,13 @@ export interface FeaturedGridProps {
 
 
 export interface DisclosureSectionProps {
-  disclosure: DisclosureItem[]
+  disclosures: DisclosureItem[]
   disclosureBackgroundColor?: { hex: string }
   disclosureTextColor?: { hex: string }
   disclosureContentColor?: { hex: string }
   content?: any[]
   textAlign?: "left" | "center" | "right"
-  layout: "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
+  layoutType: "default" | "twoColumn" | "sidebar" | "tabbed" | "contentSide"
   primaryButton?: ButtonProps
   secondaryButton?: ButtonProps
   textColor?: string
@@ -548,9 +499,9 @@ export interface CtaSectionProps {
   textAlign: "left" | "center" | "right"
   primaryButton?: any
   secondaryButton?: any
-  layout: "full-width" | "banner" | "text-image" | "fullWidthTextImage"
+  layoutType: "full-width" | "banner" | "text-image" | "fullWidthTextImage"
   style?: React.CSSProperties
-  image?: string
+  imageData?: string
   altText?: string
   blurData?: string
   reverseColumn?: boolean
@@ -589,8 +540,8 @@ export interface BlogSectionProps {
   blog: BlogPost[]
   content?: any[]
   textAlign?: "left" | "center" | "right"
-  layout?: "grid" | "list" | "featured" | "carousel"
-  columns?: 2 | 3 | 4
+  layoutType?: "grid" | "list" | "featured" | "carousel"
+  columnNumber?: 2 | 3 | 4
   secondaryButton?: ButtonProps
   primaryButton?: ButtonProps
   textColor?: string

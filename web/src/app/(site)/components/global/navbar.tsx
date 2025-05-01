@@ -104,7 +104,7 @@ export function Navbar({
         <div className="hidden lg:flex items-center space-x-8">
           <NavigationMenu>
             <NavigationMenuList>
-              {navbarData?.appearances?.header?.mainNav?.navItems?.map((item) => (
+              {navbarData?.appearances?.header?.mainNav?.navItems?.map((item: any) => (
                 <NavigationMenuItem key={item._key}>
                   {item.subMenu && item.subMenu.length > 0 ? (
                     <>
@@ -154,7 +154,7 @@ export function Navbar({
             </SheetTrigger>
             <SheetContent className="overflow-y-scroll">
               <div className="flex flex-col space-y-4 mt-20">
-                {navbarData?.appearances?.header?.mainNav?.navItems?.map((item) => (
+                {navbarData?.appearances?.header?.mainNav?.navItems?.map((item: any) => (
                   <MobileNavItem key={item._key} item={item} closeMenu={() => setIsMobileMenuOpen(false)} />
                 ))}
                 {!navbarData?.appearances?.header?.hideCta && ctaLinking && (

@@ -23,7 +23,7 @@ export default function Hero({ section }: { section: HeroProps }) {
     backgroundColor,
     textColor,
     imageOverlayColor,
-    layout,
+    layoutType,
     height = 'large',
     backgroundImage,
     enableBreadcrumbs
@@ -173,7 +173,7 @@ export default function Hero({ section }: { section: HeroProps }) {
     }
   }
 
-  switch (layout) {
+  switch (layoutType) {
     case "hero":
       return (
         <div className={cn("relative isolate flex items-center", imageHeight(height))}>

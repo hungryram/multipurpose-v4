@@ -18,7 +18,6 @@ export default function CtaSection({
     imageData,
     reverseColumn,
     columnLayout = "half",
-    backgroundColor,
   } = section || {}
 
   const getColumnLayoutClasses = () => {
