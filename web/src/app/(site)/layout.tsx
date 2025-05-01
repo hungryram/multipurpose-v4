@@ -7,9 +7,6 @@ import { Metadata } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { bodyFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
-export const revalidate = 0
-
-console.log(`Last built at: ${new Date().toLocaleString()}`)
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
