@@ -13,20 +13,22 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
 
     // Extract content type and slug information
+    // Note: Sanity sends slug as an object with a current property
     const { _type, slug } = body
+    const slugValue = typeof slug === "object" ? slug?.current : slug
 
     if (!_type) {
       return new Response("Missing _type in webhook payload", { status: 400 })
     }
 
-    console.log(`Received revalidation request for: ${_type} ${slug?.current || ""}`)
+    console.log(`Received revalidation request for: ${_type} ${slugValue || ""}`)
 
     // Targeted revalidation based on content type
     switch (_type) {
       case "post":
-        if (slug?.current) {
-          await revalidatePath(`/blog/${slug.current}`)
-          console.log(`Revalidated blog post: ${slug.current}`)
+        if (slugValue) {
+          await revalidatePath(`/blog/${slugValue}`)
+          console.log(`Revalidated blog post: ${slugValue}`)
         }
         // Always revalidate the blog listing pages
         await revalidatePath("/blog")
@@ -35,16 +37,16 @@ export async function POST(req: NextRequest) {
         break
 
       case "site":
-        if (slug?.current) {
-          await revalidatePath(`/site/${slug.current}`)
-          console.log(`Revalidated site page: ${slug.current}`)
+        if (slugValue) {
+          await revalidatePath(`/site/${slugValue}`)
+          console.log(`Revalidated site page: ${slugValue}`)
         }
         break
 
       case "legal":
-        if (slug?.current) {
-          await revalidatePath(`/legal/${slug.current}`)
-          console.log(`Revalidated legal page: ${slug.current}`)
+        if (slugValue) {
+          await revalidatePath(`/legal/${slugValue}`)
+          console.log(`Revalidated legal page: ${slugValue}`)
         }
         // Also revalidate the legal index
         await revalidatePath("/legal")
@@ -52,9 +54,9 @@ export async function POST(req: NextRequest) {
         break
 
       case "service":
-        if (slug?.current) {
-          await revalidatePath(`/services/${slug.current}`)
-          console.log(`Revalidated service page: ${slug.current}`)
+        if (slugValue) {
+          await revalidatePath(`/services/${slugValue}`)
+          console.log(`Revalidated service page: ${slugValue}`)
         }
         // Also revalidate the services index
         await revalidatePath("/services")
@@ -62,9 +64,9 @@ export async function POST(req: NextRequest) {
         break
 
       case "team":
-        if (slug?.current) {
-          await revalidatePath(`/team/${slug.current}`)
-          console.log(`Revalidated team member: ${slug.current}`)
+        if (slugValue) {
+          await revalidatePath(`/team/${slugValue}`)
+          console.log(`Revalidated team member: ${slugValue}`)
         }
         // Also revalidate the team index
         await revalidatePath("/team")
@@ -87,7 +89,7 @@ export async function POST(req: NextRequest) {
     return new Response(
       JSON.stringify({
         revalidated: true,
-        message: `Revalidated ${_type} ${slug?.current || ""}`,
+        message: `Revalidated ${_type} ${slugValue || ""}`,
         timestamp: new Date().toISOString(),
       }),
       {
