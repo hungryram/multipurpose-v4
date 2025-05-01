@@ -47,7 +47,8 @@ export default defineType({
     {
       title: 'Align Content Center',
       name: 'alignContentCenter',
-      type: 'boolean'
+      type: 'boolean',
+      hidden: ({ parent }) => parent?.layoutType !== 'twoColumn',
     },
     primaryButton,
     secondaryButton,

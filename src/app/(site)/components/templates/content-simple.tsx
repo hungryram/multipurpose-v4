@@ -25,16 +25,23 @@ const columnGapClasses = {
 }
 
 export default function ContentSection({
-    content,
-    layout,
-    textColor,
-    textAlign = "left",
-    maxWidth = "7xl",
-    columnGap = "lg",
-    className,
-    primaryButton,
-    secondaryButton,
-}: ContentSectionProps) {
+    section
+}: {
+    section: ContentSectionProps
+}) {
+
+    const {
+        content,
+        layout,
+        textColor,
+        textAlign = "left",
+        maxWidth = "7xl",
+        columnGap = "lg",
+        className,
+        primaryButton,
+        secondaryButton,
+    } = section || {}
+
     const containerClass = classNames(
         "mx-auto",
         maxWidthClasses[maxWidth],

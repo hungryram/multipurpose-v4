@@ -6,19 +6,21 @@ import { baseEncode } from "../../../../../lib/utils"
 
 
 export default function CtaSection({
-  content,
-  textAlign,
-  primaryButton,
-  secondaryButton,
-  layout,
-  image,
-  altText,
-  reverseColumn,
-  columnLayout = "half",
-  subtitle,
-  backgroundColor,
-  blurData
-}: CtaSectionProps) {
+  section
+}: { section: CtaSectionProps }) {
+
+  const {
+    content,
+    textAlign,
+    primaryButton,
+    secondaryButton,
+    layoutType,
+    imageData,
+    reverseColumn,
+    columnLayout = "half",
+    backgroundColor,
+  } = section || {}
+
   const getColumnLayoutClasses = () => {
     switch (columnLayout) {
       case "half":
@@ -54,23 +56,19 @@ export default function CtaSection({
     />
   )
 
-  const style = {
-    backgroundColor: backgroundColor
-  }
-
-  if (layout === "text-image") {
+  if (layoutType === "text-image") {
     return (
       <div>
         <div className={cn("flex flex-col lg:flex-row items-center gap-8", { "lg:flex-row-reverse": reverseColumn })}>
           <div className={getColumnLayoutClasses()}>
             <Image
-              src={image || "/placeholder.svg"}
-              alt={altText || "CTA Image"}
-              width={800}
-              height={600}
+              src={imageData?.asset?.url || "/placeholder.svg"}
+              alt={imageData?.asset?.altText || "CTA Image"}
+              width={1920}
+              height={1080}
               className="object-cover"
               placeholder="blur"
-              blurDataURL={blurData ?? baseEncode}
+              blurDataURL={imageData?.asset?.lqip ?? baseEncode}
             />
           </div>
           <div className={getSecondColumnLayoutClasses()}>
@@ -81,21 +79,19 @@ export default function CtaSection({
     )
   }
 
-  if (layout === "banner") {
+  if (layoutType === "banner") {
     return (
       <div>
         <div className={cn("mx-auto max-w-7xl px-6 sm:px-8")}>
-          <div>
-            {renderContent}
-          </div>
+          {renderContent}
         </div>
       </div>
     )
   }
 
-  if (layout === "fullWidthTextImage") {
+  if (layoutType === "fullWidthTextImage") {
     return (
-      <div className={cn("relative", backgroundColor)} style={style}>
+      <div className={cn("relative")}>
         <div
           className={cn(
             "relative h-96 overflow-hidden md:absolute md:h-full md:w-1/3 lg:w-1/2",
@@ -103,12 +99,12 @@ export default function CtaSection({
           )}
         >
           <Image
-            src={image || "/placeholder.svg"}
-            alt={altText || "CTA Image"}
+            src={imageData?.asset?.url || "/placeholder.svg"}
+            alt={imageData?.asset?.altText || "CTA Image"}
             layout="fill"
             objectFit="cover"
             placeholder="blur"
-            blurDataURL={baseEncode}
+            blurDataURL={imageData?.asset?.lqip ?? baseEncode}
           />
         </div>
         <div className="relative mx-auto py-24 sm:py-32 lg:px-8 lg:py-52">
@@ -127,10 +123,8 @@ export default function CtaSection({
 
   // Default to full-width layout
   return (
-    <div className={cn(backgroundColor)}>
-      <div className="mx-auto max-w-2xl">
-        {renderContent}
-      </div>
+    <div>
+      {renderContent}
     </div>
   )
 }

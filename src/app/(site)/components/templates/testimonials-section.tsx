@@ -14,14 +14,21 @@ import { Testimonial, TestimonialSectionProps } from "@/lib/types"
 
 export default function TestimonialSection({
     testimonials,
-    content,
-    textAlign,
-    layout,
-    primaryButton,
-    textColor,
-    secondaryButton,
-    slidesToShow
-}: TestimonialSectionProps) {
+    section
+}: {
+    testimonials: any,
+    section: TestimonialSectionProps
+}) {
+
+    const {
+        content,
+        textAlign,
+        layoutType,
+        primaryButton,
+        textColor,
+        secondaryButton,
+        slideNumber
+    } = section || {}
 
     const renderContent = (
         <div className="mb-16 content" style={{ color: textColor }}>
@@ -35,7 +42,7 @@ export default function TestimonialSection({
     )
 
     const renderTestimonials = () => {
-        switch (layout) {
+        switch (layoutType) {
             case "slider":
                 return (
                     <Carousel
@@ -47,7 +54,7 @@ export default function TestimonialSection({
                     >
                         <CarouselContent>
                             {testimonials.map((testimonial) => (
-                                <CarouselItem key={testimonial._id} className={`md:basis-1/${slidesToShow}`}>
+                                <CarouselItem key={testimonial._id} className={`md:basis-1/${slideNumber}`}>
                                     <div className="p-1">
                                         <Card>
                                             <TestimonialCard testimonial={testimonial} />

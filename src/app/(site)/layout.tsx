@@ -109,24 +109,6 @@ export default async function RootLayout({
     ...(data?.profileSettings?.seo?.meta_description && { "description": data?.profileSettings?.seo?.meta_description }),
   };
 
-
-  const navbarSchema = {
-    company_name: data.profileSettings?.company_name,
-    logo: data.appearances?.branding?.logo?.asset?.url,
-    logoOnScroll: data.appearances?.branding?.logoScroll?.asset?.url,
-    navItems: data.appearances?.header?.mainNav?.navItems,
-    logoWidth: data.appearances?.branding?.logoWidth,
-    mobileLogoWidth: data.appearances?.branding?.mobileLogoWidth,
-    phone: data.profileSettings?.contact_information?.phone_number,
-    office: data.profileSettings?.contact_information?.office_number,
-    email: data.profileSettings?.contact_information?.email,
-    backgroundColor: data?.appearances?.navBgColor,
-    enableTopHeader: data?.appearances?.topHeaderBar?.enableTopHeaderBar,
-    ctaLink: data?.appearances?.header?.ctaLink,
-    hideCta: data?.appearances?.header?.hideCta,
-  }
-
-
   return (
     <html lang="en">
       <body className={`${bodyFont.variable} ${headingFont.variable}`}>
@@ -186,47 +168,14 @@ export default async function RootLayout({
               }
           `}
         </style>
-        <Navbar {...navbarSchema} />
+        <Navbar
+          navbarData={data}
+        />
         <main id="mainBody">
           {children}
         </main>
         <Footer
-          footerBackgroundColor={data.appearances?.footerBg}
-          footerHeaderColor={data.appearances?.footerHeader}
-          footerTextColor={data.appearances?.footerText}
-          footerText={data?.appearances?.footer?.footerText}
-          company_name={data.profileSettings?.company_name}
-          layout={data?.appearances?.footer?.layoutType}
-          image={data.appearances?.footer?.footerLogo?.asset?.url}
-          quickLinksHeading={data.appearances?.footer?.quickLinksHeading}
-          quickLinksTwoHeading={data.appearances?.footer?.quickLinksTwoHeading}
-          altText={data.appearances?.footer?.footerLogo?.asset?.altText}
-          blurData={data.appearances?.footer?.footerLogo?.asset?.lqip}
-          email={data.profileSettings?.contact_information?.email}
-          phone_number={data.profileSettings?.contact_information?.phone_number}
-          office_number={data.profileSettings?.contact_information?.office_number}
-          address={data.profileSettings?.address?.address}
-          city={data.profileSettings?.address?.city}
-          state={data.profileSettings?.address?.state}
-          zip_code={data.profileSettings?.address?.zip_code}
-          footerDisclaimer={data.appearances?.footer?.footerDisclaimer}
-          shortText={data.appearances?.footer?.shortText}
-          legal={data.legal}
-          links={data.appearances?.footer?.quickLinks}
-          secondLinks={data.appearances?.footer?.secondQuickLinks}
-          // SOCIAL
-          googleBusiness={data.profileSettings?.social?.googleBusiness}
-          facebook={data.profileSettings?.social?.facebook}
-          youtube={data.profileSettings?.social?.youtube}
-          instagram={data.profileSettings?.social?.instagram}
-          twitter={data.profileSettings?.social?.twitter}
-          reddit={data.profileSettings?.social?.reddit}
-          linkedin={data.profileSettings?.social?.linkedin}
-          yelp={data.profileSettings?.social?.yelp}
-          pinterest={data.profileSettings?.social?.pinterest}
-          tiktok={data.profileSettings?.social?.tiktok}
-          zillow={data.profileSettings?.social?.zillow}
-          size={data.profileSettings?.social?.size}
+          footerData={data}
         />
       </body>
     </html>

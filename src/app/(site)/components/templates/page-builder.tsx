@@ -8,20 +8,9 @@ import { Component, type ErrorInfo, type ReactNode } from "react"
 import {
     Background,
     BaseSection,
-    BlogLayout,
     ButtonProps,
     ButtonStyle,
-    CTALayout,
-    ContentLayout,
-    DisclosureLayout,
-    FeatureLayout,
-    GalleryLayout,
-    HeroLayout,
-    LeadForm,
-    LogoLayout,
-    ServiceLayout,
-    TeamLayout,
-    TestimonialLayout,
+
     PageBuilderProps
 } from "@/lib/types"
 
@@ -30,7 +19,7 @@ const Hero = dynamic(() => import("./hero"))
 const CtaSection = dynamic(() => import("./call-to-action"))
 const ContentSection = dynamic(() => import("./content-simple"))
 const LeadFormSection = dynamic(() => import("./lead-form-section"))
-const GallerySlider = dynamic(() => import("./gallery"))
+const Gallery = dynamic(() => import("./gallery"))
 const FeaturedGrid = dynamic(() => import("./feature-section"))
 const TestimonialSection = dynamic(() => import("./testimonials-section"))
 const TeamComponent = dynamic(() => import("./team-section"))
@@ -79,8 +68,15 @@ export default function PageBuilder({
     allTeam,
     allServices,
     allBlog,
-    ...props
 }: PageBuilderProps) {
+
+    const builderData = (section: BaseSection) => ({
+        ...section,
+        primaryButton: getButtonProps(section),
+        secondaryButton: getSecondaryButtonProps(section),
+    })
+
+
     // Utility function for background styles
     const getBackgroundStyles = useCallback(
         (
@@ -153,30 +149,13 @@ export default function PageBuilder({
     // Update the renderSection function to handle specific layouts
     const renderSection = useCallback(
         (section: BaseSection) => {
-            // Special cases for full-width sections
 
-
-            const commonProps = {
-                content: section.content,
-                textAlign: section.textAlign as "left" | "center" | "right",
-                primaryButton: getButtonProps(section),
-                secondaryButton: getSecondaryButtonProps(section),
-            }
 
 
             if (section._type === "hero") {
                 return (
                     <Hero
-                        image={section.imageData?.asset?.url}
-                        blurData={section.imageData?.asset?.lqip}
-                        altText={section.imageData?.asset?.altText}
-                        layout={section.layoutType as HeroLayout}
-                        height={section?.imageHeight}
-                        images={section.childImage}
-                        textColor={section?.textColor?.hex}
-                        backgroundColor={section?.backgroundColor?.hex}
-                        imageOverlayColor={section?.imageOverlayColor}
-                        {...commonProps}
+                        section={builderData(section)}
                     />
                 )
             }
@@ -184,110 +163,68 @@ export default function PageBuilder({
             if (section._type === "ctaSection") {
                 return (
                     <CtaSection
-                        layout={section.layoutType as CTALayout}
-                        image={section.imageData?.asset?.url}
-                        blurData={section.imageData?.asset?.lqip}
-                        altText={section.imageData?.asset?.altText}
-                        reverseColumn={section.reverseColumn}
-                        columnLayout={section.columnLayout}
-                        subtitle={section.subtitle}
-                        {...commonProps}
+                        section={builderData(section)}
                     />
                 )
             }
-
 
             switch (section._type) {
                 case "blogDisplay":
                     return (
                         <BlogSection
+                            section={builderData(section)}
                             blog={allBlog}
-                            columns={section?.columnNumber}
-                            limit={section?.limit}
-                            layout={section.layoutType as BlogLayout}
-                            {...commonProps}
                         />
                     )
                 case "leadForm":
                     return (
                         <LeadFormSection
-                            formSchema={section.formBuilder}
-                            layout={section?.layoutType as LeadForm}
-                            alignContent={section?.alignContentCenter}
-                            labelColor={section?.labelColor?.hex}
-                            formContent={section?.formContent}
-                            formBackgroundColor={section?.formBackgroundColor?.hex}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 case "testimonialBuilder":
                     return (
                         <TestimonialSection
+                            section={builderData(section)}
                             testimonials={allTestimonials}
-                            layout={section.layoutType as TestimonialLayout}
-                            slidesToShow={section?.slideNumber}
-                            {...commonProps}
                         />
                     )
                 case "teamDisplay":
                     return (
                         <TeamComponent
+                            section={builderData(section)}
                             team={allTeam}
-                            layout={section.layoutType as TeamLayout}
-                            limit={section?.limit}
-                            columns={section?.columnNumber}
-                            {...commonProps}
                         />
                     )
                 case "contentField":
                     return (
                         <ContentSection
-                            layout={section.layoutType as ContentLayout}
-                            heading={section?.heading}
-                            maxWidth={section?.maxWidth}
-                            columnGap={section?.columnGap}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 case "servicesDisplay":
                     return (
                         <ServiceList
                             services={allServices}
-                            layout={section.layoutType as ServiceLayout}
-                            limit={section?.limit}
-                            columns={section?.columnNumber}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 case "gallery":
                     return (
-                        <GallerySlider
-                            images={section.childImage}
-                            layout={section.layoutType as GalleryLayout}
-                            showArrows={true}
-                            showPagination={true}
-                            slidesToShow={2}
-                            effect="fade"
-                            {...commonProps}
+                        <Gallery
+                            section={builderData(section)}
                         />
                     )
                 case "featuredGrid":
                     return (
                         <FeaturedGrid
-                            blocks={section.childBlocks}
-                            layout={section.layoutType as FeatureLayout}
-                            columns={section?.columnNumber}
-                            imageHeight={section?.imageHeight}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 case "logos":
                     return (
                         <LogoCloudSection
-                            images={section?.childImage}
-                            columns={section?.columnNumber}
-                            layout={section.layoutType as LogoLayout}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 case "codeBlock":
@@ -299,12 +236,7 @@ export default function PageBuilder({
                 case "disclosureSection":
                     return (
                         <DisclosureSection
-                            disclosure={section?.disclosures}
-                            disclosureBackgroundColor={section?.disclosureBackgroundColor}
-                            disclosureTextColor={section?.disclosureTextColor}
-                            disclosureContentColor={section?.disclosureContentColor}
-                            layout={section.layoutType as DisclosureLayout}
-                            {...commonProps}
+                            section={builderData(section)}
                         />
                     )
                 default:
@@ -357,6 +289,7 @@ export default function PageBuilder({
                                 "bg-cover bg-center": section.background?.background.backgroundType === "image",
                             })}
                             style={backgroundStyles}
+                            id={section?._type + '-' + section._key}
                         >
                             <div className="container">{renderSection(section)}</div>
                         </section>

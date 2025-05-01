@@ -12,20 +12,27 @@ import { DisclosureSectionProps, BlockChild, DisclosureItem, Block } from "@/lib
 
 
 export default function DisclosureSection({
-    disclosure,
-    disclosureBackgroundColor,
-    disclosureTextColor,
-    disclosureContentColor,
-    content,
-    textAlign,
-    secondaryButton,
-    primaryButton,
-    textColor,
-    layout = "default",
-    contentSide = "left",
-    sideContent,
-}: DisclosureSectionProps) {
-    const [activeTab, setActiveTab] = useState(disclosure[0]?._key || "")
+    section
+}: {
+    section: DisclosureSectionProps
+}) {
+
+    const {
+        disclosures,
+        disclosureBackgroundColor,
+        disclosureTextColor,
+        disclosureContentColor,
+        content,
+        textAlign,
+        secondaryButton,
+        primaryButton,
+        textColor,
+        layoutType = "default",
+        contentSide = "left",
+        sideContent,
+    } = section || {}
+
+    const [activeTab, setActiveTab] = useState(disclosures[0]?._key || "")
     const [isMobile, setIsMobile] = useState(false)
 
     useEffect(() => {
@@ -51,7 +58,7 @@ export default function DisclosureSection({
     const schemaMarkup = {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: disclosure.map((node: DisclosureItem) => ({
+        mainEntity: disclosures.map((node: DisclosureItem) => ({
             "@type": "Question",
             name: node.heading || "",
             acceptedAnswer: {
@@ -99,13 +106,13 @@ export default function DisclosureSection({
     )
 
     const renderAccordionContent = () => {
-        switch (layout) {
+        switch (layoutType) {
             case "twoColumn":
-                const midpoint = Math.ceil(disclosure.length / 2)
+                const midpoint = Math.ceil(disclosures.length / 2)
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8">
-                        <div>{renderAccordion(disclosure.slice(0, midpoint))}</div>
-                        <div>{renderAccordion(disclosure.slice(midpoint))}</div>
+                        <div>{renderAccordion(disclosures.slice(0, midpoint))}</div>
+                        <div>{renderAccordion(disclosures.slice(midpoint))}</div>
                     </div>
                 )
             case "sidebar":
@@ -113,7 +120,7 @@ export default function DisclosureSection({
                     <div className="flex flex-col md:flex-row gap-8">
                         <div className="md:w-1/3">
                             <ul className="space-y-2">
-                                {disclosure.map((item) => (
+                                {disclosures.map((item) => (
                                     <li key={item._key}>
                                         <Button
                                             variant="ghost"
@@ -127,7 +134,7 @@ export default function DisclosureSection({
                             </ul>
                         </div>
                         <div className="md:w-2/3">
-                            {disclosure.map((item) => (
+                            {disclosures.map((item) => (
                                 <div key={item._key} className={cn(activeTab === item._key ? "block" : "hidden")}>
                                     <h3 className="text-xl font-semibold mb-4">{item.heading}</h3>
                                     <ContentEditor content={item.content} />
@@ -138,17 +145,17 @@ export default function DisclosureSection({
                 )
             case "tabbed":
                 return isMobile ? (
-                    renderAccordion(disclosure)
+                    renderAccordion(disclosures)
                 ) : (
-                    <Tabs defaultValue={disclosure[0]?._key} className="w-full">
+                    <Tabs defaultValue={disclosures[0]?._key} className="w-full">
                         <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-4">
-                            {disclosure.map((item) => (
+                            {disclosures.map((item) => (
                                 <TabsTrigger key={item._key} value={item._key} className="px-3 py-2">
                                     {item.heading}
                                 </TabsTrigger>
                             ))}
                         </TabsList>
-                        {disclosure.map((item) => (
+                        {disclosures.map((item) => (
                             <TabsContent key={item._key} value={item._key} className="mt-4">
                                 <ContentEditor content={item.content} />
                             </TabsContent>
@@ -166,13 +173,13 @@ export default function DisclosureSection({
                         <div
                             className={`${isMobile ? "w-full" : "md:w-1/2"} ${contentSide === "left" ? "md:order-2" : "md:order-1"}`}
                         >
-                            {renderAccordion(disclosure)}
+                            {renderAccordion(disclosures)}
                         </div>
                     </div>
                 )
             case "default":
             default:
-                return renderAccordion(disclosure)
+                return renderAccordion(disclosures)
         }
     }
 
@@ -180,14 +187,14 @@ export default function DisclosureSection({
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
             <section>
-                {layout !== "contentSide" && renderContent && (
+                {layoutType !== "contentSide" && renderContent && (
                     renderContent
                 )}
                 <div
                     className={cn("mx-auto", {
-                        "max-w-2xl": layout === "default",
-                        "max-w-4xl": layout === "twoColumn",
-                        "max-w-5xl": layout === "sidebar" || layout === "tabbed" || layout === "contentSide",
+                        "w-full": layoutType === "default",
+                        "max-w-4xl": layoutType === "twoColumn",
+                        "w-full": layoutType === "sidebar" || layoutType === "tabbed" || layoutType === "contentSide",
                     })}
                 >
                     {renderAccordionContent()}

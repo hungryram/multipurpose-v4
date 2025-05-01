@@ -20,17 +20,7 @@ import React from "react" // Import React
 import type { NavbarProps } from "@/lib/types"
 
 export function Navbar({
-  company_name,
-  logo,
-  navItems = [],
-  logoWidth,
-  phone,
-  email,
-  office,
-  enableTopHeader,
-  ctaLink,
-  hideCta,
-  logoOnScroll,
+  navbarData,
 }: NavbarProps) {
   const [scroll, setScroll] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -49,9 +39,14 @@ export function Navbar({
     setIsLoaded(true)
   }, [])
 
+  const ctaLink = navbarData?.appearances?.header?.ctaLink
   const ctaLinking = getCTALink(ctaLink)
 
+
+  const logoWidth = navbarData.appearances?.branding?.logoWidth
   const logoScroll = scroll ? (logoWidth ?? 200) * 0.7 : (logoWidth ?? 200)
+  const logoOnScroll = navbarData.appearances?.branding?.logoScroll?.asset?.url
+  const contactInfo = navbarData.profileSettings?.contact_information
 
   return (
     <header
@@ -62,22 +57,22 @@ export function Navbar({
         isLoaded ? "opacity-100" : "opacity-0",
       )}
     >
-      {enableTopHeader && !scroll && (
+      {navbarData?.appearances?.topHeaderBar?.enableTopHeaderBar && !scroll && (
         <div className="hidden lg:block bg-gray-100 py-2">
           <div className="container mx-auto flex justify-end space-x-6">
-            {email && (
-              <a href={`mailto:${email}`} className="text-sm">
-                {email}
+            {contactInfo?.email && (
+              <a href={`mailto:${contactInfo?.email}`} className="text-sm">
+                {contactInfo?.email}
               </a>
             )}
-            {phone && (
-              <a href={`tel:${phone}`} className="text-sm">
-                Direct: {phone}
+            {contactInfo?.phone && (
+              <a href={`tel:${contactInfo?.phone}`} className="text-sm">
+                Direct: {contactInfo?.phone}
               </a>
             )}
-            {office && (
-              <a href={`tel:${office}`} className="text-sm">
-                Office: {office}
+            {contactInfo?.office && (
+              <a href={`tel:${contactInfo?.office}`} className="text-sm">
+                Office: {contactInfo?.office}
               </a>
             )}
           </div>
@@ -85,23 +80,23 @@ export function Navbar({
       )}
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <Link href="/" className="flex-shrink-0">
-          {logo ? (
+          {navbarData?.appearances?.branding?.logo?.asset?.url ? (
             <Image
-              src={logo || "/placeholder.svg"}
+              src={navbarData?.appearances?.branding?.logo?.asset?.url || "/placeholder.svg"}
               width={logoScroll}
               height={10}
-              alt={company_name}
+              alt={navbarData?.profileSettings?.company_name}
               className={logoOnScroll && scroll ? "hidden" : "block h-auto"}
             />
           ) : (
-            <h1 className="text-xl font-bold">{company_name}</h1>
+            <h1 className="text-xl font-bold">{navbarData?.profileSettings?.company_name}</h1>
           )}
-          {scroll && logoOnScroll && (
+          {scroll && navbarData.appearances?.branding?.logoScroll?.asset?.url && (
             <Image
-              src={logoOnScroll || "/placeholder.svg"}
+              src={navbarData.appearances?.branding?.logoScroll?.asset?.url || "/placeholder.svg"}
               width={logoScroll}
               height={10}
-              alt={company_name}
+              alt={navbarData?.profileSettings?.company_name}
               className="h-auto"
             />
           )}
@@ -109,7 +104,7 @@ export function Navbar({
         <div className="hidden lg:flex items-center space-x-8">
           <NavigationMenu>
             <NavigationMenuList>
-              {navItems?.map((item) => (
+              {navbarData?.appearances?.header?.mainNav?.navItems?.map((item) => (
                 <NavigationMenuItem key={item._key}>
                   {item.subMenu && item.subMenu.length > 0 ? (
                     <>
@@ -133,7 +128,7 @@ export function Navbar({
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          {!hideCta && ctaLinking && (
+          {!navbarData?.appearances?.header?.hideCta && ctaLinking && (
             <Button asChild variant={"primary"}>
               <Link href={ctaLinking} className="uppercase heading-font text-xl tracking-wider">
                 {ctaLink?.text}
@@ -159,20 +154,20 @@ export function Navbar({
             </SheetTrigger>
             <SheetContent className="overflow-y-scroll">
               <div className="flex flex-col space-y-4 mt-20">
-                {navItems?.map((item) => (
+                {navbarData?.appearances?.header?.mainNav?.navItems?.map((item) => (
                   <MobileNavItem key={item._key} item={item} closeMenu={() => setIsMobileMenuOpen(false)} />
                 ))}
-                {!hideCta && ctaLinking && (
+                {!navbarData?.appearances?.header?.hideCta && ctaLinking && (
                   <Button asChild className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
                     <Link href={ctaLinking}>
-                      {ctaLink?.text} <span aria-hidden="true">&rarr;</span>
+                      {ctaLink?.text}
                     </Link>
                   </Button>
                 )}
                 <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
-                  {email && <p><a href={`mailto:${email}`}>{email}</a></p>}
-                  {phone && <p>Direct: <a href={`tel:${phone}`}>{phone}</a></p>}
-                  {office && <p>Office: {office}</p>}
+                  {contactInfo?.email && <p><a href={`mailto:${contactInfo?.email}`}>{contactInfo?.email}</a></p>}
+                  {contactInfo?.phone && <p>Direct: <a href={`tel:${contactInfo?.phone}`}>{contactInfo?.phone}</a></p>}
+                  {contactInfo?.office && <p>Office: {contactInfo?.office}</p>}
                 </div>
               </div>
             </SheetContent>
@@ -181,36 +176,6 @@ export function Navbar({
       </nav>
     </header>
   )
-}
-
-function NavItem({ item }: { item: any }) {
-  const hasSubMenu = item?.subMenu && item.subMenu.length > 0
-  const menuLink = getMenuLink(item)
-
-  if (hasSubMenu) {
-    return (
-      <NavigationMenuItem>
-        <NavigationMenuTrigger>{item.text}</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-            {item.subMenu.map((subItem: any) => (
-              <ListItem key={subItem._key} title={subItem.text} href={getMenuLink(subItem)}>
-                {subItem.description}
-              </ListItem>
-            ))}
-          </ul>
-        </NavigationMenuContent>
-      </NavigationMenuItem>
-    )
-  } else {
-    return (
-      <NavigationMenuItem>
-        <Link href={menuLink} legacyBehavior passHref>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.text}</NavigationMenuLink>
-        </Link>
-      </NavigationMenuItem>
-    )
-  }
 }
 
 function MobileNavItem({ item, closeMenu }: { item: any; closeMenu: () => void }) {

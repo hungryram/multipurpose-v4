@@ -10,16 +10,21 @@ import { LogoCloudSectionProps, LogoImage } from "@/lib/types"
 
 
 export default function LogoCloudSection({
-  images,
-  content,
-  textAlign,
-  layout,
-  primaryButton,
-  textColor,
-  secondaryButton,
-  columns,
-}: LogoCloudSectionProps) {
+  section
+}: {
+  section: LogoCloudSectionProps
+}) {
 
+  const {
+    childImage,
+    content,
+    textAlign,
+    layoutType,
+    primaryButton,
+    textColor,
+    secondaryButton,
+    columnNumber,
+  } = section || {}
 
   const renderContent = (
     <div className="mb-12 content" style={{ color: textColor }}>
@@ -47,7 +52,7 @@ export default function LogoCloudSection({
   )
 
   const renderLogos = () => {
-    switch (layout) {
+    switch (layoutType) {
       case "slider":
         return (
           <Carousel
@@ -58,8 +63,8 @@ export default function LogoCloudSection({
             }}
           >
             <CarouselContent>
-              {images.map((image, index) => (
-                <CarouselItem key={index} className={`md:basis-1/${columns} items-center flex justify-center`}>
+              {childImage.map((image, index) => (
+                <CarouselItem key={index} className={`md:basis-1/${columnNumber} items-center flex justify-center`}>
                   {renderLogo(image, index)}
                 </CarouselItem>
               ))}
@@ -73,13 +78,13 @@ export default function LogoCloudSection({
         return (
           <div
             className={cn("grid gap-8", {
-              "grid-cols-3 sm:grid-cols-3": columns === 3,
-              "grid-cols-2 sm:grid-cols-4": columns === 4,
-              "grid-cols-3 sm:grid-cols-5": columns === 5,
-              "grid-cols-3 sm:grid-cols-6": columns === 6,
+              "grid-cols-3 sm:grid-cols-3": columnNumber === 3,
+              "grid-cols-2 sm:grid-cols-4": columnNumber === 4,
+              "grid-cols-3 sm:grid-cols-5": columnNumber === 5,
+              "grid-cols-3 sm:grid-cols-6": columnNumber === 6,
             })}
           >
-            {images.map((image, index) => renderLogo(image, index))}
+            {childImage.map((image, index) => renderLogo(image, index))}
           </div>
         )
     }

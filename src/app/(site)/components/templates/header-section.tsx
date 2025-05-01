@@ -10,25 +10,28 @@ import { HeaderSectionProps, ButtonProps } from "@/lib/types"
 
 
 // Update getButtonLink to use the new type
-const getButtonLink = (button: ButtonProps["link"]) => {
-  if (button.externalUrl) return button.externalUrl
-  if (button.internalPath) return button.internalPath
-  if (!button.internalLink) return ""
+const getButtonLink = (button?: ButtonProps["link"]) => {
+  if (!button) return "";
+
+  if (button.externalUrl) return button.externalUrl;
+  if (button.internalPath) return button.internalPath;
+  if (!button.internalLink) return "";
 
   switch (button.internalLink._type) {
     case "homeDesign":
-      return "/"
+      return "/";
     case "pages":
-      return `/${button.internalLink.slug}`
+      return `/${button.internalLink.slug}`;
     case "blog":
     case "legal":
     case "services":
     case "team":
-      return `/${button.internalLink._type}/${button.internalLink.slug}`
+      return `/${button.internalLink._type}/${button.internalLink.slug}`;
     default:
-      return ""
+      return "";
   }
-}
+};
+
 
 const CustomButton: React.FC<ButtonProps & { variant: "primary" | "secondary" }> = ({ text, link, style, variant }) => {
   const href = getButtonLink(link)

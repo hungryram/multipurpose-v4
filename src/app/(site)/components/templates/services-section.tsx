@@ -13,15 +13,23 @@ import { ServiceListProps, Service } from "@/lib/types"
 
 export default function ServiceList({
   services,
-  content,
-  textAlign,
-  layout = "grid",
-  columns = 3,
-  primaryButton,
-  textColor,
-  secondaryButton,
-  limit = 6,
-}: ServiceListProps) {
+  section
+}: {
+  services: any,
+  section: ServiceListProps
+}) {
+
+  const {
+    content,
+    textAlign,
+    layoutType = "grid",
+    columnNumber = 3,
+    primaryButton,
+    textColor,
+    secondaryButton,
+    limit = 6,
+  } = section || {}
+
   const renderContent = (
     <div className="mb-16 content" style={{ color: textColor }}>
       <HeaderSection
@@ -61,7 +69,7 @@ export default function ServiceList({
 
   const renderServices = () => {
     const limitedServices = services.slice(0, limit)
-    switch (layout) {
+    switch (layoutType) {
       case "list":
         return (
           <div className="space-y-8">
@@ -140,7 +148,7 @@ export default function ServiceList({
           >
             <CarouselContent>
               {limitedServices.map((service) => (
-                <CarouselItem key={service._id} className={`md:basis-1/${columns}`}>
+                <CarouselItem key={service._id} className={`md:basis-1/${columnNumber}`}>
                   <div className="p-1">{renderServiceCard(service)}</div>
                 </CarouselItem>
               ))}
@@ -154,9 +162,9 @@ export default function ServiceList({
         return (
           <div
             className={cn("grid gap-8", {
-              "sm:grid-cols-2": columns === 2,
-              "sm:grid-cols-3": columns === 3,
-              "sm:grid-cols-4": columns === 4,
+              "sm:grid-cols-2": columnNumber === 2,
+              "sm:grid-cols-3": columnNumber === 3,
+              "sm:grid-cols-4": columnNumber === 4,
             })}
           >
             {limitedServices.map((service) => renderServiceCard(service))}
@@ -166,10 +174,10 @@ export default function ServiceList({
   }
 
   return (
-      <div>
-        {renderContent}
-        <div className={cn("mx-auto", content && "mt-16")}>{renderServices()}</div>
-      </div>
+    <div>
+      {renderContent}
+      <div className={cn("mx-auto", content && "mt-16")}>{renderServices()}</div>
+    </div>
   )
 }
 

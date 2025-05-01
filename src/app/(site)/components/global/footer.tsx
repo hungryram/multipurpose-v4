@@ -7,157 +7,130 @@ import { FooterProps } from "@/lib/types"
 import { baseEncode } from "../../../../../lib/utils"
 
 export default function Footer({
-  layout = "default",
-  footerBackgroundColor = "#0d1321",
-  footerHeaderColor = "#ffffff",
-  footerTextColor = "#9b9b9b",
-  footerText,
-  company_name,
-  image,
-  quickLinksHeading,
-  quickLinksTwoHeading,
-  altText,
-  blurData,
-  email,
-  phone_number,
-  office_number,
-  address,
-  city,
-  state,
-  zip_code,
-  footerDisclaimer,
-  shortText,
-  legal,
-  links,
-  secondLinks,
-  googleBusiness,
-  facebook,
-  youtube,
-  instagram,
-  twitter,
-  reddit,
-  linkedin,
-  yelp,
-  pinterest,
-  tiktok,
-  zillow,
+  footerData,
 }: FooterProps) {
+
+  // DEFINE FOOTER LAYOUT
+  const layout = footerData?.appearances?.footer?.layoutType
+  const social = footerData?.profileSettings?.social
+
   const socialLinks = {
-    googleBusiness,
-    facebook,
-    youtube,
-    instagram,
-    twitter,
-    reddit,
-    linkedin,
-    yelp,
-    pinterest,
-    tiktok,
-    zillow,
+    googleBusiness: social?.googleBusiness,
+    facebook: social?.facebook,
+    youtube: social?.youtube,
+    instagram: social?.instagram,
+    twitter: social?.twitter,
+    reddit: social?.reddit,
+    linkedin: social?.linkedin,
+    yelp: social?.yelp,
+    pinterest: social?.pinterest,
+    tiktok: social?.tiktok,
+    zillow: social?.zillow,
   }
 
+
   const renderLogo = () =>
-    image ? (
+    footerData?.appearances?.footer?.footerLogo?.asset?.url ? (
       <div className={`${layout === 'single-column' ? 'flex justify-center' : 'flex justify-center md:justify-start'}`}>
         <Image
-          src={image || "/placeholder.svg"}
+          src={footerData?.appearances?.footer?.footerLogo?.asset?.url || "/placeholder.svg"}
           width={200}
           height={50}
-          alt={altText || company_name}
+          alt={footerData?.appearances?.footer?.footerLogo?.asset?.altText || footerData?.profileSettings?.company_name}
           className="mb-6"
           placeholder={"blur"}
-          blurDataURL={blurData || baseEncode}
+          blurDataURL={footerData?.appearances?.footer?.footerLogo?.asset?.lqip || baseEncode}
         />
       </div>
     ) : (
-      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerHeaderColor }}>
-        {company_name}
+      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
+        {footerData?.profileSettings?.company_name}
       </h2>
     )
 
-    const renderContactInfo = (layout?: "single-column") => {
-      if (layout === "single-column") {
-        return (
-          <div className="space-x-10 text-sm flex justify-center">
-            {(address || city || state || zip_code) && (
-              <div>
-                {address && <>{address} </>}
-                    {city && <>{city}, </>}
-                    {state} {zip_code}
-              </div>
-            )}
-            {phone_number && (
-              <div>
-                <a href={`tel:${phone_number}`}>{phone_number}</a>
-              </div>
-            )}
-            {office_number && (
-              <div>
-                <a href={`tel:${office_number}`}>{office_number}</a>
-              </div>
-            )}
-            {email && (
-              <div>
-                <a href={`mailto:${email}`}>{email}</a>
-              </div>
-            )}
-          </div>
-        )
-      }
-  
+  const renderContactInfo = (layout?: "single-column") => {
+    if (layout === "single-column") {
       return (
-        <dl className="space-y-4 text-sm leading-6">
-          {(address || city || state || zip_code) && (
-            <div className="flex">
-              <dt className="w-24 flex-none">Address:</dt>
-              <dd>
-                {address && (
-                  <>
-                    {address}, <br />
-                  </>
-                )}
-                {city && <>{city}, </>} {state} {zip_code}
-              </dd>
+        <div className="space-x-10 text-sm flex justify-center">
+          {(footerData.profileSettings?.address?.address || footerData.profileSettings?.address?.city || footerData.profileSettings?.address?.state || footerData.profileSettings?.address?.zip_code) && (
+            <div>
+              {footerData.profileSettings?.address?.address && <>{footerData.profileSettings?.address?.address} </>}
+              {footerData.profileSettings?.address?.city && <>{footerData.profileSettings?.address?.city}, </>}
+              {footerData.profileSettings?.address?.state} {footerData.profileSettings?.address?.zip_code}
             </div>
           )}
-          {phone_number && (
-            <div className="flex">
-              <dt className="w-24 flex-none">Direct:</dt>
-              <dd>
-                <a href={`tel:${phone_number}`}>{phone_number}</a>
-              </dd>
+          {footerData.profileSettings?.contact_information?.phone_number && (
+            <div>
+              <a href={`tel:${footerData.profileSettings?.contact_information?.phone_number}`}>{footerData.profileSettings?.contact_information?.phone_number}</a>
             </div>
           )}
-          {office_number && (
-            <div className="flex">
-              <dt className="w-24 flex-none">Office:</dt>
-              <dd>
-                <a href={`tel:${office_number}`}>{office_number}</a>
-              </dd>
+          {footerData.profileSettings?.contact_information?.office_number && (
+            <div>
+              <a href={`tel:${footerData.profileSettings?.contact_information?.office_number}`}>{footerData.profileSettings?.contact_information?.office_number}</a>
             </div>
           )}
-          {email && (
-            <div className="flex">
-              <dt className="w-24 flex-none">Email:</dt>
-              <dd>
-                <a href={`mailto:${email}`}>{email}</a>
-              </dd>
+          {footerData.profileSettings?.contact_information?.email && (
+            <div>
+              <a href={`mailto:${footerData.profileSettings?.contact_information?.email}`}>{footerData.profileSettings?.contact_information?.email}</a>
             </div>
           )}
-        </dl>
+        </div>
       )
     }
 
-    const renderSocial = (className?: string) => (
-      <div style={{ color: footerTextColor }} className={className}>
-        <Social links={socialLinks} className={className} />
-      </div>
+    return (
+      <dl className="space-y-4 text-sm leading-6">
+        {(footerData.profileSettings?.address?.address || footerData.profileSettings?.address?.city || footerData.profileSettings?.address?.state || footerData.profileSettings?.address?.zip_code) && (
+          <div className="flex">
+            <dt className="w-24 flex-none">Address:</dt>
+            <dd>
+              {footerData.profileSettings?.address?.address && (
+                <>
+                  {footerData.profileSettings?.address?.address}, <br />
+                </>
+              )}
+              {footerData.profileSettings?.address?.city && <>{footerData.profileSettings?.address?.city}, </>} {footerData.profileSettings?.address?.state} {footerData.profileSettings?.address?.zip_code}
+            </dd>
+          </div>
+        )}
+        {footerData?.profileSettings?.contact_information?.phone_number && (
+          <div className="flex">
+            <dt className="w-24 flex-none">Direct:</dt>
+            <dd>
+              <a href={`tel:${footerData?.profileSettings?.contact_information?.phone_number}`}>{footerData?.profileSettings?.contact_information?.phone_number}</a>
+            </dd>
+          </div>
+        )}
+        {footerData?.profileSettings?.contact_information?.office_number && (
+          <div className="flex">
+            <dt className="w-24 flex-none">Office:</dt>
+            <dd>
+              <a href={`tel:${footerData?.profileSettings?.contact_information?.office_number}`}>{footerData?.profileSettings?.contact_information?.office_number}</a>
+            </dd>
+          </div>
+        )}
+        {footerData?.profileSettings?.contact_information?.email && (
+          <div className="flex">
+            <dt className="w-24 flex-none">Email:</dt>
+            <dd>
+              <a href={`mailto:${footerData?.profileSettings?.contact_information?.email}`}>{footerData?.profileSettings?.contact_information?.email}</a>
+            </dd>
+          </div>
+        )}
+      </dl>
     )
+  }
+
+  const renderSocial = (className?: string) => (
+    <div style={{ color: footerData.appearances?.footerText }} className={className}>
+      <Social links={socialLinks} className={className} />
+    </div>
+  )
 
   const renderQuickLinks = (linksArray: any[], heading: string) => (
     <div>
       {heading &&
-        <h3 className="font-semibold mb-4" style={{ color: footerHeaderColor }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
           {heading}
         </h3>
       }
@@ -166,7 +139,8 @@ export default function Footer({
           layout === "minimal" || layout === "single-column" ? "flex flex-wrap items-center gap-4" : "space-y-2",
           layout === "single-column" && "justify-center",
         )}
-      >      {linksArray?.map((link: any) => {
+      >
+        {linksArray?.map((link: any) => {
           const quickLinks =
             (link.internalLink?._type === "pages" && `/${link.internalLink.slug}`) ||
             (link.internalLink?._type === "blog" && `/blog/${link.internalLink.slug}`) ||
@@ -174,6 +148,7 @@ export default function Footer({
             (link.internalLink?._type === "services" && `/services/${link.internalLink.slug}`) ||
             (link.internalLink?._type === "team" && `/team/${link.internalLink.slug}`) ||
             (link.internalLink?._type === "homeDesign" && `/`) ||
+            (link.internalPath && link.internalPath) ||
             (link.externalUrl && `${link.externalUrl}`) ||
             "/" // Fallback to home page if no valid link is found
 
@@ -192,7 +167,7 @@ export default function Footer({
                   href={quickLinks}
                   target={link.newTab ? "_blank" : undefined}
                   className="text-sm hover:underline"
-                  style={{ color: footerTextColor }}
+                  style={{ color: footerData.appearances?.footerText }}
                 >
                   {link.text}
                 </Link>
@@ -205,9 +180,9 @@ export default function Footer({
   )
 
   const renderFooterText = (
-    footerText &&
+    footerData?.appearances?.footer?.footerText &&
     <div className="text-sm mb-4">
-      <ContentEditor content={footerText} />
+      <ContentEditor content={footerData?.appearances?.footer?.footerText} />
     </div>
   )
 
@@ -215,18 +190,17 @@ export default function Footer({
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       <div>
         {renderLogo()}
-        {shortText && <p className="text-sm mb-4">{shortText}</p>}
         {renderFooterText}
         {renderSocial()}
       </div>
       <div>
-        <h3 className="font-semibold mb-4" style={{ color: footerHeaderColor }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
           Contact Information
         </h3>
         {renderContactInfo()}
       </div>
-      {links && renderQuickLinks(links, quickLinksHeading || "Quick Links")}
-      {secondLinks && renderQuickLinks(secondLinks, quickLinksTwoHeading || "Resources")}
+      {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
+      {footerData.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData.appearances?.footer?.secondQuickLinks, footerData.appearances?.footer?.quickLinksTwoHeading || "Resources")}
     </div>
   )
 
@@ -234,13 +208,12 @@ export default function Footer({
   const renderSingleColumnLayout = () => (
     <div className="text-center">
       {renderLogo()}
-      {shortText && <p className="text-sm mb-4">{shortText}</p>}
-      {footerText && (
+      {footerData?.appearances?.footer?.footerText && (
         <div className="text-sm mb-4">
-          <ContentEditor content={footerText} />
+          <ContentEditor content={footerData?.appearances?.footer?.footerText} />
         </div>
       )}
-      <div className="mb-8">{links && renderQuickLinks(links, "")}</div>
+      <div className="mb-8">{footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, "")}</div>
       {renderSocial("justify-center")}
       <div className="mt-8">
         {renderContactInfo("single-column")}
@@ -252,13 +225,13 @@ export default function Footer({
     <div className="flex flex-col md:flex-row justify-between items-center">
       <div className="mb-4 md:mb-0">{renderLogo()}
         <div className="max-w-lg text-sm">
-          <ContentEditor content={footerText} />
+          <ContentEditor content={footerData?.appearances?.footer?.footerText} />
         </div>
         <div className="mb-6">
-        {renderContactInfo("single-column")}
+          {renderContactInfo("single-column")}
         </div>
         <div>
-          {links && renderQuickLinks(links, quickLinksHeading || "Quick Links")}
+          {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
         </div>
       </div>
       <div className="flex flex-col md:flex-row items-center gap-4">
@@ -271,13 +244,12 @@ export default function Footer({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div>
         {renderLogo()}
-        {shortText && <p className="text-sm mb-4">{shortText}</p>}
         {renderSocial()}
       </div>
       <div className="grid grid-cols-2 gap-8">
-        {links && renderQuickLinks(links, quickLinksHeading || "Quick Links")}
+        {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
         <div>
-          <h3 className="font-semibold mb-4" style={{ color: footerHeaderColor }}>
+          <h3 className="font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
             Contact Information
           </h3>
           {renderContactInfo()}
@@ -290,14 +262,13 @@ export default function Footer({
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       <div className="col-span-full xl:col-span-1">
         {renderLogo()}
-        {shortText && <p className="text-sm mb-4">{shortText}</p>}
         {renderFooterText}
         {renderSocial()}
       </div>
-      {links && renderQuickLinks(links, quickLinksHeading || "Quick Links")}
-      {secondLinks && renderQuickLinks(secondLinks, quickLinksTwoHeading || "Resources")}
+      {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
+      {footerData.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData.appearances?.footer?.secondQuickLinks, footerData.appearances?.footer?.quickLinksTwoHeading || "Resources")}
       <div>
-        <h3 className="font-semibold mb-4" style={{ color: footerHeaderColor }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
           Contact Information
         </h3>
         {renderContactInfo()}
@@ -325,21 +296,21 @@ export default function Footer({
     <footer
       className="py-12"
       style={{
-        backgroundColor: footerBackgroundColor,
-        color: footerTextColor,
+        backgroundColor: footerData.appearances?.footerBg,
+        color: footerData.appearances?.footerText,
       }}
     >
       <div className="container mx-auto px-4">
         {renderFooterContent()}
         <div className="mt-8 pt-8 border-t border-gray-200">
-          {footerDisclaimer && (
+          {footerData.appearances?.footer?.footerDisclaimer && (
             <div className="text-xs mb-4">
-              <ContentEditor content={footerDisclaimer} />
+              <ContentEditor content={footerData.appearances?.footer?.footerDisclaimer} />
             </div>
           )}
-          {legal && (
+          {footerData?.legal && (
             <ul className="flex flex-wrap gap-4 mb-4">
-              {legal.map((item: any) => (
+              {footerData?.legal.map((item: any) => (
                 <li key={item._key}>
                   <Link href={`/legal/${item.slug}`} className="text-xs hover:underline">
                     {item.title}
@@ -349,7 +320,7 @@ export default function Footer({
             </ul>
           )}
           <p className="text-xs">
-            &copy; Copyright {new Date().getFullYear()} &middot; {company_name} &middot; Website built by{" "}
+            &copy; Copyright {new Date().getFullYear()} &middot; {footerData.profileSettings?.company_name} &middot; Website built by{" "}
             <a
               href="https://www.hungryram.com/"
               className="font-bold hover:underline"

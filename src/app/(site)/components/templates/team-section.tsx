@@ -15,15 +15,22 @@ import { TeamComponentProps, TeamMember } from "@/lib/types"
 
 export default function TeamComponent({
   team,
-  content,
-  textAlign,
-  layout,
-  primaryButton,
-  textColor,
-  secondaryButton,
-  columns,
-  limit = Number.POSITIVE_INFINITY,
-}: TeamComponentProps) {
+  section
+}: {
+  team: any,
+  section: TeamComponentProps
+}) {
+
+  const {
+    content,
+    textAlign,
+    layoutType,
+    primaryButton,
+    textColor,
+    secondaryButton,
+    columnNumber,
+    limit = Number.POSITIVE_INFINITY,
+  } = section || {}
 
   const renderContent = (
     <div className="mb-16 content" style={{ color: textColor }}>
@@ -38,7 +45,7 @@ export default function TeamComponent({
 
   const renderTeam = () => {
     const limitedTeam = team.slice(0, limit === Number.POSITIVE_INFINITY ? team.length : limit)
-    switch (layout) {
+    switch (layoutType) {
       case "carousel":
         return (
           <Carousel
@@ -50,7 +57,7 @@ export default function TeamComponent({
           >
             <CarouselContent>
               {limitedTeam.map((member) => (
-                <CarouselItem key={member._id} className={`md:basis-1/${columns}`}>
+                <CarouselItem key={member._id} className={`md:basis-1/${columnNumber}`}>
                   <div className="p-1">
                     <TeamCard member={member} />
                   </div>
@@ -65,7 +72,7 @@ export default function TeamComponent({
         return (
           <div className="space-y-8 max-w-3xl mx-auto">
             {limitedTeam.map((member) => (
-              <TeamCard key={member._id} member={member} layout="list" />
+              <TeamCard key={member._id} member={member} layoutType="list" />
             ))}
           </div>
         )
@@ -74,9 +81,9 @@ export default function TeamComponent({
         return (
           <div
             className={cn("grid gap-8", {
-              "sm:grid-cols-2": columns === 2,
-              "sm:grid-cols-3": columns === 3,
-              "sm:grid-cols-4": columns === 4,
+              "sm:grid-cols-2": columnNumber === 2,
+              "sm:grid-cols-3": columnNumber === 3,
+              "sm:grid-cols-4": columnNumber === 4,
             })}
           >
             {limitedTeam.map((member) => (
@@ -88,19 +95,19 @@ export default function TeamComponent({
   }
 
   return (
-      <div>
-        {renderContent}
-        <div className={cn("mx-auto", content && "mt-16")}>{renderTeam()}</div>
-      </div>
+    <div>
+      {renderContent}
+      <div className={cn("mx-auto", content && "mt-16")}>{renderTeam()}</div>
+    </div>
   )
 }
 
-function TeamCard({ member, layout = "grid" }: { member: TeamMember; layout?: "grid" | "list" }) {
+function TeamCard({ member, layoutType = "grid" }: { member: TeamMember; layoutType?: "grid" | "list" }) {
   return (
-    <Card className={cn(layout === "list" && "flex items-start")}>
-      <CardContent className={cn("p-6", layout === "list" && "flex-grow")}>
-        <div className={cn("mb-4", layout === "list" && "mr-6")}>
-          <div className={cn("relative", layout === "list" ? "w-24 h-24" : "w-full pb-[100%]")}>
+    <Card className={cn(layoutType === "list" && "flex items-start")}>
+      <CardContent className={cn("p-6", layoutType === "list" && "flex-grow")}>
+        <div className={cn("mb-4", layoutType === "list" && "mr-6")}>
+          <div className={cn("relative", layoutType === "list" ? "w-24 h-24" : "w-full pb-[100%]")}>
             <Image
               src={member.imageData.asset.url || "/placeholder.svg"}
               alt={member.imageData.asset.altText || member.name}

@@ -56,6 +56,7 @@ export default defineType({
             title: 'Image',
             name: 'image',
             type: 'image',
+            hidden: ({ parent }) => parent?.layoutType === "banner",
         },
         {
             title: 'Reverse Column',

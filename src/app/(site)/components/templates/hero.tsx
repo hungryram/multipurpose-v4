@@ -9,23 +9,26 @@ import type { CarouselApi } from "@/components/ui/carousel"
 import { baseEncode } from "../../../../../lib/utils"
 import Breadcrumb from "./breadcrumbs"
 
-export default function Hero({
-  content,
-  image,
-  images,
-  altText,
-  blurData,
-  primaryButton,
-  secondaryButton,
-  textAlign,
-  backgroundColor,
-  textColor,
-  imageOverlayColor,
-  layout,
-  height = 'large',
-  backgroundImage,
-  enableBreadcrumbs
-}: HeroProps) {
+export default function Hero({ section }: { section: HeroProps }) {
+
+  if (!section) return null;
+
+  const {
+    content,
+    imageData,
+    images,
+    primaryButton,
+    secondaryButton,
+    textAlign,
+    backgroundColor,
+    textColor,
+    imageOverlayColor,
+    layout,
+    height = 'large',
+    backgroundImage,
+    enableBreadcrumbs
+  } = section || {}
+
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
@@ -61,7 +64,7 @@ export default function Hero({
   }
 
   const renderContent = (
-    <div style={{ color: textColor }}>
+    <div style={{ color: textColor?.hex }}>
       <HeaderSection
         content={content}
         textAlign={textAlign}
@@ -73,10 +76,10 @@ export default function Hero({
 
   const renderImage = () => (
     <Image
-      src={image || "/placeholder.svg"}
-      alt={altText || 'Hero Image'}
-      placeholder={blurData ? "blur" : "empty"}
-      blurDataURL={blurData || baseEncode}
+      src={imageData?.asset?.url || "/placeholder.svg"}
+      alt={imageData?.asset?.altText || 'Hero Image'}
+      placeholder={imageData?.asset?.lqip ? "blur" : "empty"}
+      blurDataURL={imageData?.asset?.lqip || baseEncode}
       className="object-cover"
       fill={true}
       sizes="100vw"
@@ -85,7 +88,7 @@ export default function Hero({
   )
 
   const getCarouselHeight = (height: "large" | "medium" | "small") => {
-    switch (height) {
+    switch (height.imageHeight) {
       case "large":
         return "min-h-[800px]"
       case "medium":
@@ -157,7 +160,7 @@ export default function Hero({
   )
 
   const imageHeight = (height: "large" | "medium" | "small") => {
-    switch (height) {
+    switch (height.imageHeight) {
       case "large":
         return "min-h-screen"
       case "medium":

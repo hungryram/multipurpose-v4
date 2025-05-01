@@ -75,13 +75,13 @@ const GalleryMasonry = ({ images }: { images: GalleryImage[] }) => {
 
 const GallerySlider = ({
   images,
-  showArrows = true,
-  slidesToShow = 3,
+  disableNavigation = true,
+  slideNumber = 3,
   autoplay = false,
 }: {
   images: GalleryImage[]
-  showArrows?: boolean
-  slidesToShow?: number
+  disableNavigation?: boolean
+  slideNumber?: number
   autoplay?: boolean
 }) => {
   const plugin = React.useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
@@ -98,7 +98,7 @@ const GallerySlider = ({
     >
       <CarouselContent>
         {images.map((image, index) => (
-          <CarouselItem key={index} className={`md:basis-1/${slidesToShow}`}>
+          <CarouselItem key={index} className={`md:basis-1/${slideNumber}`}>
             <Card>
               <div className="relative h-80">
                 <Image
@@ -114,7 +114,7 @@ const GallerySlider = ({
           </CarouselItem>
         ))}
       </CarouselContent>
-      {showArrows && (
+      {disableNavigation && (
         <>
           <CarouselPrevious />
           <CarouselNext />
@@ -125,19 +125,26 @@ const GallerySlider = ({
 }
 
 export default function Gallery({
-  images,
-  showArrows = true,
-  slidesToShow = 3,
-  content,
-  textAlign = "left",
-  primaryButton,
-  secondaryButton,
-  textColor = "black",
-  autoplay = false,
-  layout = "slider",
-  columns = 3,
-  gap = "medium",
-}: GallerySliderProps) {
+  section
+}: {
+  section: GallerySliderProps
+}) {
+
+  const {
+    childImage,
+    disableNavigation = true,
+    slideNumber = 3,
+    content,
+    textAlign = "left",
+    primaryButton,
+    secondaryButton,
+    textColor = "black",
+    autoplay = false,
+    layoutType = "slider",
+    columns = 3,
+    gap = "medium",
+  } = section || {}
+
   const renderContent = content && content.length > 0 && (
     <div className="mb-12" style={{ color: textColor }}>
       <HeaderSection
@@ -150,14 +157,14 @@ export default function Gallery({
   )
 
   const renderGallery = () => {
-    switch (layout) {
+    switch (layoutType) {
       case "grid":
-        return <GalleryGrid images={images} columns={columns} gap={gap} />
+        return <GalleryGrid images={childImage} columns={slideNumber} gap={gap} />
       case "masonry":
-        return <GalleryMasonry images={images} />
+        return <GalleryMasonry images={childImage} />
       case "slider":
       default:
-        return <GallerySlider images={images} showArrows={showArrows} slidesToShow={slidesToShow} autoplay={autoplay} />
+        return <GallerySlider images={childImage} disableNavigation={disableNavigation} slideNumber={slideNumber} autoplay={autoplay} />
     }
   }
 
