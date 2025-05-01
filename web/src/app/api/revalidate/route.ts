@@ -9,8 +9,8 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    // Revalidate the entire site starting from root
-    revalidatePath('/')
+    // ✅ Await the revalidation
+    await revalidatePath('/')
     return new Response('Site revalidated.', { status: 200 })
   } catch (err) {
     return new Response('Error revalidating', { status: 500 })
