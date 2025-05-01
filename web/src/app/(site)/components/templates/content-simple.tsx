@@ -1,5 +1,5 @@
 import type React from "react"
-import classNames from "classnames"
+import { cn } from "@/lib/utils"
 import HeaderSection from "./header-section"
 import { ContentSectionProps } from "@/lib/types"
 
@@ -32,7 +32,7 @@ export default function ContentSection({
 
     const {
         content,
-        layout,
+        layoutType,
         textColor,
         textAlign = "left",
         maxWidth = "7xl",
@@ -42,23 +42,23 @@ export default function ContentSection({
         secondaryButton,
     } = section || {}
 
-    const containerClass = classNames(
+    const containerClass = cn(
         "mx-auto",
         maxWidthClasses[maxWidth],
         {
-            "md:columns-2": layout === "twoColumn",
-            [columnGapClasses[columnGap]]: layout === "twoColumn",
-            "prose prose-gray dark:prose-invert": layout === "prose" || layout === "article",
-            "max-w-3xl": layout === "article",
+            "md:columns-2": layoutType === "twoColumn",
+            [columnGapClasses[columnGap]]: layoutType === "twoColumn",
+            "prose prose-gray dark:prose-invert": layoutType === "prose" || layoutType === "article",
+            "max-w-3xl": layoutType === "article",
         },
         className,
     )
 
-    const contentClass = classNames(
+    const contentClass = cn(
         "prose prose-gray dark:prose-invert",
         {
-            "max-w-none": layout === "twoColumn",
-            "mx-auto": layout === "centered",
+            "max-w-none": layoutType === "twoColumn",
+            "mx-auto": layoutType === "centered",
         },
         textAlign && `text-${textAlign}`,
     )

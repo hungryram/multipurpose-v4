@@ -1,4 +1,4 @@
-import { client } from '../../../sanity/lib/client';
+import { client } from '../../../lib/sanity';
 import Main from './components/templates/page-builder';
 import { homePageData } from '../../../lib/groq-data';
 

@@ -3,12 +3,6 @@ import getYouTubeId from 'get-youtube-id'
 import YouTube from 'react-youtube'
 import React from 'react'
 
-const Preview = ({value}) => {
-	const { url } = value
-	const id = getYouTubeId(url)
-	return (<YouTube videoId={id} />)
-}
-
 export default defineType({
     title: 'YouTube Embed',
     name: 'youtube',

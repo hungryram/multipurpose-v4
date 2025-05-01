@@ -1,4 +1,4 @@
-import { urlForImage } from "../../../../../sanity/lib/image";
+import { urlForImage } from "../../../../../lib/image";
 import getYouTubeID from "get-youtube-id";
 import Youtube from "react-youtube";
 import slugify from "slugify";

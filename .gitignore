@@ -1,9 +1,17 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+**/node_modules/
 /.pnp
 .pnp.js
+
+# Ignore Next.js build output in web/
+web/.next/
+web/out/
+
+# Ignore Sanity Studio build output in cms/
+cms/dist/
+cms/.sanity/
 
 # testing
 /coverage
@@ -23,6 +31,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore environment variables in all folders
+**/.env
+**/.env.*.local
 
 # local env files
 .env*.local
