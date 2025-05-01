@@ -10,7 +10,8 @@ export async function GET(req: NextRequest) {
 
   try {
     // ✅ Await the revalidation
-    await revalidatePath('/')
+    await revalidatePath('/', 'layout')
+    console.log("Revalidating path /")
     return new Response('Site revalidated.', { status: 200 })
   } catch (err) {
     return new Response('Error revalidating', { status: 500 })
