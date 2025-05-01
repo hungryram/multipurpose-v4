@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
         console.log("Revalidated team index")
         break
 
-      case "home":
+      case "homeDesign":
         // Revalidate the homepage
         await revalidatePath("/")
         console.log("Revalidated homepage")
