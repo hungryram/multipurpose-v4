@@ -6,8 +6,6 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Social from "../../components/templates/social"
 
-export const revalidate = 0
-
 type Props = {
   params: {
     slug: string

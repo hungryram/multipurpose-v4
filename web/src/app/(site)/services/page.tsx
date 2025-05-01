@@ -8,8 +8,6 @@ import ContentEditor from "../components/util/content-editor"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowRight, Settings} from "lucide-react"
 
-export const revalidate = 0
-
 interface Service {
     _id: string
     title: string

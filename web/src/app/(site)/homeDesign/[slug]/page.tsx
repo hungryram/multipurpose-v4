@@ -3,7 +3,6 @@ import { getHome } from '../../../../../lib/groq-data'
 import PageBuilder from '../../components/templates/page-builder'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
-export const revalidate = 0;
 
 type Props = {
     params: {
