@@ -30,9 +30,4 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-
-  experimental: {
-    legacyBrowsers: false,
-    modern: true,
-  },
 };
