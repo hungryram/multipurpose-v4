@@ -9,11 +9,11 @@ Name the dataset: production
 
 Add in the needed env variables for the frontend:
 
-SANITY_STUDIO_DATASET=production
-NEXT_PUBLIC_SANITY_DATASET=production
+SANITY_STUDIO_DATASET=production  
+NEXT_PUBLIC_SANITY_DATASET=production  
 REVALIDATE_SECRET_TOKEN=
 
-Generate Secret Token with node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+Generate Secret Token with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`
 
 ### Deploy the ADMIN
 
@@ -21,6 +21,13 @@ Generate Secret Token with node -e "console.log(require('crypto').randomBytes(32
 
 Add in variables for the admin:
 
-SANITY_STUDIO_PROJECT_ID=
+SANITY_STUDIO_PROJECT_ID=  
 NEXT_PUBLIC_SANITY_PROJECT_ID=
 
+## Clone the Repo to your local machine
+
+cd into web and run `npx vercel link` to the vercel project.
+
+Then run `npx vercel env pull` to get env variables.
+
+cd into cms/admin and do the same.
