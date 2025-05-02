@@ -35,4 +35,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhungryram%2Fmultipurpose-v4&env=NEXT_PUBLIC_SANITY_PROJECT_ID,NEXT_PUBLIC_SANITY_DATASET,REVALIDATE_SECRET_TOKEN&project-name=multipurpose-v4&repository-name=multipurpose-v4
+[vercel-deploy]: https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhungryram%2Fmultipurpose-v4&env=NEXT_PUBLIC_SANITY_PROJECT_ID,SANITY_STUDIO_PROJECT_ID,SANITY_STUDIO_DATASET,NEXT_PUBLIC_SANITY_DATASET,REVALIDATE_SECRET_TOKEN&project-name=multipurpose-v4&repository-name=multipurpose-v4
+
+[Deploy Web with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhungryram%2Fmultipurpose-v4&env=NEXT_PUBLIC_SANITY_PROJECT_ID,SANITY_STUDIO_PROJECT_ID,SANITY_STUDIO_DATASET,NEXT_PUBLIC_SANITY_DATASET,REVALIDATE_SECRET_TOKEN&project-name=multipurpose-v4-web&repository-name=multipurpose-v4&rootDirectory=web)
+
+[Deploy CMS with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhungryram%2Fmultipurpose-v4&env=NEXT_PUBLIC_SANITY_PROJECT_ID,SANITY_STUDIO_PROJECT_ID,SANITY_STUDIO_DATASET,NEXT_PUBLIC_SANITY_DATASET,REVALIDATE_SECRET_TOKEN&project-name=multipurpose-v4-cms&repository-name=multipurpose-v4&rootDirectory=cms/admin)
+
+
+
+Generate Secret Token with node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"

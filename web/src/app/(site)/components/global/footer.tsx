@@ -43,7 +43,7 @@ export default function Footer({
         />
       </div>
     ) : (
-      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
+      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
         {footerData?.profileSettings?.company_name}
       </h2>
     )
@@ -122,7 +122,7 @@ export default function Footer({
   }
 
   const renderSocial = (className?: string) => (
-    <div style={{ color: footerData.appearances?.footerText }} className={className}>
+    <div style={{ color: footerData?.appearances?.footerText }} className={className}>
       <Social links={socialLinks} className={className} />
     </div>
   )
@@ -167,7 +167,7 @@ export default function Footer({
                   href={quickLinks}
                   target={link.newTab ? "_blank" : undefined}
                   className="text-sm hover:underline"
-                  style={{ color: footerData.appearances?.footerText }}
+                  style={{ color: footerData?.appearances?.footerText }}
                 >
                   {link.text}
                 </Link>
@@ -194,13 +194,13 @@ export default function Footer({
         {renderSocial()}
       </div>
       <div>
-        <h3 className="font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
           Contact Information
         </h3>
         {renderContactInfo()}
       </div>
-      {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
-      {footerData.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData.appearances?.footer?.secondQuickLinks, footerData.appearances?.footer?.quickLinksTwoHeading || "Resources")}
+      {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
+      {footerData?.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData?.appearances?.footer?.secondQuickLinks, footerData?.appearances?.footer?.quickLinksTwoHeading || "Resources")}
     </div>
   )
 
@@ -213,7 +213,7 @@ export default function Footer({
           <ContentEditor content={footerData?.appearances?.footer?.footerText} />
         </div>
       )}
-      <div className="mb-8">{footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, "")}</div>
+      <div className="mb-8">{footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, "")}</div>
       {renderSocial("justify-center")}
       <div className="mt-8">
         {renderContactInfo("single-column")}
@@ -231,7 +231,7 @@ export default function Footer({
           {renderContactInfo("single-column")}
         </div>
         <div>
-          {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
+          {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
         </div>
       </div>
       <div className="flex flex-col md:flex-row items-center gap-4">
@@ -247,9 +247,9 @@ export default function Footer({
         {renderSocial()}
       </div>
       <div className="grid grid-cols-2 gap-8">
-        {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
+        {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
         <div>
-          <h3 className="font-semibold mb-4" style={{ color: footerData?.data.appearances?.footerHeader }}>
+          <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
             Contact Information
           </h3>
           {renderContactInfo()}
@@ -265,8 +265,8 @@ export default function Footer({
         {renderFooterText}
         {renderSocial()}
       </div>
-      {footerData.appearances?.footer?.quickLinks && renderQuickLinks(footerData.appearances?.footer?.quickLinks, footerData.appearances?.footer?.quickLinksHeading || "Quick Links")}
-      {footerData.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData.appearances?.footer?.secondQuickLinks, footerData.appearances?.footer?.quickLinksTwoHeading || "Resources")}
+      {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
+      {footerData?.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData?.appearances?.footer?.secondQuickLinks, footerData?.appearances?.footer?.quickLinksTwoHeading || "Resources")}
       <div>
         <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
           Contact Information
@@ -296,16 +296,16 @@ export default function Footer({
     <footer
       className="py-12"
       style={{
-        backgroundColor: footerData.appearances?.footerBg,
-        color: footerData.appearances?.footerText,
+        backgroundColor: footerData?.appearances?.footerBg,
+        color: footerData?.appearances?.footerText,
       }}
     >
       <div className="container mx-auto px-4">
         {renderFooterContent()}
         <div className="mt-8 pt-8 border-t border-gray-200">
-          {footerData.appearances?.footer?.footerDisclaimer && (
+          {footerData?.appearances?.footer?.footerDisclaimer && (
             <div className="text-xs mb-4">
-              <ContentEditor content={footerData.appearances?.footer?.footerDisclaimer} />
+              <ContentEditor content={footerData?.appearances?.footer?.footerDisclaimer} />
             </div>
           )}
           {footerData?.legal && (

@@ -34,9 +34,9 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: '@' + data?.profileSettings?.seo?.twitterHandle,
     },
     icons: {
-      icon: data.appearances?.branding?.favicon?.asset?.url,
-      shortcut: data.appearances?.branding?.favicon?.asset?.url,
-      apple: data.appearances?.branding?.favicon?.asset?.url,
+      icon: data?.appearances?.branding?.favicon?.asset?.url,
+      shortcut: data?.appearances?.branding?.favicon?.asset?.url,
+      apple: data?.appearances?.branding?.favicon?.asset?.url,
     },
     verification: {
       google: data?.profileSettings?.settings?.googleVerification
@@ -62,7 +62,7 @@ export default async function RootLayout({
     ...(data?.profileSettings?.company_name && { "name": data?.profileSettings?.company_name }),
     ...(data?.profileSettings?.seo?.meta_description && { "description": data?.profileSettings?.seo?.meta_description }),
     ...(data?.profileSettings?.settings?.websiteName && { "url": data?.profileSettings?.settings?.websiteName }),
-    ...(data.appearances?.branding?.logo?.asset?.url && { "logo": data.appearances?.branding?.logo?.asset?.url }),
+    ...(data?.appearances?.branding?.logo?.asset?.url && { "logo": data?.appearances?.branding?.logo?.asset?.url }),
     ...(data?.profileSettings?.seo?.imageData?.asset?.url && { "image": data?.profileSettings?.seo?.imageData?.asset?.url }),
     "address": {
       "@type": "PostalAddress",
@@ -131,39 +131,39 @@ export default async function RootLayout({
           {`
               :root {
                   --swiper-navigation-size: 30px;
-                  --top-header-background: ${data.appearances?.topHeaderBar?.topHeaderBarBgColor};
-                  --top-header-text-color: ${data.appearances?.topHeaderBar?.topHeaderBarTextColor};
-                  --primary-accent: ${data.appearances?.primaryAccent ?? '#cccccc'};
-                  --radio-color: ${data.appearances?.primaryAccent ?? '#cccccc'};
+                  --top-header-background: ${data?.appearances?.topHeaderBar?.topHeaderBarBgColor};
+                  --top-header-text-color: ${data?.appearances?.topHeaderBar?.topHeaderBarTextColor};
+                  --primary-accent: ${data?.appearances?.primaryAccent ?? '#cccccc'};
+                  --radio-color: ${data?.appearances?.primaryAccent ?? '#cccccc'};
 
-                  --primary-button-background: ${data.appearances?.primaryButtonBg ?? 'transparent'};
-                  --primary-button-text: ${data.appearances?.primaryButtonText ?? '#000000'};
-                  --secondary-button-background: ${data.appearances?.secondaryButtonBg ?? 'transparent'};
-                  --secondary-button-text: ${data.appearances?.secondaryButtonText ?? '#cccccc'};
-                  --secondary-color: ${data.appearances?.secondaryColor ?? '#cccccc'};
+                  --primary-button-background: ${data?.appearances?.primaryButtonBg ?? 'transparent'};
+                  --primary-button-text: ${data?.appearances?.primaryButtonText ?? '#000000'};
+                  --secondary-button-background: ${data?.appearances?.secondaryButtonBg ?? 'transparent'};
+                  --secondary-button-text: ${data?.appearances?.secondaryButtonText ?? '#cccccc'};
+                  --secondary-color: ${data?.appearances?.secondaryColor ?? '#cccccc'};
 
-                  --header-background-color: ${data.appearances?.navBgColor ? data.appearances?.navBgColor : 'transparent'};
-                  --header-scroll-background-color: ${data.appearances?.navBgScrollColor ? data.appearances?.navBgScrollColor : 'transparent'};
-                  --header-navigation-color: ${data.appearances?.navColor ?? '#ffffff'};
-                  --header-navigation-scroll-color: ${data.appearances?.navScrollColor};
+                  --header-background-color: ${data?.appearances?.navBgColor ? data?.appearances?.navBgColor : 'transparent'};
+                  --header-scroll-background-color: ${data?.appearances?.navBgScrollColor ? data?.appearances?.navBgScrollColor : 'transparent'};
+                  --header-navigation-color: ${data?.appearances?.navColor ?? '#ffffff'};
+                  --header-navigation-scroll-color: ${data?.appearances?.navScrollColor};
 
-                  --mobile-icon-color: ${data.appearances?.mobileIconColor ?? '#ffffff'};
+                  --mobile-icon-color: ${data?.appearances?.mobileIconColor ?? '#ffffff'};
                   --mobile-bg-color: ${data?.appearances?.mobileMenu?.mobileBgDrawer};
                   --mobile-nav-color: ${data?.appearances?.mobileMenu?.mobileNavColor};
 
-                  --loading-background-color: ${data.appearances?.loaderColor ?? '#0e0e0e'};
-                  --loading-image: url(${data.appearances?.loaderImage});
+                  --loading-background-color: ${data?.appearances?.loaderColor ?? '#0e0e0e'};
+                  --loading-image: url(${data?.appearances?.loaderImage});
 
-                  --website-body-color: ${data.appearances?.websiteBodyColor ?? '#fff'};
-                  --website-text-color: ${data.appearances?.websiteTextColor ?? '#222'};
-                  --website-heading-color: ${data.appearances?.websiteHeadingColor ?? '#000'};
+                  --website-body-color: ${data?.appearances?.websiteBodyColor ?? '#fff'};
+                  --website-text-color: ${data?.appearances?.websiteTextColor ?? '#222'};
+                  --website-heading-color: ${data?.appearances?.websiteHeadingColor ?? '#000'};
 
-                  --button-radius: ${`${data.appearances?.buttonRadius ?? 6}px`};
-                  --button-y-padding: ${`${data.appearances?.buttonYPadding ?? 8}px`};
-                  --button-x-padding: ${`${data.appearances?.buttonXPadding ?? 12}px`};
+                  --button-radius: ${`${data?.appearances?.buttonRadius ?? 6}px`};
+                  --button-y-padding: ${`${data?.appearances?.buttonYPadding ?? 8}px`};
+                  --button-x-padding: ${`${data?.appearances?.buttonXPadding ?? 12}px`};
                   
-                  --announcementbar-background-color: ${data.appearances?.announcementBar?.announcementBgColor};
-                  --announcementbar-text-color: ${data.appearances?.announcementBar?.announcementTextColor};
+                  --announcementbar-background-color: ${data?.appearances?.announcementBar?.announcementBgColor};
+                  --announcementbar-text-color: ${data?.appearances?.announcementBar?.announcementTextColor};
               }
           `}
         </style>
