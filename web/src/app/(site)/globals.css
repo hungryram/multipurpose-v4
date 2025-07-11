@@ -161,7 +161,7 @@ input[type="radio"]:checked {
 .slide-down {
   transform: translateY(0%);
 }
-
+/* 
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -225,4 +225,4 @@ input[type="radio"]:checked {
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
