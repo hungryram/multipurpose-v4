@@ -4,7 +4,6 @@ import Navbar from './components/global/navbar'
 import './globals.css'
 import { appearance, mainLayoutProfile } from '../../../lib/groq-data'
 import { Metadata } from 'next';
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { bodyFont, headingFont } from '../fonts'
 import Pixel from './components/global/pixel'
 
@@ -111,9 +110,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${bodyFont.variable} ${headingFont.variable}`}>
-        {data?.profileSettings?.settings?.googleID &&
+        {/* {data?.profileSettings?.settings?.googleID &&
           <GoogleAnalytics gaId={data?.profileSettings?.settings?.googleID} />
-        }
+        } */}
         {data?.profileSettings?.settings?.facebookPixel &&
           <Pixel
             facebookPixel={data?.profileSettings?.settings?.facebookPixel}
