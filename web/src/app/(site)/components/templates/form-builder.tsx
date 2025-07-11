@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 import {
   Select,
   SelectContent,
@@ -21,13 +21,28 @@ import { usePathname } from "next/navigation";
 import { DatePicker } from "@/components/ui/date-picker";
 
 
-
 export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const path = usePathname();
   const [fullPath, setFullPath] = useState("");
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date | undefined }>({});
 
+  const [formValues, setFormValues] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("formValues");
+    if (saved) {
+      setFormValues(JSON.parse(saved));
+    }
+  }, []);
+
+  const handleInputChange = (name: string, value: any) => {
+    setFormValues((prev) => {
+      const updated = { ...prev, [name]: value };
+      sessionStorage.setItem("formValues", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -37,31 +52,28 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
   }, [path]);
 
   const renderField = (field: FormField, index: number) => {
-    // Early return for static description text (non-input)
     if (field.type === "description") {
       return (
         <div key={field._key} className="col-span-4 py-2">
-          <p className="whitespace-pre-line mt-6">
-            {field.descriptionText}
-          </p>
+          <p className="whitespace-pre-line mt-6 font-semibold">{field.descriptionText}</p>
         </div>
       );
     }
-
-
 
     const commonProps = {
       id: `${field._key}-${index}`,
       name: field.label,
       placeholder:
-        (!field.hideLabel && field.placeholder) ||
-        (field.hideLabel && field.required
-          ? `${field.placeholder || field.label} *`
-          : field.placeholder || field.label),
+        field.placeholder?.trim() !== ""
+          ? field.placeholder
+          : field.hideLabel && field.required
+            ? `${field.label} *`
+            : undefined,
       required: field.required,
+      value: formValues[field.label] || "", // ✅ get current value
+      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+        handleInputChange(field.label, e.target.value),
     };
-    
-
     const fieldComponents = {
       text: <Input type="text" {...commonProps} />,
       email: <Input type="email" {...commonProps} />,
@@ -78,6 +90,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
                 ...prev,
                 [commonProps.name]: date,
               }));
+              handleInputChange(commonProps.name, format(date, "MM/dd/yyyy"));
             }}
           />
           <input
@@ -85,13 +98,12 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
             name={commonProps.name}
             value={
               selectedDates?.[commonProps.name]
-                ? format(selectedDates[commonProps.name] as Date, 'MM/dd/yyyy')
-                : ''
+                ? format(selectedDates[commonProps.name] as Date, "MM/dd/yyyy")
+                : ""
             }
           />
         </div>
       ),
-
       radio: (
         <RadioGroup {...commonProps}>
           {field.radioValue?.map((value, i) => (
@@ -134,7 +146,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         className={`${field.half ? "col-span-2" : "col-span-4"} space-y-2`}
       >
         {!field.hideLabel && (
-          <Label htmlFor={commonProps.id} style={{ color: labelColor }}>
+          <Label htmlFor={commonProps.id} style={{ color: labelColor }} className="relative -bottom-5 left-4 bg-white p-2">
             {field.label}
             {field.required && <span className="text-red-500">*</span>}
           </Label>
@@ -152,8 +164,14 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
     const formData = new FormData(event.currentTarget);
 
     try {
-      await submitForm(formData, formSchema?.spreadsheetId, formSchema?.sheetName);
-      // handle success (e.g., show confirmation or redirect)
+      await submitForm(
+        formData,
+        formSchema?.spreadsheetId,
+        formSchema?.sheetName,
+        formSchema?.subject,
+        formSchema?.sendTo,
+        formSchema?.redirectTo
+      );
     } catch (error) {
       console.error("Form submission error:", error);
     } finally {
@@ -161,26 +179,33 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
     }
   };
 
+
   return (
     <div className="py-2">
       <form onSubmit={handleSubmit}>
-        <input type="hidden" name="name-honey" />
-        <input type="hidden" name="bcc" value={formSchema?.emailBcc} />
-        <input type="hidden" name="cc" value={formSchema?.emailCc} />
-        <input
-          type="hidden"
-          name="sendFrom"
-          value={formSchema?.sendFrom || "forms@hungryramwebdesign.com"}
-        />
-        <input type="hidden" name="sendTo" value={formSchema?.sendTo} />
-        <input type="hidden" name="subject" value={formSchema?.subject} />
-        <input type="hidden" name="redirectTo" value={formSchema?.redirectTo} />
+        {/* ✅ Honeypot */}
+        <div style={{ position: "absolute", left: "-5000px" }} aria-hidden="true">
+          <Label htmlFor="website">Website</Label>
+          <Input
+            type="text"
+            name="website"
+            id="website"
+            autoComplete="off"
+            tabIndex={-1}
+          />
+        </div>
+
+        {/* ✅ Timestamp */}
+        <input type="hidden" name="formStartTime" value={Date.now()} />
+
         <input type="hidden" name="fullPath" value={fullPath} />
 
-        <div className="grid grid-cols-4 gap-4">
+        {/* ✅ Your dynamic fields */}
+        <div className="grid grid-cols-4 gap-2">
           {formSchema?.fields?.map(renderField)}
         </div>
 
+        {/* Disclaimer if present */}
         {formSchema?.formDisclaimer && (
           <div className="mt-6 text-xs">
             <ContentEditor content={formSchema.formDisclaimer} />
@@ -191,7 +216,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
           <Button
             type="submit"
             disabled={isSubmitting}
-            variant="secondary"
+            variant="primary"
             style={{
               backgroundColor: formSchema?.buttonBackgroundColor?.hex,
               color: formSchema?.buttonTextColor?.hex,

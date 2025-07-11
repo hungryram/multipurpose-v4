@@ -43,7 +43,7 @@ export default function Footer({
         />
       </div>
     ) : (
-      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
+      <h2 className="text-2xl font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
         {footerData?.profileSettings?.company_name}
       </h2>
     )
@@ -130,7 +130,7 @@ export default function Footer({
   const renderQuickLinks = (linksArray: any[], heading: string) => (
     <div>
       {heading &&
-        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
           {heading}
         </h3>
       }
@@ -194,7 +194,7 @@ export default function Footer({
         {renderSocial()}
       </div>
       <div>
-        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
           Contact Information
         </h3>
         {renderContactInfo()}
@@ -249,7 +249,7 @@ export default function Footer({
       <div className="grid grid-cols-2 gap-8">
         {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
         <div>
-          <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
+          <h3 className="font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
             Contact Information
           </h3>
           {renderContactInfo()}
@@ -268,7 +268,7 @@ export default function Footer({
       {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
       {footerData?.appearances?.footer?.secondQuickLinks && renderQuickLinks(footerData?.appearances?.footer?.secondQuickLinks, footerData?.appearances?.footer?.quickLinksTwoHeading || "Resources")}
       <div>
-        <h3 className="font-semibold mb-4" style={{ color: footerData?.data?.appearances?.footerHeader }}>
+        <h3 className="font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
           Contact Information
         </h3>
         {renderContactInfo()}

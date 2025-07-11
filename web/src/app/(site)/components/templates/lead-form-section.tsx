@@ -57,7 +57,14 @@ export default function LeadFormSection({
                 <ContentEditor content={formContent} />
               </div>
             )}
-            <FormBuilder formSchema={formBuilder} labelColor={labelColor?.hex} />
+            <FormBuilder
+              formSchema={{
+                ...formBuilder,
+                subject: formBuilder?.subject || 'Contact Form Submission',
+                sendTo: formBuilder?.sendTo,
+                redirectTo: formBuilder?.redirectTo,
+              }}
+              labelColor={labelColor?.hex} />
           </div>
         </div>
       </div>
