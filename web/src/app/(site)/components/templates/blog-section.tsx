@@ -190,7 +190,7 @@ function BlogCard({
       )}
       {!hideContent && (
         <>
-          <CardContent className="px-2 flex-grow">{date && <p className="text-sm text-gray-500">{date}</p>}</CardContent>
+          <CardContent className="px-2 grow">{date && <p className="text-sm text-gray-500">{date}</p>}</CardContent>
           <CardFooter className="px-2">
             <Link href={slug} className="text-primary hover:underline">
               Read More

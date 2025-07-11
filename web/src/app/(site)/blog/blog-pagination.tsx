@@ -40,7 +40,7 @@ export function BlogCard({ title, slug, date, image, blurData, altText, excerpt 
     return (
         <Link href={`/${slug}`} className="block h-full">
             <Card className="group h-full overflow-hidden transition-all hover:shadow-lg dark:bg-gray-800">
-                <div className="relative aspect-[16/9] overflow-hidden">
+                <div className="relative aspect-video overflow-hidden">
                     <Image
                         src={image || "/placeholder.svg"}
                         alt={altText || title}
@@ -77,7 +77,7 @@ function BlogGridSkeleton() {
         <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
                 <Card key={i} className="overflow-hidden">
-                    <Skeleton className="aspect-[16/9] w-full" />
+                    <Skeleton className="aspect-video w-full" />
                     <CardHeader className="space-y-2">
                         <Skeleton className="h-6 w-3/4" />
                         <Skeleton className="h-4 w-1/4" />

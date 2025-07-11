@@ -112,7 +112,7 @@ export default async function TeamSlug({ params }: Props) {
             {/* Main Content */}
             <div className="grid gap-12 lg:grid-cols-2">
               {/* Image */}
-              <div className="relative aspect-[3/4] overflow-hidden rounded-lg shadow-lg">
+              <div className="relative aspect-3/4 overflow-hidden rounded-lg shadow-lg">
                 {data?.imageData?.asset?.url ? (
                   <Image
                     src={data?.imageData?.asset?.url || "/placeholder.svg"}

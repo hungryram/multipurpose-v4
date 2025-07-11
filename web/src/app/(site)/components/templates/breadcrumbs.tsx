@@ -57,7 +57,7 @@ function Breadcrumb({ textAlign, color }: { textAlign?: string, color?: string }
 
     return (
         <ol role="list"
-              className={cn("content list-none flex items-center !ml-0", {
+              className={cn("content list-none flex items-center ml-0!", {
                 "text-left": textAlign === "left",
                 "mx-auto text-center justify-center": textAlign === "center",
                 "text-right justify-end": textAlign === "right",
@@ -78,7 +78,7 @@ function Breadcrumb({ textAlign, color }: { textAlign?: string, color?: string }
                 return (
                     <li key={index} className="inline-block">
                         <div className="flex items-center">
-                            <IoChevronForwardOutline className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                            <IoChevronForwardOutline className="h-5 w-5 shrink-0" aria-hidden="true" />
                             <Link
                                 href={href}
                                 className="capitalize"

@@ -79,7 +79,7 @@ export function Navbar({
         </div>
       )}
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" className="shrink-0">
           {navbarData?.appearances?.branding?.logo?.asset?.url ? (
             <Image
               src={navbarData?.appearances?.branding?.logo?.asset?.url || "/placeholder.svg"}

@@ -76,7 +76,7 @@ export async function generateMetadata() {
 function TeamCard({ member }: { member: TeamMember }) {
   return (
     <Card className="h-full flex flex-col">
-      <div className="relative aspect-[3/3] overflow-hidden rounded-t-lg">
+      <div className="relative aspect-3/3 overflow-hidden rounded-t-lg">
         {member.imageData?.asset?.url ? (
           <Image
             src={member.imageData.asset.url || "/placeholder.svg"}
@@ -92,7 +92,7 @@ function TeamCard({ member }: { member: TeamMember }) {
           </div>
         )}
       </div>
-      <CardContent className="flex-grow p-6">
+      <CardContent className="grow p-6">
         <h3 className="text-lg font-semibold mb-1">{member.name}</h3>
         <p className="text-sm text-muted-foreground mb-4">{member.position}</p>
         {member.description && <p className="text-sm line-clamp-3">{member.description}</p>}

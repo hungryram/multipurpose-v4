@@ -105,7 +105,7 @@ export default function TeamComponent({
 function TeamCard({ member, layoutType = "grid" }: { member: TeamMember; layoutType?: "grid" | "list" }) {
   return (
     <Card className={cn(layoutType === "list" && "flex items-start")}>
-      <CardContent className={cn("p-6", layoutType === "list" && "flex-grow")}>
+      <CardContent className={cn("p-6", layoutType === "list" && "grow")}>
         <div className={cn("mb-4", layoutType === "list" && "mr-6")}>
           <div className={cn("relative", layoutType === "list" ? "w-24 h-24" : "w-full pb-[100%]")}>
             <Image

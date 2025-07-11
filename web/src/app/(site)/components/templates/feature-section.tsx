@@ -124,7 +124,7 @@ export default function FeaturedGrid({
                         </div>
                         <CardHeader>
                             <CardTitle>
-                                <h3 className="!text-2xl !mt-0" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
+                                <h3 className="text-2xl! mt-0!" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
                             </CardTitle>
                             {item?.content && (
                                 <CardDescription>
@@ -145,7 +145,7 @@ export default function FeaturedGrid({
                     <Card key={index}>
                         <CardHeader>
                             <CardTitle>
-                                <h3 className="!text-2xl !mt-0" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
+                                <h3 className="text-2xl! mt-0!" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
                             </CardTitle>
                             {item?.content && (
                                 <CardDescription>

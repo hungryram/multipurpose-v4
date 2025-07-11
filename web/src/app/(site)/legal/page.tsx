@@ -70,7 +70,7 @@ export default async function LegalPage() {
                     />
                 </div>
                 <div className="my-20">
-                    <ul role="list" className="divide-y !list-none divide-gray-200 text-xl">
+                    <ul role="list" className="divide-y list-none! divide-gray-200 text-xl">
                         {legal?.legal?.map((item: any) => (
                             <li key={item._id} className="py-4">
                                 <Link href={`legal/${item.slug}`}>{item.title}</Link>

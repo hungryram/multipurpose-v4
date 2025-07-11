@@ -56,7 +56,7 @@ export default function ServiceList({
       <CardHeader className="px-2">
         <CardTitle>{service.title}</CardTitle>
       </CardHeader>
-      <CardContent className="px-2 flex-grow">
+      <CardContent className="px-2 grow">
         <p className="line-clamp-3">{service.detail}</p>
       </CardContent>
       <CardFooter className="px-2">

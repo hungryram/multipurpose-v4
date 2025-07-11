@@ -118,7 +118,7 @@ export default async function ServicesSection() {
                                 <Link key={service._id} href={`services/${service.slug.current}`} className="group relative">
                                     <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
                                         {service?.imageData?.asset?.url ? (
-                                            <div className="relative aspect-[16/9] overflow-hidden">
+                                            <div className="relative aspect-video overflow-hidden">
                                                 <Image
                                                     src={service.imageData.asset.url || "/placeholder.svg"}
                                                     alt={service.imageData.asset.altText || service.title}
@@ -129,7 +129,7 @@ export default async function ServicesSection() {
                                                 />
                                             </div>
                                         ) : (
-                                            <div className="flex aspect-[16/9] items-center justify-center bg-muted">
+                                            <div className="flex aspect-video items-center justify-center bg-muted">
                                                 <IconComponent className="h-12 w-12 text-muted-foreground transition-colors group-hover:text-primary" />
                                             </div>
                                         )}
