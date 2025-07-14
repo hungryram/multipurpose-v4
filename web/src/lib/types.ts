@@ -343,7 +343,7 @@ export interface HeaderSectionProps {
   secondaryButton?: ButtonProps
 }
 
-// GALLERY SWIPER
+// GALLERY CAROUSEL
 
 export interface GalleryImage {
   src: string

@@ -81,11 +81,6 @@ body .content h6 {
   font-family: var(--heading-font);
 }
 
-.swiper-button-disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 /*  FORM  */
 
 input[type="radio"]:checked:focus {

@@ -1,7 +1,5 @@
 export function buildThemeVariables(data: any): Record<string, string> {
   return {
-    'swiper-navigation-size': '30px',
-
     'top-header-background': data?.appearances?.topHeaderBar?.topHeaderBarBgColor ?? 'transparent',
     'top-header-text-color': data?.appearances?.topHeaderBar?.topHeaderBarTextColor ?? '#000000',
 

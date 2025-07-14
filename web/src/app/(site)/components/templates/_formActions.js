@@ -2,7 +2,6 @@
 
 import {ServerClient} from "postmark"
 import {redirect} from "next/navigation"
-import {sentToSheet} from "../../../../../lib/sheetsapi"
 
 export const submitForm = async (
   data,
@@ -63,9 +62,34 @@ export const submitForm = async (
     }
   })
 
-  // ✅ Send to Google Sheets if needed
   if (sheetName && spreadsheetId) {
-    await sentToSheet(formData, spreadsheetId, sheetName)
+    try {
+      const payload = {
+        value: formData,
+        spreadsheetId,
+        sheetName,
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/send-to-google-sheet`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      )
+
+      if (!res.ok) {
+        console.error(
+          "[submitForm] Sheets API call failed:",
+          await res.text()
+        )
+      }
+    } catch (err) {
+      console.error("[submitForm] Sheets API fetch error:", err)
+    }
   }
 
   // ✅ Prepare Postmark HTML body
@@ -105,7 +129,7 @@ export const submitForm = async (
   if (process.env.POSTMARK_API_TOKEN) {
     const client = new ServerClient(process.env.POSTMARK_API_TOKEN)
 
-    let response // ✅ Declare outside
+    let response
 
     try {
       response = await client.sendEmail({
@@ -117,15 +141,23 @@ export const submitForm = async (
       })
     } catch (err) {
       console.error("Postmark send error:", err)
+      return {success: false}
     }
 
     if (response?.Message === "OK") {
-      const safeRedirect = redirectTo?.startsWith("/")
-        ? redirectTo
-        : `/${redirectTo || "thank-you"}`
-      redirect(safeRedirect)
+      if (redirectTo) {
+        const safeRedirect = redirectTo.startsWith("/")
+          ? redirectTo
+          : `/${redirectTo}`
+        redirect(safeRedirect)
+      } else {
+        return {success: true}
+      }
+    } else {
+      return {success: false}
     }
   } else {
     console.error("Postmark API token is missing.")
+    return {success: false}
   }
 }

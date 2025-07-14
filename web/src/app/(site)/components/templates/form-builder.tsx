@@ -26,6 +26,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
   const path = usePathname();
   const [fullPath, setFullPath] = useState("");
   const [selectedDates, setSelectedDates] = useState<{ [key: string]: Date | undefined }>({});
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const [formValues, setFormValues] = useState<Record<string, any>>({});
 
@@ -146,7 +147,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         className={`${field.half ? "col-span-2" : "col-span-4"} space-y-2`}
       >
         {!field.hideLabel && (
-          <Label htmlFor={commonProps.id} style={{ color: labelColor }} className="relative -bottom-5 left-4 bg-white p-2">
+          <Label htmlFor={commonProps.id} style={{ color: labelColor }}>
             {field.label}
             {field.required && <span className="text-red-500">*</span>}
           </Label>
@@ -164,7 +165,7 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
     const formData = new FormData(event.currentTarget);
 
     try {
-      await submitForm(
+      const result = await submitForm(
         formData,
         formSchema?.spreadsheetId,
         formSchema?.sheetName,
@@ -172,6 +173,10 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
         formSchema?.sendTo,
         formSchema?.redirectTo
       );
+
+      if (result?.success) {
+        setShowThankYou(true);
+      }
     } catch (error) {
       console.error("Form submission error:", error);
     } finally {
@@ -224,6 +229,12 @@ export default function FormBuilder({ formSchema, labelColor }: FormBuilderProps
           >
             {isSubmitting ? "Submitting..." : formSchema?.buttonLabel || "SUBMIT"}
           </Button>
+          {showThankYou && (
+            <div className="mt-6 text-green-600">
+              ✅ Thank you for your submission!
+            </div>
+          )}
+
         </div>
       </form>
     </div>
