@@ -16,8 +16,8 @@ export default defineType({
             type: "string",
             options: {
                 list: [
-                    { title: "Banner", value: "banner" },
                     { title: "Text and Image", value: "text-image" },
+                    { title: "Banner", value: "banner" },
                     { title: "Full Width Text & Image", value: "fullWidthTextImage" },
                 ],
             },
@@ -33,6 +33,9 @@ export default defineType({
                     { title: "1/2 Columns", value: "half" },
                     { title: "2/5 and 3/5", value: "twoFifths" },
                     { title: "1/3 and 2/3", value: "oneThird" },
+                    { title: "1/4 and 3/4", value: "oneFourth" },
+                    { title: "3/5 and 2/5", value: "threeFifth" },
+                    { title: "2/3 and 1/3", value: "twoThirds" },
                 ],
             },
             initialValue: "half"

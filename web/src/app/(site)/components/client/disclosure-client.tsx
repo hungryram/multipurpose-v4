@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import ContentEditor from "../util/content-editor"
-import HeaderSection from "../util/header-section"
 import { DisclosureSectionProps, DisclosureItem } from "@/lib/types"
 
 export default function DisclosureInteractive({
@@ -21,10 +20,6 @@ export default function DisclosureInteractive({
     disclosureTextColor,
     disclosureContentColor,
     content,
-    textAlign,
-    secondaryButton,
-    primaryButton,
-    textColor,
     layoutType = "default",
     contentSide = "left",
     sideContent,
@@ -42,16 +37,6 @@ export default function DisclosureInteractive({
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const renderContent = (
-    <div className="mb-12" style={{ color: textColor }}>
-      <HeaderSection
-        content={content}
-        textAlign={textAlign}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-      />
-    </div>
-  )
 
   const renderAccordion = (items: DisclosureItem[]) => (
     <Accordion type="single" collapsible className="w-full space-y-4">
@@ -159,16 +144,7 @@ export default function DisclosureInteractive({
 
   return (
     <section>
-      {layoutType !== "contentSide" && renderContent}
-      <div
-        className={cn("mx-auto", {
-          "w-full": layoutType === "default",
-          "max-w-4xl": layoutType === "twoColumn",
-          "w-full": layoutType === "sidebar" || layoutType === "tabbed" || layoutType === "contentSide",
-        })}
-      >
         {renderAccordionContent()}
-      </div>
     </section>
   )
 }

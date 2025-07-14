@@ -139,11 +139,11 @@ export default defineType({
                     type: "string",
                     options: {
                         list: [
-                            { title: "Default", value: "default" },
+                            { title: "Default (4 Column)", value: "default" },
                             { title: "Grid", value: "grid" },
                             { title: "Minimal", value: "minimal" },
                             { title: "Single Column", value: "single-column" },
-                            { title: "two Column", value: "two-column" },
+                            { title: "Two Column", value: "two-column" },
                         ],
                     },
                 },
