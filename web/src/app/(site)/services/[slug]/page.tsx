@@ -3,59 +3,26 @@ import { getServices } from '../../../../../lib/groq-data'
 import PageBuilder from '../../components/templates/page-builder'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
-
-type Props = {
-    params: {
-        slug: string
-    }
-}
-
-type Meta = {
-    params: {
-        slug: string
-    }
-}
+import { generatePageMetadata } from '../../components/util/generateMetaData';
+import { PageParams } from '@/lib/types';
 
 // GENERATES SEO
-export async function generateMetadata({ params }: Meta): Promise<Metadata> {
-    const slug = params.slug
-    const servicesMeta = await getServices(slug)
-    return {
-        title: servicesMeta?.services?.seo?.title_tag,
-        description: servicesMeta?.services?.seo?.meta_description,
-        metadataBase: new URL(servicesMeta?.profileSettings?.settings?.websiteName ?? 'http://localhost:3000'),
-        alternates: {
-            canonical: 'services/' + servicesMeta?.services?.slug
-        },
-        openGraph: {
-            title: servicesMeta?.services?.seo?.title_tag,
-            description: servicesMeta?.services?.seo?.meta_description,
-            url: 'services/' + servicesMeta?.services?.slug,
-            siteName: servicesMeta?.profileSettings?.company_name,
-            images: servicesMeta?.services?.imageData?.asset?.url,
-            locale: 'en-US',
-            type: 'website',
-        },
-        twitter: {
-            title: servicesMeta?.services?.seo?.title_tag,
-            description: servicesMeta?.services?.seo?.meta_description,
-            creator: '@' + servicesMeta?.profileSettings?.seo?.twitterHandle,
-        },
-        icons: {
-            icon: servicesMeta?.appearances?.branding?.favicon?.asset?.url,
-            shortcut: servicesMeta?.appearances?.branding?.favicon?.asset?.url,
-            apple: servicesMeta?.appearances?.branding?.favicon?.asset?.url,
-        },
-        robots: {
-            index: servicesMeta?.services?.seo?.noIndex ? false : true,
-            follow: servicesMeta?.services?.seo?.noIndex ? false : true,
-        }
-    }
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+    const param = await params;
+
+    return generatePageMetadata({
+        slug: param.slug,
+        fetcher: getServices,
+        mainKey: "services",
+        type: 'services'
+    });
 }
 
-export default async function servicesSlug({ params }: Props) {
+export default async function servicesSlug({ params }: PageParams) {
 
-    const slug = params.slug
+    const param = await params;
+    const slug = param.slug;
+
     const services = await getServices(slug)
 
     if (!services?.services) {

@@ -150,25 +150,19 @@ export default function PageBuilder({
     const renderSection = useCallback(
         (section: BaseSection) => {
 
-
-
-            if (section._type === "hero") {
-                return (
-                    <Hero
-                        section={builderData(section)}
-                    />
-                )
-            }
-
-            if (section._type === "ctaSection") {
-                return (
-                    <CtaSection
-                        section={builderData(section)}
-                    />
-                )
-            }
-
             switch (section._type) {
+                case "hero":
+                    return (
+                        <Hero
+                            section={builderData(section)}
+                        />
+                    )
+                case "ctaSection":
+                    return (
+                        <CtaSection
+                            section={builderData(section)}
+                        />
+                    )
                 case "blogDisplay":
                     return (
                         <BlogSection
@@ -258,15 +252,7 @@ export default function PageBuilder({
                 )
 
                 // Special case for full-width sections
-                if (section._type === "hero" && section.layoutType === "hero" || section.layoutType === "sideBysideCarousel") {
-                    return (
-                        <SectionErrorBoundary key={section._key || section.id} sectionName={section._type}>
-                            {renderSection(section)}
-                        </SectionErrorBoundary>
-                    )
-                }
-
-                if (section._type === "ctaSection" && section.layoutType === "fullWidthTextImage") {
+                if (section._type === "hero" && section.layoutType === "hero" || section.layoutType === "sideBysideCarousel" || section._type === "ctaSection" && section.layoutType === "fullWidthTextImage") {
                     return (
                         <SectionErrorBoundary key={section._key || section.id} sectionName={section._type}>
                             <section
@@ -274,6 +260,7 @@ export default function PageBuilder({
                                     "bg-cover bg-center": section.background?.background.backgroundType === "image",
                                 })}
                                 style={backgroundStyles}
+                                id={section?._type + '-' + section._key}
                             >
                                 {renderSection(section)}
                             </section>
@@ -291,7 +278,9 @@ export default function PageBuilder({
                             style={backgroundStyles}
                             id={section?._type + '-' + section._key}
                         >
-                            <div className="container">{renderSection(section)}</div>
+                            <div className="container">
+                                {renderSection(section)}
+                            </div>
                         </section>
                     </SectionErrorBoundary>
                 )

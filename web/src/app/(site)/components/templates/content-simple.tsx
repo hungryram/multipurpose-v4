@@ -1,6 +1,6 @@
 import type React from "react"
 import { cn } from "@/lib/utils"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { ContentSectionProps } from "@/lib/types"
 
 

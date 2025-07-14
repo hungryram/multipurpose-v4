@@ -39,7 +39,7 @@ interface BlogCardProps {
 export function BlogCard({ title, slug, date, image, blurData, altText, excerpt }: BlogCardProps) {
     return (
         <Link href={`/${slug}`} className="block h-full">
-            <Card className="group h-full overflow-hidden transition-all hover:shadow-lg dark:bg-gray-800">
+            <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
                 <div className="relative aspect-video overflow-hidden">
                     <Image
                         src={image || "/placeholder.svg"}
@@ -50,23 +50,25 @@ export function BlogCard({ title, slug, date, image, blurData, altText, excerpt 
                         blurDataURL={blurData ?? baseEncode}
                     />
                 </div>
-                <CardHeader className="space-y-2">
-                    <CardTitle className="line-clamp-2 transition-colors group-hover:text-primary">{title}</CardTitle>
-                    <div className="flex items-center text-sm text-muted-foreground">
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        <time dateTime={date}>{date}</time>
-                    </div>
-                </CardHeader>
-                {excerpt &&
+                <div className="px-4 pb-4">
+                    <CardHeader className="space-y-2">
+                        <CardTitle className="line-clamp-2 transition-colors group-hover:text-primary">{title}</CardTitle>
+                        <div className="flex items-center text-sm text-muted-foreground">
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            <time dateTime={date}>{date}</time>
+                        </div>
+                    </CardHeader>
+                    {excerpt &&
                         <CardContent>
                             <p>{excerpt}</p>
                         </CardContent>
                     }
-                <CardFooter>
-                    <span className="flex items-center gap-2 text-sm font-medium text-primary">
-                        Read article <ArrowRight className="h-4 w-4" />
-                    </span>
-                </CardFooter>
+                    <CardFooter>
+                        <span className="flex items-center gap-2 text-sm font-medium text-primary">
+                            Read article <ArrowRight className="h-4 w-4" />
+                        </span>
+                    </CardFooter>
+                </div>
             </Card>
         </Link>
     )

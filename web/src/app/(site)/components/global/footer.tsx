@@ -51,7 +51,7 @@ export default function Footer({
   const renderContactInfo = (layout?: "single-column") => {
     if (layout === "single-column") {
       return (
-        <div className="space-x-10 text-sm flex justify-center">
+        <div className="space-x-10 text-sm md:flex md:space-y-0 space-y-4 justify-center">
           {(footerData.profileSettings?.address?.address || footerData.profileSettings?.address?.city || footerData.profileSettings?.address?.state || footerData.profileSettings?.address?.zip_code) && (
             <div>
               {footerData.profileSettings?.address?.address && <>{footerData.profileSettings?.address?.address} </>}
@@ -234,7 +234,7 @@ export default function Footer({
           {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
         </div>
       </div>
-      <div className="flex flex-col md:flex-row items-center gap-4">
+      <div className="flex flex-col md:flex-row items-center justify-start gap-4">
         {renderSocial()}
       </div>
     </div>
@@ -246,7 +246,7 @@ export default function Footer({
         {renderLogo()}
         {renderSocial()}
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
         <div>
           <h3 className="font-semibold mb-4" style={{ color: footerData?.appearances?.footerHeader }}>
@@ -310,13 +310,15 @@ export default function Footer({
           )}
           {footerData?.legal && (
             <ul className="flex flex-wrap gap-4 mb-4">
-              {footerData?.legal.map((item: any) => (
-                <li key={item._key}>
+              {footerData?.legal.map((item: any) => {
+                return (
+                <li key={item._id}>
                   <Link href={`/legal/${item.slug}`} className="text-xs hover:underline">
                     {item.title}
                   </Link>
                 </li>
-              ))}
+              )
+              })}
             </ul>
           )}
           <p className="text-xs">

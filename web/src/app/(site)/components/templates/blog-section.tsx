@@ -7,7 +7,7 @@ import { format, parseISO } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { BlogSectionProps, BlogPost } from "@/lib/types"
 import { baseEncode } from "../../../../../lib/utils"
 

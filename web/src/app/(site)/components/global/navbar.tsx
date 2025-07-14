@@ -16,12 +16,11 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import React from "react" // Import React
+import React from "react"
 import type { NavbarProps } from "@/lib/types"
+import { getNavLink } from "../util/getButtonLink"
 
-export function Navbar({
-  navbarData,
-}: NavbarProps) {
+export function Navbar({ navbarData }: NavbarProps) {
   const [scroll, setScroll] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -30,7 +29,6 @@ export function Navbar({
     const handleScroll = () => {
       setScroll(window.scrollY > 100)
     }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -40,20 +38,19 @@ export function Navbar({
   }, [])
 
   const ctaLink = navbarData?.appearances?.header?.ctaLink
-  const ctaLinking = getCTALink(ctaLink)
-
+  const ctaLinking = getNavLink(ctaLink)
 
   const logoWidth = navbarData.appearances?.branding?.logoWidth
   const logoScroll = scroll ? (logoWidth ?? 200) * 0.7 : (logoWidth ?? 200)
   const logoOnScroll = navbarData.appearances?.branding?.logoScroll?.asset?.url
   const contactInfo = navbarData.profileSettings?.contact_information
 
+
   return (
     <header
       className={cn(
         "fixed w-full z-50 transition-all duration-700 ease-in-out nav-bg-fixed",
-        scroll ? "shadow-md" : "top-0",
-        scroll ? "nav-bg-scroll" : "bg-transparent",
+        scroll ? "shadow-md nav-bg-scroll" : "top-0 bg-transparent",
         isLoaded ? "opacity-100" : "opacity-0",
       )}
     >
@@ -82,7 +79,7 @@ export function Navbar({
         <Link href="/" className="shrink-0">
           {navbarData?.appearances?.branding?.logo?.asset?.url ? (
             <Image
-              src={navbarData?.appearances?.branding?.logo?.asset?.url || "/placeholder.svg"}
+              src={navbarData.appearances?.branding?.logo?.asset?.url || "/placeholder.svg"}
               width={logoScroll}
               height={10}
               alt={navbarData?.profileSettings?.company_name}
@@ -91,9 +88,9 @@ export function Navbar({
           ) : (
             <h1 className="text-xl font-bold">{navbarData?.profileSettings?.company_name}</h1>
           )}
-          {scroll && navbarData.appearances?.branding?.logoScroll?.asset?.url && (
+          {scroll && logoOnScroll && (
             <Image
-              src={navbarData.appearances?.branding?.logoScroll?.asset?.url || "/placeholder.svg"}
+              src={logoOnScroll}
               width={logoScroll}
               height={10}
               alt={navbarData?.profileSettings?.company_name}
@@ -104,28 +101,32 @@ export function Navbar({
         <div className="hidden lg:flex items-center space-x-8">
           <NavigationMenu>
             <NavigationMenuList>
-              {navbarData?.appearances?.header?.mainNav?.navItems?.map((item: any) => (
-                <NavigationMenuItem key={item._key}>
-                  {item.subMenu && item.subMenu.length > 0 ? (
-                    <>
-                      <NavigationMenuTrigger triggerMode="click">{item.text}</NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[300px]">
-                          {item.subMenu.map((subItem: any) => (
-                            <ListItem key={subItem._key} title={subItem.text} href={getMenuLink(subItem)}>
-                              {subItem.description}
-                            </ListItem>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <Link href={getMenuLink(item)} legacyBehavior passHref>
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.text}</NavigationMenuLink>
-                    </Link>
-                  )}
-                </NavigationMenuItem>
-              ))}
+              {navbarData?.appearances?.header?.mainNav?.navItems?.map((item: any) => {
+                return (
+                  <NavigationMenuItem key={item._key}>
+                    {item.subMenu?.length > 0 ? (
+                      <>
+                        <NavigationMenuTrigger triggerMode="click">{item.text}</NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] lg:w-[300px]">
+                            {item.subMenu.map((subItem: any) => (
+                              <ListItem key={subItem._key} title={subItem.text} href={getNavLink(subItem)}>
+                                {subItem.description}
+                              </ListItem>
+                            ))}
+                          </ul>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href={getNavLink(item)}>
+                          {item.text}
+                        </Link>
+                      </NavigationMenuLink>
+                    )}
+                  </NavigationMenuItem>
+                )
+              })}
             </NavigationMenuList>
           </NavigationMenu>
           {!navbarData?.appearances?.header?.hideCta && ctaLinking && (
@@ -159,9 +160,7 @@ export function Navbar({
                 ))}
                 {!navbarData?.appearances?.header?.hideCta && ctaLinking && (
                   <Button asChild className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href={ctaLinking}>
-                      {ctaLink?.text}
-                    </Link>
+                    <Link href={ctaLinking}>{ctaLink?.text}</Link>
                   </Button>
                 )}
                 <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
@@ -180,7 +179,7 @@ export function Navbar({
 
 function MobileNavItem({ item, closeMenu }: { item: any; closeMenu: () => void }) {
   const hasSubMenu = item?.subMenu && item.subMenu.length > 0
-  const menuLink = getMenuLink(item)
+  const menuLink = getNavLink(item)
 
   if (hasSubMenu) {
     return (
@@ -191,7 +190,7 @@ function MobileNavItem({ item, closeMenu }: { item: any; closeMenu: () => void }
             {item.subMenu?.map((subItem: any) => (
               <Link
                 key={subItem._key}
-                href={getMenuLink(subItem)}
+                href={getNavLink(subItem)}
                 className="block py-2 mobileNavItem"
                 target={subItem.newTab ? "_blank" : undefined}
                 onClick={closeMenu}
@@ -205,7 +204,12 @@ function MobileNavItem({ item, closeMenu }: { item: any; closeMenu: () => void }
     )
   } else {
     return (
-      <Link href={menuLink} className="block py-2 mobileNavItem" target={item.newTab ? "_blank" : undefined} onClick={closeMenu}>
+      <Link
+        href={menuLink}
+        className="block py-2 mobileNavItem"
+        target={item.newTab ? "_blank" : undefined}
+        onClick={closeMenu}
+      >
         {item.text}
       </Link>
     )
@@ -235,53 +239,4 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
 )
 ListItem.displayName = "ListItem"
 
-function getMenuLink(item: any) {
-  if (!item) return "/"
-  if (item.externalUrl) return item.externalUrl
-  if (item.internalPath) return item.internalPath;
-  if (!item.internalLink) return "/"
-
-  const { _type, slug } = item.internalLink
-  switch (_type) {
-    case "pages":
-      return `/${slug}`
-    case "blog":
-      return `/blog/${slug}`
-    case "legal":
-      return `/legal/${slug}`
-    case "services":
-      return `/services/${slug}`
-    case "team":
-      return `/team/${slug}`
-    case "homeDesign":
-      return "/"
-    default:
-      return "/"
-  }
-}
-
-function getCTALink(ctaLink: any) {
-  if (!ctaLink) return "/"
-  if (ctaLink.internalPath) return ctaLink.internalPath;
-  if (ctaLink?.externalUrl) return ctaLink.externalUrl
-  if (!ctaLink?.internalLink) return "/"
-
-  const { _type, slug } = ctaLink.internalLink
-  switch (_type) {
-    case "pages":
-      return `/${slug}`
-    case "blog":
-      return `/blog/${slug}`
-    case "legal":
-      return `/legal/${slug}`
-    case "services":
-      return `/services/${slug}`
-    case "team":
-      return `/team/${slug}`
-    default:
-      return "/"
-  }
-}
-
 export default Navbar
-

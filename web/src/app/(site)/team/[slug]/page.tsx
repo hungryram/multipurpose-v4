@@ -1,58 +1,29 @@
 import { getTeam } from '../../../../../lib/groq-data'
 import ContentEditor from "../../components/util/content-editor"
 import Image from "next/image"
-import { FaMobileAlt,FaRegEnvelope } from "react-icons/fa";
+import { FaMobileAlt, FaRegEnvelope } from "react-icons/fa";
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Social from "../../components/templates/social"
-
-type Props = {
-  params: {
-    slug: string
-  }
-}
-
-type Meta = {
-  params: {
-    slug: string
-  }
-}
+import { generatePageMetadata } from '../../components/util/generateMetaData';
+import { PageParams } from '@/lib/types';
 
 // GENERATES SEO
-export async function generateMetadata({ params }: Meta): Promise<Metadata> {
-  const slug = params.slug
-  const teamMetaData = await getTeam(slug)
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const param = await params;
 
-  return {
-    title: teamMetaData?.team?.seo?.title_tag,
-    description: teamMetaData?.team?.seo?.meta_description,
-    metadataBase: new URL(teamMetaData?.profileSettings?.settings?.websiteName ?? "http://localhost:3000"),
-    alternates: {
-      canonical: "team/" + teamMetaData?.team?.slug,
-    },
-    openGraph: {
-      title: teamMetaData?.team?.seo?.title_tag,
-      description: teamMetaData?.team?.seo?.meta_description,
-      url: "team/" + teamMetaData?.team?.slug,
-      siteName: teamMetaData?.profileSettings?.company_name,
-      locale: "en-US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: teamMetaData?.team?.seo?.title_tag,
-      description: teamMetaData?.team?.seo?.meta_description,
-      creator: "@" + teamMetaData?.profileSettings?.seo?.twitterHandle,
-    },
-    robots: {
-      index: teamMetaData?.team?.seo?.noIndex ? false : true,
-      follow: teamMetaData?.team?.seo?.noIndex ? false : true,
-    },
-  }
+  return generatePageMetadata({
+    slug: param.slug,
+    fetcher: getTeam,
+    mainKey: "team",
+    type: 'team'
+  });
 }
 
-export default async function TeamSlug({ params }: Props) {
-  const slug = params.slug
+export default async function TeamSlug({ params }: PageParams) {
+  const param = await params;
+  const slug = param.slug;
+  
   const team = await getTeam(slug)
 
   if (!team?.team) {
@@ -75,19 +46,17 @@ export default async function TeamSlug({ params }: Props) {
     },
   }
 
-  console.log(data?.socialAccounts?.twitter)
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
       <div>
-        <div className="container pt-32 pb-20">
-          <div className="mx-auto max-w-4xl">
+        <div className="container pt-44 pb-20">
+          <div>
             {/* Header Section */}
-            <div className="text-center mb-12">
+            <div className="text-left mb-12">
               <p className="text-base font-semibold text-primary mb-2">{data?.position}</p>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl mb-6">{data?.name}</h1>
-              <div className="flex flex-wrap items-center justify-center gap-6">
+              <div className="flex flex-wrap items-center justify-start gap-6">
                 {data?.contactInformation?.phoneNumber && (
                   <a
                     href={`tel:${data?.contactInformation?.phoneNumber}`}
@@ -112,12 +81,13 @@ export default async function TeamSlug({ params }: Props) {
             {/* Main Content */}
             <div className="grid gap-12 lg:grid-cols-2">
               {/* Image */}
-              <div className="relative aspect-3/4 overflow-hidden rounded-lg shadow-lg">
+              <div>
                 {data?.imageData?.asset?.url ? (
                   <Image
                     src={data?.imageData?.asset?.url || "/placeholder.svg"}
                     alt={data?.imageData?.asset?.altText || data?.name}
-                    fill
+                    width={800}
+                    height={800}
                     className="object-cover"
                     placeholder={data?.imageData?.asset?.lqip ? "blur" : "empty"}
                     blurDataURL={data?.imageData?.asset?.lqip}
@@ -138,7 +108,7 @@ export default async function TeamSlug({ params }: Props) {
 
                 {/* Social Links */}
                 <div className="border-t">
-                <Social
+                  <Social
                     links={{
                       facebook: data?.socialAccounts?.facebook,
                       youtube: data?.socialAccounts?.youtube,

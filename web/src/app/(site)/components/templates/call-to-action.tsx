@@ -1,5 +1,5 @@
 import Image from "next/image"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { cn } from "@/lib/utils"
 import { CtaSectionProps } from "@/lib/types"
 import { baseEncode } from "../../../../../lib/utils"
@@ -28,6 +28,12 @@ export default function CtaSection({
         return "lg:w-2/5"
       case "oneThird":
         return "lg:w-1/3"
+      case "oneFourth":
+        return "lg:w-1/4"
+      case "threeFifth":
+        return "lg:w-3/5"
+      case "twoThirds":
+        return "lg:w-2/3"
       default:
         return "lg:w-1/2"
     }
@@ -41,6 +47,12 @@ export default function CtaSection({
         return "lg:w-3/5"
       case "oneThird":
         return "lg:w-2/3"
+      case "oneFourth":
+        return "lg:w-3/4"
+      case "threeFifth":
+        return "lg:w-2/5"
+      case "twoThirds":
+        return "lg:w-1/3"
       default:
         return "lg:w-1/2"
     }

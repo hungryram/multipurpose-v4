@@ -3,11 +3,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import ContentEditor from "../util/content-editor"
-import CustomButton from "./custom-button"
+import CustomButton from "../util/custom-button"
 import { baseEncode } from "../../../../../lib/utils"
 import { BlockLinking, FeaturedGridProps, FeaturedItem } from "@/lib/types"
+import { getLinkUrl } from "../util/getButtonLink"
 
 export default function FeaturedGrid({
     section
@@ -24,7 +25,10 @@ export default function FeaturedGrid({
         content,
         secondaryButton,
         primaryButton,
-        imageHeight = "large"
+        imageHeight = "large",
+        headingColor,
+        contentColor,
+        linkColor
     } = section || {}
 
     const gridClass = {
@@ -51,33 +55,22 @@ export default function FeaturedGrid({
         </div>
     )
 
-    const getLinkUrl = (blockLinking: BlockLinking | undefined) => {
-        if (!blockLinking) return ""
 
-        const { internalLink, externalUrl, internalPath } = blockLinking
-
-        if (externalUrl) return externalUrl
-        if (internalPath) return internalPath
-
-        if (internalLink) {
-            switch (internalLink._type) {
-                case "pages":
-                    return `/${internalLink.slug}`
-                case "blog":
-                case "legal":
-                case "services":
-                case "team":
-                    return `/${internalLink._type}/${internalLink.slug}`
-                default:
-                    return ""
-            }
-        }
-
-        return ""
-    }
 
     const renderCard = (item: FeaturedItem, index: number) => {
         const linkUrl = getLinkUrl(item.blockLinking)
+
+        const titleColor = {
+            color: headingColor?.hex
+        }
+
+        const textColor = {
+            color: contentColor?.hex
+        }
+
+        const navColor = {
+            color: linkColor?.hex
+        }
 
         switch (layoutType) {
             case "text-overlay":
@@ -86,7 +79,7 @@ export default function FeaturedGrid({
                         {item.image?.asset?.url && (
                             <Image
                                 src={item.image?.asset?.url || "/placeholder.svg"}
-                                alt={item.image?.asset?.altText}
+                                alt={item.image?.asset?.altText || item?.heading}
                                 fill
                                 className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                                 placeholder="blur"
@@ -94,7 +87,7 @@ export default function FeaturedGrid({
                             />
                         )}
                         <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-500 flex flex-col justify-end p-4">
-                            <CardTitle className="text-white mb-2">
+                            <CardTitle style={titleColor}>
                                 <h3 className="heading-font" style={{ color: item.headingColor?.hex }}>{item.heading}</h3>
                             </CardTitle>
                             {item?.content && (
@@ -103,7 +96,7 @@ export default function FeaturedGrid({
                                 </CardDescription>
                             )}
                             {linkUrl && (
-                                <Link href={linkUrl} className="absolute inset-0"><span className="sr-only">view {item?.heading}</span></Link>
+                                <Link href={linkUrl || '/'} className="absolute inset-0"><span className="sr-only">view {item?.heading}</span></Link>
                             )}
                         </div>
                     </Card>
@@ -115,7 +108,7 @@ export default function FeaturedGrid({
                         <div className={`relative ${imageHeightClass}`}>
                             <Image
                                 src={item.image?.asset?.url || "/placeholder.svg"}
-                                alt={item.image?.asset?.altText}
+                                alt={item.image?.asset?.altText || item?.heading}
                                 placeholder="blur"
                                 blurDataURL={item?.image?.asset?.lqip ?? baseEncode}
                                 fill
@@ -123,18 +116,18 @@ export default function FeaturedGrid({
                             />
                         </div>
                         <CardHeader>
-                            <CardTitle>
+                            <CardTitle style={titleColor}>
                                 <h3 className="text-2xl! mt-0!" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
                             </CardTitle>
                             {item?.content && (
-                                <CardDescription>
+                                <CardDescription style={textColor}>
                                     <ContentEditor content={item?.content} />
                                 </CardDescription>
                             )}
                         </CardHeader>
                         {linkUrl && (
-                            <CardContent>
-                                <CustomButton text={item.button?.text} link={linkUrl} variant="secondary" />
+                            <CardContent style={navColor}>
+                                <Link href={linkUrl || '/'}>{item.button?.text}</Link>
                             </CardContent>
                         )}
                     </Card>
@@ -144,7 +137,7 @@ export default function FeaturedGrid({
                 return (
                     <Card key={index}>
                         <CardHeader>
-                            <CardTitle>
+                            <CardTitle style={titleColor}>
                                 <h3 className="text-2xl! mt-0!" style={{ color: item.headingColor?.hex }}>{item?.heading}</h3>
                             </CardTitle>
                             {item?.content && (
@@ -166,7 +159,7 @@ export default function FeaturedGrid({
                     <Card key={index} className={`overflow-hidden relative ${imageHeightClass}`}>
                         <Image
                             src={item?.image?.asset?.url || "/placeholder.svg"}
-                            alt={item?.image?.asset?.altText}
+                            alt={item.image?.asset?.altText || item?.heading}
                             fill
                             className="object-cover"
                             placeholder="blur"

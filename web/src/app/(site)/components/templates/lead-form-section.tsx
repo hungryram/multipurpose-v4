@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 import FormBuilder from "./form-builder"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import ContentEditor from "../util/content-editor"
 import { LeadFormSectionProps } from "@/lib/types"
 

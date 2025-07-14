@@ -6,7 +6,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import ContentEditor from "../components/util/content-editor"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Settings} from "lucide-react"
+import { ArrowRight, Settings } from "lucide-react"
+import { generatePageMetadata } from "../components/util/generateMetaData"
 
 interface Service {
     _id: string
@@ -32,40 +33,11 @@ const serviceIcons: Record<string, React.ElementType> = {
 
 // GENERATES SEO
 export async function generateMetadata() {
-    const serviceMeta = await client.fetch(servicesPage)
-    const hasServices = serviceMeta?.services?.length > 0
-
-    return {
-        title: serviceMeta?.pageSetting?.services?.seo?.title_tag,
-        description: serviceMeta?.pageSetting?.services?.seo?.meta_description,
-        metadataBase: new URL(serviceMeta?.profileSettings?.settings?.websiteName ?? "http://localhost:3000"),
-        alternates: {
-            canonical: "services",
-        },
-        openGraph: {
-            title: serviceMeta?.pageSetting?.services?.seo?.title_tag,
-            description: serviceMeta?.pageSetting?.services?.seo?.meta_description,
-            url: "services",
-            siteName: serviceMeta?.profileSettings?.company_name,
-            images: serviceMeta?.profileSettings?.seo?.defaultImageBanner?.asset?.url,
-            locale: "en-US",
-            type: "website",
-        },
-        twitter: {
-            title: serviceMeta?.pageSetting?.services?.seo?.title_tag,
-            description: serviceMeta?.pageSetting?.services?.seo?.meta_description,
-            creator: "@" + serviceMeta?.profileSettings?.seo?.twitterHandle,
-        },
-        icons: {
-            icon: serviceMeta.appearances?.branding?.favicon?.asset?.url,
-            shortcut: serviceMeta.appearances?.branding?.favicon?.asset?.url,
-            apple: serviceMeta.appearances?.branding?.favicon?.asset?.url,
-        },
-        robots: {
-            index: hasServices,
-            follow: hasServices,
-        },
-    }
+    return generatePageMetadata({
+        fetcher: () => client.fetch(servicesPage),
+        mainKey: "pageSetting",
+        type: "services",
+    });
 }
 
 export default async function ServicesSection() {
@@ -99,10 +71,9 @@ export default async function ServicesSection() {
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
-            <div className="pt-40 pb-20">
+            <div className="pt-44 pb-20">
                 <div className="container">
                     <div className="mx-auto max-w-2xl text-center">
-                        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{services?.pageSetting?.services?.title ?? 'Services'}</h1>
                         {services?.pageSetting?.services?.content && (
                             <div className="mt-6 text-lg leading-8 text-muted-foreground">
                                 <ContentEditor content={services?.pageSetting?.services?.content} />
@@ -115,7 +86,7 @@ export default async function ServicesSection() {
                             const IconComponent = serviceIcons[service.title] || serviceIcons.default
 
                             return (
-                                <Link key={service._id} href={`services/${service.slug.current}`} className="group relative">
+                                <Link key={service._id} href={`/services/${service.slug.current}`}>
                                     <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg">
                                         {service?.imageData?.asset?.url ? (
                                             <div className="relative aspect-video overflow-hidden">
@@ -133,15 +104,12 @@ export default async function ServicesSection() {
                                                 <IconComponent className="h-12 w-12 text-muted-foreground transition-colors group-hover:text-primary" />
                                             </div>
                                         )}
-                                        <CardHeader>
-                                            <CardTitle className="group-hover:text-primary transition-colors">{service.title}</CardTitle>
-                                            {service.detail && <CardDescription className="line-clamp-3">{service.detail}</CardDescription>}
-                                        </CardHeader>
-                                        <CardContent>
-                                            <span className="flex items-center text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
-                                                Learn more <ArrowRight className="ml-1 h-4 w-4" />
-                                            </span>
-                                        </CardContent>
+                                        <div className="py-4 pl-6">
+                                            <CardHeader>
+                                                <CardTitle className="group-hover:text-primary transition-colors">{service.title}</CardTitle>
+                                                {service.detail && <CardDescription className="line-clamp-3">{service.detail}</CardDescription>}
+                                            </CardHeader>
+                                        </div>
                                     </Card>
                                 </Link>
                             )

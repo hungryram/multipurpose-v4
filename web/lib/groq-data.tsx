@@ -601,6 +601,7 @@ export const servicesPage = groq`
     'services': *[_type == 'services'] | order(sortOrder asc){
       title,
       detail,
+      _id,
       slug,
       'imageData': featuredImage {
         asset-> {
@@ -858,7 +859,7 @@ export async function getLegal(slug: string) {
           }
         }
       },
-  'legal': *[_type == "legal" && slug.current == $slug][0]{
+  "legal": *[_type == "legal" && slug.current == $slug][0] {
     _id,
     title,
     content,

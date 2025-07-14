@@ -3,44 +3,16 @@ import type { Metadata } from "next"
 import { blogPage } from "../../../../lib/groq-data"
 import ContentEditor from "../components/util/content-editor"
 import BlogPaginationClient from "./blog-pagination"
+import { generatePageMetadata } from "../components/util/generateMetaData"
 
 // GENERATES SEO
 export async function generateMetadata(): Promise<Metadata> {
-  const post = await blogPage()
-  const hasBlog = post?.blog?.length > 0
-
-  return {
-    title: post?.pageSetting?.blog?.seo?.title_tag,
-    description: post?.pageSetting?.blog?.seo?.meta_description,
-    metadataBase: new URL(post?.profileSettings?.settings?.websiteName ?? "http://localhost:3000"),
-    alternates: {
-      canonical: "blog",
-    },
-    openGraph: {
-      title: post?.blog?.seo?.title_tag,
-      description: post?.blog?.seo?.meta_description,
-      url: "blog",
-      siteName: post?.profileSettings?.company_name,
-      images: post?.blog?.imageData?.asset?.url,
-      locale: "en-US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post?.blog?.seo?.title_tag,
-      description: post?.blog?.seo?.meta_description,
-      creator: "@" + post?.profileSettings?.seo?.twitterHandle,
-    },
-    icons: {
-      icon: post.appearances?.branding?.favicon?.asset?.url,
-      shortcut: post.appearances?.branding?.favicon?.asset?.url,
-      apple: post.appearances?.branding?.favicon?.asset?.url,
-    },
-    robots: {
-      index: hasBlog,
-      follow: hasBlog,
-    },
-  }
+  return generatePageMetadata({
+    fetcher: blogPage,
+    mainKey: "pageSetting",
+    subKey: "blog",
+    type: "blog",
+  });
 }
 
 export default async function BlogPage() {
@@ -94,7 +66,6 @@ export default async function BlogPage() {
       <div className="pt-40 pb-20">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">{posts?.pageSetting?.blog?.title ?? 'Blog'}</h1>
             {posts?.pageSetting?.blog?.content && (
               <div className="mt-10">
                 <ContentEditor content={posts?.pageSetting?.blog?.content} />

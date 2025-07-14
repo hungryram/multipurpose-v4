@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 body {
   font-family: var(--body-font);
@@ -10,17 +10,9 @@ body {
 html {
   scroll-behavior: smooth;
 }
-/* 
-.section {
-  @apply py-20
-} */
-
-.container {
-  padding: 0 10px;
-}
 
 .accent {
-  color: var(--primary-accent)
+  color: var(--primary-accent);
 }
 
 .bg-accent {
@@ -44,17 +36,16 @@ header.nav-bg-scroll {
 }
 
 .primary-button {
-  /* @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2; */
   background-color: var(--primary-button-background);
   color: var(--primary-button-text);
   border-radius: var(--button-radius);
   padding-left: var(--button-x-padding);
   padding-right: var(--button-x-padding);
   padding-top: var(--button-y-padding);
-  padding-bottom: var(--button-y-padding);}
+  padding-bottom: var(--button-y-padding);
+}
 
 .secondary-button {
-  /* @apply px-3 py-2 text-sm shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2; */
   background-color: var(--secondary-button-background);
   color: var(--secondary-button-text);
   border-radius: var(--button-radius);
@@ -64,27 +55,24 @@ header.nav-bg-scroll {
   padding-bottom: var(--button-y-padding);
 }
 
-
 /* NAVBAR */
 
 .mobileBg {
-  background-color: var(--mobile-bg-color)
+  background-color: var(--mobile-bg-color);
 }
 
 .mobileNavItem {
   color: var(--mobile-nav-color);
-  font-family: var(--heading-font)!important;
-  /* @apply text-4xl uppercase tracking-wide */
+  font-family: var(--heading-font) !important;
 }
 
 /* CONTENT */
-body .content h1, 
-body .content h2, 
-body .content h3, 
-body .content h4, 
-body .content h5, 
+body .content h1,
+body .content h2,
+body .content h3,
+body .content h4,
+body .content h5,
 body .content h6 {
-  /* @apply leading-snug font-medium mb-6 mt-2; */
   color: var(--website-heading-color, #000);
   font-family: var(--heading-font);
 }
@@ -92,39 +80,6 @@ body .content h6 {
 .heading-font {
   font-family: var(--heading-font);
 }
-
-/* .content h1 {
-  @apply md:text-5xl text-3xl;
-}
-
-.content h2 {
-  @apply md:text-4xl text-3xl;
-}
-
-.content h3 {
-  @apply md:text-2xl text-lg;
-}
-
-.content h4 {
-  @apply text-lg;
-} */
-
-.content p {
-  margin-bottom: 1rem;
-  line-height: 1.7;
-}
-
-/* .content ul {
-  @apply my-2 list-disc ml-8;
-}
-
-.content ol {
-  @apply my-2 list-decimal ml-8
-}
-
-.content li {
-  @apply my-1;
-} */
 
 .swiper-button-disabled {
   opacity: 0.5;
@@ -140,16 +95,12 @@ input[type="radio"]:checked:focus {
 input[type="radio"]:checked:hover {
   background-color: var(--radio-color);
   /* @apply outline-none */
-
 }
-
 
 input[type="radio"]:checked {
   /* Change the background color of the radio button circle when checked */
   background-color: var(--radio-color);
   background-image: none;
-  /* @apply outline-none */
-
 }
 
 .slide-up {
@@ -159,68 +110,89 @@ input[type="radio"]:checked {
 .slide-down {
   transform: translateY(0%);
 }
-/* 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+
+@utility content {
+  & h1 {
+    font-size: theme("fontSize.3xl");
+
+    @variant md {
+      font-size: theme("fontSize.5xl");
+    }
   }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+
+  & h2 {
+    font-size: theme("fontSize.3xl");
+
+    @variant md {
+      font-size: theme("fontSize.4xl");
+    }
+  }
+
+  & h3 {
+    font-size: theme("fontSize.lg");
+
+    @variant md {
+      font-size: theme("fontSize.2xl");
+    }
+  }
+
+  & h4 {
+    font-size: theme("fontSize.lg");
+  }
+
+  & p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  & li {
+    margin-bottom: 6px;
+  }
+
+  & ol {
+    list-style-type: decimal; /* spelling! */
+    list-style-position: inside;
+    padding-left: 1em; /* optional, if you want indent */
+  }
+
+  & ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    padding-left: 1em; /* optional */
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@utility container {
+  margin-inline: auto;
+  padding: 0 12px;
+  @variant sm {
+    padding-inline: 20px;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  @variant md {
+    padding-inline: 40px;
   }
-} */
+}
+
+@theme {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}

@@ -1,37 +1,10 @@
 import type React from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import ContentEditor from "../util/content-editor"
+import ContentEditor from "./content-editor"
 import { Button } from "@/components/ui/button"
 import { HeaderSectionProps, ButtonProps } from "@/lib/types"
-
-// Remove the local ButtonProps interface since we're importing it
-
-
-
-// Update getButtonLink to use the new type
-const getButtonLink = (button?: ButtonProps["link"]) => {
-  if (!button) return "";
-
-  if (button.externalUrl) return button.externalUrl;
-  if (button.internalPath) return button.internalPath;
-  if (!button.internalLink) return "";
-
-  switch (button.internalLink._type) {
-    case "homeDesign":
-      return "/";
-    case "pages":
-      return `/${button.internalLink.slug}`;
-    case "blog":
-    case "legal":
-    case "services":
-    case "team":
-      return `/${button.internalLink._type}/${button.internalLink.slug}`;
-    default:
-      return "";
-  }
-};
-
+import { getButtonLink } from "./getButtonLink" 
 
 const CustomButton: React.FC<ButtonProps & { variant: "primary" | "secondary" }> = ({ text, link, style, variant }) => {
   const href = getButtonLink(link)
@@ -68,7 +41,7 @@ export default function HeaderSection({ content, textAlign, primaryButton, secon
       <ContentEditor content={content} />
       {(primaryButton || secondaryButton) && (
         <div
-          className={cn("mt-10 flex items-center gap-x-6", {
+          className={cn("mt-10 flex flex-wrap items-center gap-2 md:gap-x-6 md:gap-y-2", {
             "text-left": textAlign === "left",
             "mx-auto text-center justify-center": textAlign === "center",
             "text-right justify-end": textAlign === "right",
@@ -81,4 +54,3 @@ export default function HeaderSection({ content, textAlign, primaryButton, secon
     </div>
   )
 }
-

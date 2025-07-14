@@ -4,7 +4,7 @@ import type React from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { LogoCloudSectionProps, LogoImage } from "@/lib/types"
 
 

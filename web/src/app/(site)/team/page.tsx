@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { generatePageMetadata } from "../components/util/generateMetaData"
 
 interface TeamMember {
   name: string
@@ -37,41 +38,13 @@ interface TeamMember {
 
 // GENERATES SEO
 export async function generateMetadata() {
-  const teamMeta = await client.fetch(teamPage)
-  const hasTeam = teamMeta?.team?.length > 0
-
-  return {
-    title: teamMeta?.pageSetting?.team?.seo?.title_tag,
-    description: teamMeta?.pageSetting?.team?.seo?.meta_description,
-    metadataBase: new URL(teamMeta?.profileSettings?.settings?.websiteName ?? "http://localhost:3000"),
-    alternates: {
-      canonical: "team",
-    },
-    openGraph: {
-      title: teamMeta?.pageSetting?.team?.seo?.title_tag,
-      description: teamMeta?.pageSetting?.team?.seo?.meta_description,
-      url: "team",
-      siteName: teamMeta?.profileSettings?.company_name,
-      images: teamMeta?.profileSettings?.seo?.defaultImageBanner?.asset?.url,
-      locale: "en-US",
-      type: "website",
-    },
-    twitter: {
-      title: teamMeta?.pageSetting?.team?.seo?.title_tag,
-      description: teamMeta?.pageSetting?.team?.seo?.meta_description,
-      creator: "@" + teamMeta?.profileSettings?.seo?.twitterHandle,
-    },
-    icons: {
-      icon: teamMeta.appearances?.branding?.favicon?.asset?.url,
-      shortcut: teamMeta.appearances?.branding?.favicon?.asset?.url,
-      apple: teamMeta.appearances?.branding?.favicon?.asset?.url,
-    },
-    robots: {
-      index: hasTeam,
-      follow: hasTeam,
-    },
-  }
+    return generatePageMetadata({
+        fetcher: () => client.fetch(teamPage),
+        mainKey: "pageSetting",
+        type: "team",
+    });
 }
+
 
 function TeamCard({ member }: { member: TeamMember }) {
   return (
@@ -134,12 +107,9 @@ export default async function TeamSection() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaMarkup) }} />
-      <div className="pt-40 pb-20">
+      <div className="pt-44 pb-20">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
-            <div className="content">
-              <h1>{team?.pageSetting?.team?.title}</h1>
-            </div>
             {team?.pageSetting?.team?.content && (
               <div className="mt-10">
                 <ContentEditor content={team?.pageSetting?.team?.content} />

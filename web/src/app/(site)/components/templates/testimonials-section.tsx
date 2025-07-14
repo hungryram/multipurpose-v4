@@ -7,7 +7,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { FaStar } from "react-icons/fa6"
 import ContentEditor from "../util/content-editor"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { Testimonial, TestimonialSectionProps } from "@/lib/types"
 
 

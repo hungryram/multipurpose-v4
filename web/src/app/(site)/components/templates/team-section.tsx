@@ -9,9 +9,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import ContentEditor from "../util/content-editor"
 import { FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa6"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { TeamComponentProps, TeamMember } from "@/lib/types"
-
 
 export default function TeamComponent({
   team,

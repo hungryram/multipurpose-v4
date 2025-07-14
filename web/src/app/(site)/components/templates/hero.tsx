@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import HeaderSection from "./header-section"
+import HeaderSection from "../util/header-section"
 import { useState, useEffect } from "react"
 import type { HeroProps } from "@/lib/types"
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
@@ -24,9 +24,11 @@ export default function Hero({ section }: { section: HeroProps }) {
     textColor,
     imageOverlayColor,
     layoutType,
-    height = 'large',
+    imageHeight = 'large',
     backgroundImage,
-    enableBreadcrumbs
+    enableBreadcrumbs,
+    itemsEnd,
+    heading
   } = section || {}
 
   const [api, setApi] = useState<CarouselApi>()
@@ -80,16 +82,16 @@ export default function Hero({ section }: { section: HeroProps }) {
       alt={imageData?.asset?.altText || 'Hero Image'}
       placeholder={imageData?.asset?.lqip ? "blur" : "empty"}
       blurDataURL={imageData?.asset?.lqip || baseEncode}
-      className="object-cover"
+      className="object-cover object-center"
       fill={true}
-      sizes="(max-width: 768px) 100vw, 50vw"
+      // sizes="(max-width: 768px) 100vw, 50vw"
       priority={true}
 
     />
   )
 
-  const getCarouselHeight = (height: "large" | "medium" | "small") => {
-    switch (height.imageHeight) {
+  const getCarouselHeight = (imageHeight: "large" | "medium" | "small") => {
+    switch (imageHeight) {
       case "large":
         return "min-h-[800px]"
       case "medium":
@@ -160,12 +162,12 @@ export default function Hero({ section }: { section: HeroProps }) {
     </Carousel>
   )
 
-  const imageHeight = (height: "large" | "medium" | "small") => {
-    switch (height.imageHeight) {
+  const getImageHeight = (imageHeight: "large" | "medium" | "small") => {
+    switch (imageHeight) {
       case "large":
         return "min-h-screen"
       case "medium":
-        return "min-h-[60vh]"
+        return "min-h-[80vh]"
       case "small":
         return "min-h-[40vh]"
       default:
@@ -176,17 +178,30 @@ export default function Hero({ section }: { section: HeroProps }) {
   switch (layoutType) {
     case "hero":
       return (
-        <div className={cn("relative isolate flex items-center", imageHeight(height))}>
-          {enableBreadcrumbs && <Breadcrumb textAlign={textAlign} color={textColor} />}
+        <div className={cn("relative isolate flex justify-center overflow-hidden", itemsEnd ? '!items-end' : 'flex-col', getImageHeight(imageHeight))}>
           {renderImage()}
           <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
-          <div className="container relative z-10">{renderContent}</div>
+          <div className="container relative z-10">
+            <div className={cn(textAlign === 'left' && 'md:w-1/2')}>
+              <div className={cn('md:py-32 py-60')}>
+                {enableBreadcrumbs && <Breadcrumb textAlign={textAlign ?? 'center'} color={textColor} />}
+                {renderContent}
+                {heading &&
+                  <div className="text-center mt-4">
+                    <h1 className="text-4xl uppercase" style={{
+                      color: textColor
+                    }}>{heading}</h1>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
         </div>
       )
 
     case "split":
       return (
-        <div className={cn("flex flex-col lg:flex-row", imageHeight)}>
+        <div className={cn("flex flex-col lg:flex-row", getImageHeight(imageHeight))}>
           <div className="w-full lg:w-1/2 relative">{renderImage()}</div>
           <div className="w-full lg:w-1/2 flex items-center bg-background p-8 lg:p-16">
             <div className="w-full">{renderContent}</div>
@@ -196,7 +211,7 @@ export default function Hero({ section }: { section: HeroProps }) {
 
     case "centered":
       return (
-        <div className={cn("relative flex items-center justify-center", imageHeight(height))}>
+        <div className={cn("relative flex items-center justify-center", getImageHeight(imageHeight))}>
           {renderImage()}
           <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
           <div className="container relative z-10 text-center max-w-2xl mx-auto">{renderContent}</div>
@@ -234,7 +249,7 @@ export default function Hero({ section }: { section: HeroProps }) {
 
     default:
       return (
-        <div className={cn("relative isolate flex items-center", imageHeight(height))}>
+        <div className={cn("relative isolate flex items-center", getImageHeight(imageHeight))}>
           {renderImage()}
           <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
           <div className="container relative z-10">{renderContent}</div>
