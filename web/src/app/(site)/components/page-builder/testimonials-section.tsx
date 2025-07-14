@@ -1,16 +1,12 @@
-"use client"
-
 import type React from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { FaStar } from "react-icons/fa6"
 import ContentEditor from "../util/content-editor"
 import HeaderSection from "../util/header-section"
 import { Testimonial, TestimonialSectionProps } from "@/lib/types"
-
-
+import BaseSlider from "../templates/client/gallery-slider-client"
 
 export default function TestimonialSection({
     testimonials,
@@ -41,31 +37,18 @@ export default function TestimonialSection({
         </div>
     )
 
+    const items = testimonials.map((testimonial) => (
+        <TestimonialCard key={testimonial._id} testimonial={testimonial} />
+    ))
+
     const renderTestimonials = () => {
         switch (layoutType) {
             case "slider":
                 return (
-                    <Carousel
-                        className="w-full mx-auto"
-                        opts={{
-                            align: "start",
-                            loop: true,
-                        }}
-                    >
-                        <CarouselContent>
-                            {testimonials.map((testimonial) => (
-                                <CarouselItem key={testimonial._id} className={`md:basis-1/${slideNumber}`}>
-                                    <div className="p-1">
-                                        <Card>
-                                            <TestimonialCard testimonial={testimonial} />
-                                        </Card>
-                                    </div>
-                                </CarouselItem>
-                            ))}
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </Carousel>
+                    <BaseSlider
+                        slides={items}
+                        slideNumber={slideNumber}
+                    />
                 )
             case "column":
                 return (
@@ -88,14 +71,15 @@ export default function TestimonialSection({
     }
 
     return (
-            <div>
-                {renderContent}
-                <div className={cn("mx-auto", content && "mt-10")}>{renderTestimonials()}</div>
-            </div>
+        <div>
+            {renderContent}
+            <div className={cn("mx-auto", content && "mt-10")}>{renderTestimonials()}</div>
+        </div>
     )
 }
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+
     return (
         <Card>
             <CardContent className="p-6">

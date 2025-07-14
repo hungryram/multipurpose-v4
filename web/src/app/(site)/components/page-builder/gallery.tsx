@@ -1,10 +1,11 @@
-// ✅ SSR SERVER COMPONENT
 import HeaderSection from "../util/header-section"
-import StructuredData from "../util/structured-data"
-import GalleryGrid from "./gallery-grid"
-import GalleryMasonry from "../client/gallery-masonry"
-import GallerySlider from "../client/gallery-slider-client"
+import GalleryGrid from "../templates/gallery-grid"
+import GalleryMasonry from "../templates/client/gallery-masonry"
 import { GallerySliderProps } from "@/lib/types"
+import BaseSlider from "../templates/client/gallery-slider-client"
+import Image from "next/image"
+import { baseEncode } from "../../../../../lib/utils"
+import { Card } from "@/components/ui/card"
 
 export default function GallerySection({
   section,
@@ -28,6 +29,21 @@ export default function GallerySection({
     autoplaySpeed
   } = section || {}
 
+    const slides = childImage.map((image) => (
+    <Card key={image._key}>
+      <div className="relative h-80">
+        <Image
+          src={image?.asset?.url || "/placeholder.svg"}
+          alt={image.asset?.altText || "Gallery Slide"}
+          fill
+          className="object-cover rounded-lg"
+          placeholder="blur"
+          blurDataURL={image?.asset?.lqip ?? baseEncode}
+        />
+      </div>
+    </Card>
+  ))
+
   return (
     <section className="w-full overflow-hidden">
       {content && (
@@ -50,13 +66,13 @@ export default function GallerySection({
       )}
 
       {layoutType === "slider" && (
-        <GallerySlider
-          images={childImage}
-          disableNavigation={disableNavigation}
+        <BaseSlider
+          slides={slides}
           slideNumber={slideNumber}
           autoplay={autoplay}
-          duration={duration}
           autoplaySpeed={autoplaySpeed}
+          duration={duration}
+          disableNavigation={disableNavigation}
         />
       )}
     </section>

@@ -1,10 +1,9 @@
-// REMOVE "use client" -- this file is SSR by default!
-
 import React from "react";
 import { cn } from "@/lib/utils";
 import HeaderSection from "../util/header-section";
 import { LogoCloudSectionProps, LogoImage } from "@/lib/types";
-import LogoCloudSlider from "../client/logo-cloud-slider";
+import BaseSlider from "../templates/client/gallery-slider-client";
+import Image from "next/image";
 
 export default function LogoCloudSection({
   section
@@ -37,28 +36,43 @@ export default function LogoCloudSection({
   );
 
   const renderLogo = (image: LogoImage, index: number) => (
-    <div key={index} className="flex items-center justify-center p-4">
-      <img
+    <div key={index} className="flex items-center justify-center p-4 w-full h-20">
+      <Image
         src={image.asset.url || "/placeholder.svg"}
-        alt={image.asset.altText}
+        alt={image.asset.altText || 'Logo cloud'}
         width={200}
         height={48}
         loading="lazy"
-        className="max-w-full h-auto object-contain"
+        className="max-w-full max-h-full object-contain"
       />
     </div>
+
   );
+
+  const slides = childImage.map((image, index) => (
+    <div key={index} className="flex items-center justify-center p-4 w-full h-20">
+      <Image
+        src={image.asset.url || "/placeholder.svg"}
+        alt={image.asset.altText || 'Logo cloud'}
+        width={200}
+        height={48}
+        loading="lazy"
+        className="max-w-full max-h-full object-contain"
+      />
+    </div>
+
+  ))
 
   const renderLogos = () => {
     switch (layoutType) {
       case "slider":
         return (
-          <LogoCloudSlider
-            images={childImage}
-            columnNumber={columnNumber}
+          <BaseSlider
+            slides={slides}
+            slideNumber={columnNumber}
             autoplay={autoplay}
-            duration={duration}
             autoplaySpeed={autoplaySpeed}
+            duration={duration}
           />
         );
       case "grid":

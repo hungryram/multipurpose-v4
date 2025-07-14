@@ -153,7 +153,7 @@ export function Navbar({ navbarData }: NavbarProps) {
                 </svg>
               </Button>
             </SheetTrigger>
-            <SheetContent className="overflow-y-scroll">
+            <SheetContent className="overflow-y-scroll" title="Navigation Menu">
               <div className="flex flex-col space-y-4 mt-20">
                 {navbarData?.appearances?.header?.mainNav?.navItems?.map((item: any) => (
                   <MobileNavItem key={item._key} item={item} closeMenu={() => setIsMobileMenuOpen(false)} />

@@ -333,7 +333,13 @@ const homeOtherDocumentSections = groq`
 },
 'allTestimonial': *[_type == 'testimonials']{
   _id,
-  image,
+  image {
+    asset-> {
+      url,
+      'lqip': metadata.lqip,
+      altText
+    }
+  },
   name,
   stars,
   testimonial,

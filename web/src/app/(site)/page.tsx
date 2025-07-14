@@ -1,6 +1,6 @@
 import { client } from '../../../lib/sanity';
 import { homePageData } from '../../../lib/groq-data';
-import PageBuilder from './components/templates/page-builder';
+import PageBuilder from './components/page-builder/page-builder';
 
 export default async function Home() {
   const data = await client.fetch(homePageData)

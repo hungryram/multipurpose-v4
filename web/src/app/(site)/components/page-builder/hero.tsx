@@ -1,8 +1,8 @@
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import Breadcrumb from "./breadcrumbs"
+import Breadcrumb from "../templates/breadcrumbs"
 import HeaderSection from "../util/header-section"
-import HeroCarousel from "../client/hero-carousel"
+import HeroCarousel from "../templates/client/hero-carousel"
 import type { HeroProps } from "@/lib/types"
 import { baseEncode } from "../../../../../lib/utils"
 

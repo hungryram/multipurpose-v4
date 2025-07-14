@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import ContentEditor from "../util/content-editor"
+import ContentEditor from "../../util/content-editor"
 import { DisclosureSectionProps, DisclosureItem } from "@/lib/types"
 
 export default function DisclosureInteractive({

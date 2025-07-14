@@ -7,7 +7,7 @@ import HeaderSection from "../util/header-section"
 import ContentEditor from "../util/content-editor"
 import CustomButton from "../util/custom-button"
 import { baseEncode } from "../../../../../lib/utils"
-import { BlockLinking, FeaturedGridProps, FeaturedItem } from "@/lib/types"
+import { FeaturedGridProps, FeaturedItem } from "@/lib/types"
 import { getLinkUrl } from "../util/getButtonLink"
 
 export default function FeaturedGrid({

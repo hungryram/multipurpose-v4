@@ -1,16 +1,13 @@
-"use client"
-
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { format, parseISO } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import HeaderSection from "../util/header-section"
 import { BlogSectionProps, BlogPost } from "@/lib/types"
 import { baseEncode } from "../../../../../lib/utils"
-
+import BaseSlider from "../templates/client/gallery-slider-client"
 
 export default function BlogSection({
   section,
@@ -27,8 +24,6 @@ export default function BlogSection({
     secondaryButton,
     limit = 6,
   } = section || {}
-
-  console.log(section)
 
   const renderContent = (
     <div className="mb-16 content" style={{ color: textColor }}>
@@ -103,23 +98,10 @@ export default function BlogSection({
         )
       case "carousel":
         return (
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-4xl xl:max-w-6xl mx-auto"
-          >
-            <CarouselContent>
-              {limitedBlog.map((post) => (
-                <CarouselItem key={post._id} className={`md:basis-1/${columnNumber}`}>
-                  <div className="p-1">{renderBlogCard(post)}</div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <BaseSlider
+            slides={limitedBlog.map((post) => renderBlogCard(post, false, false))}
+            slideNumber={columnNumber}
+          />
         )
       case "grid":
       default:
@@ -171,13 +153,13 @@ function BlogCard({
 }) {
   return (
     <Card className="h-full flex flex-col">
-      <div className="relative h-48">
+      <div className="relative h-60">
         {image && (
           <Image
             src={image || "/placeholder.svg"}
             alt={altText || title}
             fill
-            className="object-cover rounded-t-lg"
+            className="object-coverg"
             placeholder={"blur"}
             blurDataURL={blurData || baseEncode}
           />

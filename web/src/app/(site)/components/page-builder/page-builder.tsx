@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { cn } from "@/lib/utils"
-import SectionErrorBoundary from "../client/section-error-boundary"
+import SectionErrorBoundary from "../templates/client/section-error-boundary"
 
 import Hero from "./hero"
 import CtaSection from "./call-to-action"

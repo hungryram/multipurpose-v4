@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import HeaderSection from "../util/header-section"
+import HeaderSection from "../../util/header-section"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import type { CarouselApi } from "@/components/ui/carousel"
-import { baseEncode } from "../../../../../lib/utils"
+import { baseEncode } from "../../../../../../lib/utils"
 
 export default function HeroCarousel({
     childImage,

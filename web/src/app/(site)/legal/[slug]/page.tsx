@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { getLegal } from "../../../../../lib/groq-data"
 import { Metadata } from 'next';
 import ContentEditor from "../../components/util/content-editor";
-import Hero from "../../components/templates/hero";
+import Hero from "../../components/page-builder/hero";
 import { generatePageMetadata } from "../../components/util/generateMetaData";
 import { PageParams } from "@/lib/types";
 export const revalidate = 0;

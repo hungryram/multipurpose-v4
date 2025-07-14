@@ -2,7 +2,7 @@ import { client } from "../../../../lib/sanity"
 import { legalPage } from '../../../../lib/groq-data'
 import ContentEditor from '../components/util/content-editor'
 import Link from 'next/link'
-import Hero from '../components/templates/hero';
+import Hero from '../components/page-builder/hero';
 import { generatePageMetadata } from "../components/util/generateMetaData";
 export const revalidate = 0;
 

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { submitForm } from "./_formActions";
+import { submitForm } from "../../util/_formActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ContentEditor from "../util/content-editor";
+import ContentEditor from "../../util/content-editor";
 import { FormField, FormBuilderProps } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { DatePicker } from "@/components/ui/date-picker";

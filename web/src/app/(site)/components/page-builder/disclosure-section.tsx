@@ -1,4 +1,4 @@
-import DisclosureInteractive from "../client/disclosure-client"
+import DisclosureInteractive from "../templates/client/disclosure-client"
 import StructuredData from "../util/structured-data"
 import { DisclosureSectionSchema } from "../schema-templates/disclosure-schema"
 import HeaderSection from "../util/header-section"

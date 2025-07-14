@@ -1,16 +1,14 @@
-"use client"
-
 import type React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import ContentEditor from "../util/content-editor"
 import { FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa6"
 import HeaderSection from "../util/header-section"
 import { TeamComponentProps, TeamMember } from "@/lib/types"
+import BaseSlider from "../templates/client/gallery-slider-client"
 
 export default function TeamComponent({
   team,
@@ -47,25 +45,12 @@ export default function TeamComponent({
     switch (layoutType) {
       case "carousel":
         return (
-          <Carousel
-            className="w-full mx-auto"
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {limitedTeam.map((member) => (
-                <CarouselItem key={member._id} className={`md:basis-1/${columnNumber}`}>
-                  <div className="p-1">
-                    <TeamCard member={member} />
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <BaseSlider
+            slides={limitedTeam.map((member) => (
+              <TeamCard key={member._id} member={member} />
+            ))}
+            slideNumber={columnNumber}
+          />
         )
       case "list":
         return (

@@ -25,8 +25,6 @@ export default defineType({
       options: {
         list: [
           {title: 'Grid', value: 'grid'},
-          {title: 'List', value: 'list'},
-          {title: 'Featured', value: 'featured'},
           {title: 'Carousel', value: 'carousel'},
         ],
       },

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { GalleryImage } from "@/lib/types"
-import { baseEncode } from "../../../../../lib/utils"
+import { baseEncode } from "../../../../../../lib/utils"
 
 export default function GalleryMasonryClient({
   images,
