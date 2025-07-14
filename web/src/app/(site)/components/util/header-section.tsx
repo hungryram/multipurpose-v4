@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import ContentEditor from "./content-editor"
 import { Button } from "@/components/ui/button"
 import { HeaderSectionProps, ButtonProps } from "@/lib/types"
-import { getButtonLink } from "./getButtonLink" 
+import { getButtonLink } from "./getButtonLink" // ✅ use the shared helper
 
 const CustomButton: React.FC<ButtonProps & { variant: "primary" | "secondary" }> = ({ text, link, style, variant }) => {
   const href = getButtonLink(link)
