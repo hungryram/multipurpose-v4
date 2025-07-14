@@ -13,11 +13,11 @@ import { LogoImage } from "@/lib/types";
 import Autoplay from "embla-carousel-autoplay"
 
 const basisClassMap: Record<number, string> = {
-  1: "md:basis-full",
-  2: "md:basis-1/2",
-  3: "md:basis-1/3",
-  4: "md:basis-1/4",
-  5: "md:basis-1/5",
+    1: "md:basis-full",
+    2: "md:basis-1/2",
+    3: "md:basis-1/3",
+    4: "md:basis-1/4",
+    5: "md:basis-1/5",
 }
 
 export default function LogoCloudSlider({
@@ -69,8 +69,10 @@ export default function LogoCloudSlider({
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <div className="flex items-center justify-center gap-4 mt-8">
+                <CarouselPrevious className="relative !left-0 top-5 cursor-pointer" variant={'ghost'} size={"lg"} />
+                <CarouselNext className="relative !right-0 top-5 cursor-pointer" variant={'ghost'} size={"lg"} />
+            </div>
         </Carousel>
     );
 }

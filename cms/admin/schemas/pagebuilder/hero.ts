@@ -1,5 +1,6 @@
 import {defineType} from 'sanity'
 import {textAlign} from '../lib/classes'
+import {toPlainText} from 'next-sanity'
 
 export default defineType({
   title: 'Hero',
@@ -17,9 +18,9 @@ export default defineType({
       options: {
         list: [
           {title: 'Hero', value: 'hero'},
-          {title: 'Container', value: 'container'},
+          {title: 'Full Width Full Image', value: 'fullWidthFullImage'},
+          {title: 'Containered Full Image', value: 'fullImageContainer'},
           {title: 'Side by Side Carousel', value: 'sideBysideCarousel'},
-          {title: 'Basic', value: 'basic'},
         ],
       },
       initialValue: 'static',
@@ -41,13 +42,14 @@ export default defineType({
       title: 'Content',
       name: 'content',
       type: 'contentEditor',
-      hidden: ({parent}) => parent?.layoutType === 'heroSwiper',
       group: 'content',
     },
     {
       title: 'Text Align',
       name: 'textAlign',
       type: 'string',
+      hidden: ({parent}) =>
+        parent?.layoutType !== 'hero' || parent?.layoutType !== 'sideBysideCarousel',
       options: {
         list: textAlign,
       },
@@ -84,99 +86,81 @@ export default defineType({
         layout: 'grid',
       },
     },
-    //   {
-    //     title: 'Animation',
-    //     name: 'animation',
-    //     hidden: ({ parent }) => parent?.layoutType === 'static',
-    //     type: 'string',
-    //     options: {
-    //       list: [
-    //         { title: 'Fade', value: 'fade' },
-    //         { title: 'Slide', value: 'slide' },
-    //       ]
-    //     },
-    //     group: 'settings',
-    //   },
     {
       title: 'Image',
       name: 'image',
       type: 'image',
       group: 'content',
-      hidden: ({parent}) => parent?.layoutType === 'heroSwiper',
+      hidden: ({parent}) => parent?.layoutType === 'sideBysideCarousel',
     },
     {
       title: 'Image Overlay Color',
       name: 'imageOverlayColor',
-      hidden: ({parent}) =>
-        parent?.layoutType === 'heroSwiper' ||
-        parent?.layoutType === 'sideByside' ||
-        parent?.layoutType === 'basic',
+      hidden: ({parent}) => parent?.layoutType !== 'hero',
       type: 'color',
     },
     {
       title: 'Background Color',
       name: 'backgroundColor',
       type: 'color',
+      hidden: ({parent}) => parent?.layoutType === 'hero',
     },
     {
       title: 'Primary Button',
       name: 'button',
       type: 'buttonSettings',
       group: 'content',
+      hidden: ({parent}) =>
+        parent?.layoutType !== 'hero' || parent?.layoutType !== 'sideBysideCarousel',
     },
     {
       title: 'Secondary Button',
       name: 'secondaryButton',
       type: 'secondaryButton',
       group: 'content',
-    },
-    {
-      title: 'Disable Navigation Arrows',
-      name: 'disableNavigation',
-      type: 'boolean',
-      hidden: ({parent}) => parent?.layoutType !== 'heroSwiper',
-      group: 'settings',
-    },
-    {
-      title: 'Navigation Arrow Colors',
-      name: 'navigationColors',
-      hidden: ({parent}) => parent?.layoutType !== 'heroSwiper',
-      type: 'color',
-      group: 'settings',
+      hidden: ({parent}) =>
+        parent?.layoutType !== 'hero' || parent?.layoutType !== 'sideBysideCarousel',
     },
     {
       title: 'Text Color',
       name: 'textColor',
       type: 'color',
       group: 'settings',
+      hidden: ({parent}) =>
+        parent?.layoutType !== 'hero' || parent?.layoutType !== 'sideBysideCarousel',
     },
-{
-  title: 'Padding Top',
-  name: 'paddingTop',
-  type: 'string',
-  group: 'settings',
-  description: 'Add top padding using px, em, rem, or percentages',
-  initialValue: '0',  // ✅ sets default to '0'
-},
-{
-  title: 'Padding Bottom',
-  name: 'paddingBottom',
-  type: 'string',
-  group: 'settings',
-  description: 'Add bottom padding using px, em, rem, or percentages',
-  initialValue: '0',  // ✅ sets default to '0'
-},
-
+    {
+      title: 'Padding Top',
+      name: 'paddingTop',
+      type: 'string',
+      group: 'settings',
+      description: 'Add top padding using px, em, rem, or percentages',
+      initialValue: '0', // ✅ sets default to '0'
+    },
+    {
+      title: 'Padding Bottom',
+      name: 'paddingBottom',
+      type: 'string',
+      group: 'settings',
+      description: 'Add bottom padding using px, em, rem, or percentages',
+      initialValue: '0', // ✅ sets default to '0'
+    },
   ],
   preview: {
     select: {
       content: 'content',
+      image: 'image',
+      images: 'images',
     },
-    prepare({content}) {
-      const hasContent = content && content[0]?.children?.length > 0
+    prepare({content, image, images}) {
+      const plain = content ? toPlainText(content) : ''
+
+      const mediaImage = image?.asset || (images && images[0]?.asset)
 
       return {
-        title: hasContent ? content[0].children[0].text : 'Hero Section',
+        title: 'Hero',
+        subtitle: plain,
+        media: mediaImage,
       }
     },
   },

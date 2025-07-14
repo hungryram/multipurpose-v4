@@ -200,6 +200,11 @@ export const pageBuilderData = groq`
   }
 },
 'childImage': images[] {
+  asset->{
+    'altText': altText,
+    'lqip': metadata.lqip,
+    url,
+  },
   _key,
   content,
   'buttonLinking': button {
@@ -242,11 +247,6 @@ export const pageBuilderData = groq`
       }
     },
   },
-  asset->{
-    'altText': altText,
-    'lqip': metadata.lqip,
-    url,
-  }
 },
 'buttonLinking': button.button{
   'buttonText': text,

@@ -1,249 +1,123 @@
-"use client"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import HeaderSection from "../util/header-section"
-import { useState, useEffect } from "react"
-import type { HeroProps } from "@/lib/types"
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
-import type { CarouselApi } from "@/components/ui/carousel"
-import { baseEncode } from "../../../../../lib/utils"
 import Breadcrumb from "./breadcrumbs"
+import HeaderSection from "../util/header-section"
+import HeroCarousel from "../client/hero-carousel"
+import type { HeroProps } from "@/lib/types"
+import { baseEncode } from "../../../../../lib/utils"
 
 export default function Hero({ section }: { section: HeroProps }) {
-
-  if (!section) return null;
+  if (!section) return null
 
   const {
     content,
     imageData,
-    images,
+    childImage,
     primaryButton,
     secondaryButton,
     textAlign,
-    backgroundColor,
-    textColor,
     imageOverlayColor,
     layoutType,
-    imageHeight = 'large',
-    backgroundImage,
     enableBreadcrumbs,
+    heading,
+    textColor,
     itemsEnd,
-    heading
+    imageHeight = "large",
   } = section || {}
 
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!api) {
-      return
-    }
-
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap())
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
-
-  // Set up autoplay
-  useEffect(() => {
-    if (!api) {
-      return
-    }
-
-    const interval = setInterval(() => {
-      api.scrollNext()
-    }, 6500) // Change slide every 6.5 seconds
-
-    return () => clearInterval(interval)
-  }, [api])
+  const getImageHeight = (h: "large" | "medium" | "small") =>
+    h === "large" ? "min-h-screen"
+      : h === "medium" ? "min-h-[80vh]"
+        : h === "small" ? "min-h-[40vh]"
+          : "min-h-[50vh]"
 
   const imageOverlay = {
     background: `rgba(${imageOverlayColor?.rgb?.r ?? "0"}, ${imageOverlayColor?.rgb?.g ?? "0"}, ${imageOverlayColor?.rgb?.b ?? "0"}, ${imageOverlayColor?.rgb?.a ?? "0"})`,
   }
 
-  const renderContent = (
-    <div style={{ color: textColor?.hex }}>
-      <HeaderSection
-        content={content}
-        textAlign={textAlign}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-      />
-    </div>
-  )
-
   const renderImage = () => (
     <Image
       src={imageData?.asset?.url || "/placeholder.svg"}
-      alt={imageData?.asset?.altText || 'Hero Image'}
+      alt={imageData?.asset?.altText || "Hero Image"}
       placeholder={imageData?.asset?.lqip ? "blur" : "empty"}
       blurDataURL={imageData?.asset?.lqip || baseEncode}
       className="object-cover object-center"
-      fill={true}
-      // sizes="(max-width: 768px) 100vw, 50vw"
-      priority={true}
-
+      fill
+      priority
     />
   )
 
-  const getCarouselHeight = (imageHeight: "large" | "medium" | "small") => {
-    switch (imageHeight) {
-      case "large":
-        return "min-h-[800px]"
-      case "medium":
-        return "md:min-h-[600px] md:pt-56 pt-40 md:pb-32 pb-10"
-      case "small":
-        return "min-h-[400px]"
-      default:
-        return "min-h-[600px]"
-    }
-  }
-
-  const renderCarousel = () => (
-    <Carousel
-      opts={{
-        loop: true,
-        align: "start",
-      }}
-      setApi={setApi}
-      className="w-full"
-    >
-      <CarouselContent className={cn(getCarouselHeight(height))}>
-        {images.map((slide: any, index: number) => (
-          <CarouselItem key={slide._key} className="h-full">
-            <div className="grid md:grid-cols-12 h-full items-center gap-8">
-              <div className="md:col-span-5">
-                <div style={{ color: textColor }}>
-                  <HeaderSection
-                    content={slide.content}
-                    textAlign={textAlign}
-                    primaryButton={primaryButton}
-                    secondaryButton={secondaryButton}
-                  />
-                </div>
-              </div>
-              <div className="md:col-span-7 relative">
-                <div className={cn("relative", getCarouselHeight(height))}>
-                  <Image
-                    src={slide.asset.url || "/placeholder.svg"}
-                    alt={slide.asset.altText || "Slide image"}
-                    placeholder={slide.asset.lqip ? "blur" : "empty"}
-                    blurDataURL={slide.asset.lqip}
-                    className="object-contain"
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, 60vw"
-                    priority={index === 0}
-                  />
-                </div>
-              </div>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      {count > 1 && (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-          {Array.from({ length: count }).map((_, index) => (
-            <button
-              key={index}
-              className={cn(
-                "h-2 w-2 rounded-full transition-all duration-500",
-                current === index ? "bg-primary w-6" : "bg-primary/50 hover:bg-primary/75",
-              )}
-              onClick={() => api?.scrollTo(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+  const renderContent = (
+    <div style={{ color: textColor?.hex }} className="py-20">
+      {enableBreadcrumbs && <Breadcrumb textAlign={textAlign ?? "center"} color={textColor} />}
+      <HeaderSection content={content} textAlign={textAlign} primaryButton={primaryButton} secondaryButton={secondaryButton} />
+      {heading && (
+        <div className="text-center mt-4">
+          <h1 className="text-4xl uppercase">{heading}</h1>
         </div>
       )}
-    </Carousel>
+    </div>
   )
 
-  const getImageHeight = (imageHeight: "large" | "medium" | "small") => {
-    switch (imageHeight) {
-      case "large":
-        return "min-h-screen"
-      case "medium":
-        return "min-h-[80vh]"
-      case "small":
-        return "min-h-[40vh]"
-      default:
-        return "min-h-[50vh]"
-    }
-  }
-
   switch (layoutType) {
+    case "sideBysideCarousel":
+      return (
+        <div className="relative w-full overflow-hidden">
+          <HeroCarousel
+            childImage={childImage}
+            textColor={textColor}
+            textAlign={textAlign}
+            primaryButton={primaryButton}
+            secondaryButton={secondaryButton}
+            imageHeight={imageHeight}
+          />
+        </div>
+      )
+
+    case "fullImageContainer":
+      return (
+        <Image
+          src={imageData?.asset?.url || "/placeholder.svg"}
+          alt={imageData?.asset?.altText || "Hero Image"}
+          placeholder={imageData?.asset?.lqip ? "blur" : "empty"}
+          blurDataURL={imageData?.asset?.lqip || baseEncode}
+          className="object-cover object-center"
+          width={2000}
+          height={2000}
+          sizes="100vw"
+          priority
+        />
+      )
+    case "fullWidthFullImage":
+      return (
+        <div>
+          <Image
+            src={imageData?.asset?.url || "/placeholder.svg"}
+            alt={imageData?.asset?.altText || "Hero Image"}
+            placeholder={imageData?.asset?.lqip ? "blur" : "empty"}
+            blurDataURL={imageData?.asset?.lqip || baseEncode}
+            width={2000}
+            height={2000}
+            sizes="100vw"
+            className="w-full"
+            priority
+          />
+        </div>
+
+      )
+
     case "hero":
       return (
-        <div className={cn("relative isolate flex justify-center overflow-hidden", itemsEnd ? '!items-end' : 'flex-col', getImageHeight(imageHeight))}>
+        <div className={cn("relative isolate flex justify-center overflow-hidden", itemsEnd ? "!items-end" : "flex-col", getImageHeight(imageHeight))}>
           {renderImage()}
           <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
           <div className="container relative z-10">
-            <div className={cn(textAlign === 'left' && 'md:w-1/2')}>
-              <div className={cn('md:py-32 py-60')}>
-                {enableBreadcrumbs && <Breadcrumb textAlign={textAlign ?? 'center'} color={textColor} />}
+            <div className={cn(textAlign === "left" && "md:w-1/2")}>
+              <div className="md:py-32 py-60">
                 {renderContent}
-                {heading &&
-                  <div className="text-center mt-4">
-                    <h1 className="text-4xl uppercase" style={{
-                      color: textColor
-                    }}>{heading}</h1>
-                  </div>
-                }
               </div>
             </div>
           </div>
-        </div>
-      )
-
-    case "split":
-      return (
-        <div className={cn("flex flex-col lg:flex-row", getImageHeight(imageHeight))}>
-          <div className="w-full lg:w-1/2 relative">{renderImage()}</div>
-          <div className="w-full lg:w-1/2 flex items-center bg-background p-8 lg:p-16">
-            <div className="w-full">{renderContent}</div>
-          </div>
-        </div>
-      )
-
-    case "centered":
-      return (
-        <div className={cn("relative flex items-center justify-center", getImageHeight(imageHeight))}>
-          {renderImage()}
-          <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
-          <div className="container relative z-10 text-center max-w-2xl mx-auto">{renderContent}</div>
-        </div>
-      )
-
-    case "fullscreen":
-      return (
-        <div className="relative h-screen flex items-center justify-center">
-          {renderImage()}
-          <div className="absolute inset-0" style={imageOverlay} aria-hidden="true"></div>
-          <div className="container relative z-10">{renderContent}</div>
-        </div>
-      )
-
-    case "sideBysideCarousel":
-      return (
-        <div
-          className={cn("relative w-full overflow-hidden")}
-          style={
-            backgroundImage
-              ? {
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }
-              : {
-                backgroundColor,
-              }
-          }
-        >
-          <div className="container relative z-10">{renderCarousel()}</div>
         </div>
       )
 
@@ -257,4 +131,3 @@ export default function Hero({ section }: { section: HeroProps }) {
       )
   }
 }
-

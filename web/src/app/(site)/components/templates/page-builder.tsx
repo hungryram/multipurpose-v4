@@ -142,7 +142,8 @@ export default function PageBuilder({
         const isFullWidth = (
           (section._type === "hero" && section.layoutType === "hero") ||
           section.layoutType === "sideBysideCarousel" ||
-          (section._type === "ctaSection" && section.layoutType === "fullWidthTextImage")
+          (section._type === "ctaSection" && section.layoutType === "fullWidthTextImage") ||
+          (section._type === "hero" && section.layoutType === "fullWidthFullImage")
         )
 
         return (

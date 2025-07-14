@@ -7,6 +7,7 @@ import {
   secondaryButton,
   textAlign,
 } from '../lib/classes'
+import { toPlainText } from 'next-sanity'
 
 export default defineType({
   title: 'Featured Grid',
@@ -146,12 +147,18 @@ export default defineType({
   preview: {
     select: {
       content: 'content',
+      blocks: 'blocks',
     },
-    prepare({content}) {
-      const hasContent = content && content[0]?.children?.length > 0
+    prepare({ content, blocks }) {
+      const plain = content ? toPlainText(content) : ''
+
+      // Use the first block's image if it exists
+      const mediaImage = blocks && blocks.length > 0 && blocks[0].image?.asset
 
       return {
-        title: hasContent ? content[0].children[0].text : 'Featured Grid Section',
+        title: 'Featured Grid',
+        subtitle: plain,
+        media: mediaImage,
       }
     },
   },

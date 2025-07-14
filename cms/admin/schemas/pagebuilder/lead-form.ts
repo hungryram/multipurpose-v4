@@ -1,5 +1,6 @@
 import { defineType } from "sanity";
 import { colorOptions, paddingBottom, paddingTop, primaryButton, secondaryButton, textAlign } from "../lib/classes";
+import { toPlainText } from "next-sanity";
 
 export default defineType({
   title: 'Lead Form',
@@ -76,11 +77,12 @@ export default defineType({
       content: 'content',
     },
     prepare({ content }) {
-      const hasContent = content && content[0]?.children?.length > 0;
+      const plain = content ? toPlainText(content) : ''
 
       return {
-        title: hasContent ? content[0].children[0].text : 'Lead Form Section',
-      };
+        title: 'Lead Form',
+        subtitle: plain,
+      }
     },
   },
 })

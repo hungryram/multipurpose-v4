@@ -39,7 +39,6 @@ export default function GallerySlider({
   autoplaySpeed?: number
 }) {
 
-  console.log(autoplay)
   const plugin = React.useRef(
     Autoplay({ delay: autoplaySpeed || 3000, stopOnInteraction: true })
   )

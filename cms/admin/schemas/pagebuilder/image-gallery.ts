@@ -8,6 +8,7 @@ import {
   secondaryButton,
   textAlign,
 } from '../lib/classes'
+import { toPlainText } from 'next-sanity'
 
 export default defineType({
   name: 'gallery',
@@ -114,12 +115,17 @@ export default defineType({
   preview: {
     select: {
       content: 'content',
+      images: 'images',
     },
-    prepare({content}) {
-      const hasContent = content && content[0]?.children?.length > 0
+    prepare({ content, images }) {
+      const plain = content ? toPlainText(content) : ''
+
+      const mediaImage = images && images.length > 0 && images[0].asset
 
       return {
-        title: hasContent ? content[0].children[0].text : 'Image Gallery',
+        title: 'Gallery',
+        subtitle: plain,
+        media: mediaImage,
       }
     },
   },
