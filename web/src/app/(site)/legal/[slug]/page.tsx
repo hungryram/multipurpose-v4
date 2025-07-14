@@ -1,11 +1,14 @@
 import { notFound } from "next/navigation"
-import { getLegal } from "../../../../../lib/groq-data"
+import { getAllPages, getLegal } from "../../../../../lib/groq-data"
 import { Metadata } from 'next';
 import ContentEditor from "../../components/util/content-editor";
 import Hero from "../../components/page-builder/hero";
 import { generatePageMetadata } from "../../components/util/generateMetaData";
 import { PageParams } from "@/lib/types";
-export const revalidate = 0;
+import { client } from "../../../../../lib/sanity";
+
+
+export const revalidate = 60;
 
 
 // GENERATES SEO
@@ -18,6 +21,14 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
         mainKey: "legal",
         type: 'legal'
     });
+}
+
+
+export async function generateStaticParams() {
+  const { legal } = await client.fetch(getAllPages);
+  return legal.map((doc: {slug: string}) => ({
+    slug: doc.slug,
+  }));
 }
 
 export default async function LegalSlug({ params }: PageParams) {

@@ -1,4 +1,4 @@
-import { getTeam } from '../../../../../lib/groq-data'
+import { getAllPages, getTeam } from '../../../../../lib/groq-data'
 import ContentEditor from "../../components/util/content-editor"
 import Image from "next/image"
 import { FaMobileAlt, FaRegEnvelope } from "react-icons/fa";
@@ -7,6 +7,10 @@ import type { Metadata } from "next"
 import Social from "../../components/templates/social"
 import { generatePageMetadata } from '../../components/util/generateMetaData';
 import { PageParams } from '@/lib/types';
+import { client } from '../../../../../lib/sanity';
+
+export const revalidate = 60;
+
 
 // GENERATES SEO
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
@@ -18,6 +22,14 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     mainKey: "team",
     type: 'team'
   });
+}
+
+
+export async function generateStaticParams() {
+  const { team } = await client.fetch(getAllPages);
+  return team.map((person: {slug: string}) => ({
+    slug: person.slug,
+  }));
 }
 
 export default async function TeamSlug({ params }: PageParams) {

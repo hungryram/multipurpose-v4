@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
-import { getPage } from "../../../../lib/groq-data";
+import { getAllPages, getPage } from "../../../../lib/groq-data";
 import PageBuilder from "../components/page-builder/page-builder";
 import { Metadata } from "next";
 import { generatePageMetadata } from "../components/util/generateMetaData";
+import { client } from "../../../../lib/sanity";
+
+export const revalidate = 60;
+
 
 interface Props {
   params: { slug: string };
@@ -18,6 +22,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     type: 'page'
   });
 }
+
+export async function generateStaticParams() {
+  const { pages } = await client.fetch(getAllPages);
+  return pages.map((page: {slug: string}) => ({
+    slug: page.slug,
+  }));
+}
+
 
 // GENERATES PAGE DATA
 export default async function Page({ params }: Props) {

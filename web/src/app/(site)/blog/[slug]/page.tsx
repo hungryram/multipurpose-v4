@@ -1,4 +1,4 @@
-import { getBlog } from "../../../../../lib/groq-data";
+import { blogPage, getAllPages, getBlog } from "../../../../../lib/groq-data";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { format, parseISO } from "date-fns";
@@ -14,8 +14,9 @@ import { baseEncode } from "../../../../../lib/utils";
 import { generatePageMetadata } from "../../components/util/generateMetaData";
 import type { Metadata } from "next";
 import { PageParams } from "@/lib/types";
+import { client } from "../../../../../lib/sanity";
 
-
+export const revalidate = 60;
 
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
     const param = await params;
@@ -26,6 +27,13 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     mainKey: "blog",
     type: 'blog'
   });
+}
+
+export async function generateStaticParams() {
+  const { blog } = await client.fetch(getAllPages);
+  return blog.map((post: {slug: string}) => ({
+    slug: post.slug,
+  }));
 }
 
 

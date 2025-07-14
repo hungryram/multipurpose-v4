@@ -1,10 +1,14 @@
 import React from 'react'
-import { getServices } from '../../../../../lib/groq-data'
+import { getAllPages, getServices } from '../../../../../lib/groq-data'
 import PageBuilder from '../../components/page-builder/page-builder'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next';
 import { generatePageMetadata } from '../../components/util/generateMetaData';
 import { PageParams } from '@/lib/types';
+import { client } from '../../../../../lib/sanity';
+
+export const revalidate = 60;
+
 
 // GENERATES SEO
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
@@ -16,6 +20,13 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
         mainKey: "services",
         type: 'services'
     });
+}
+
+export async function generateStaticParams() {
+  const { services } = await client.fetch(getAllPages);
+  return services.map((service: {slug: string}) => ({
+    slug: service.slug,
+  }));
 }
 
 export default async function servicesSlug({ params }: PageParams) {
