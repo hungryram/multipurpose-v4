@@ -2,7 +2,6 @@ import { useCallback } from "react"
 import { cn } from "@/lib/utils"
 import SectionErrorBoundary from "../client/section-error-boundary"
 
-// Import sections normally (SSR-friendly)
 import Hero from "./hero"
 import CtaSection from "./call-to-action"
 import ContentSection from "./content-simple"

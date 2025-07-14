@@ -1,20 +1,16 @@
-"use client"
+// REMOVE "use client" -- this file is SSR by default!
 
-import type React from "react"
-import Image from "next/image"
-import { cn } from "@/lib/utils"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import HeaderSection from "../util/header-section"
-import { LogoCloudSectionProps, LogoImage } from "@/lib/types"
-
-
+import React from "react";
+import { cn } from "@/lib/utils";
+import HeaderSection from "../util/header-section";
+import { LogoCloudSectionProps, LogoImage } from "@/lib/types";
+import LogoCloudSlider from "../client/logo-cloud-slider";
 
 export default function LogoCloudSection({
   section
 }: {
   section: LogoCloudSectionProps
 }) {
-
   const {
     childImage,
     content,
@@ -24,10 +20,13 @@ export default function LogoCloudSection({
     textColor,
     secondaryButton,
     columnNumber,
-  } = section || {}
+    autoplay,
+    autoplaySpeed,
+    duration
+  } = section || {};
 
   const renderContent = (
-    <div className="mb-12 content" style={{ color: textColor }}>
+    <div className="mb-12" style={{ color: textColor }}>
       <HeaderSection
         content={content}
         textAlign={textAlign}
@@ -35,44 +34,33 @@ export default function LogoCloudSection({
         secondaryButton={secondaryButton}
       />
     </div>
-  )
+  );
 
   const renderLogo = (image: LogoImage, index: number) => (
     <div key={index} className="flex items-center justify-center p-4">
-      <Image
+      <img
         src={image.asset.url || "/placeholder.svg"}
         alt={image.asset.altText}
         width={200}
         height={48}
-        placeholder={image.asset.lqip ? "blur" : "empty"}
-        blurDataURL={image.asset.lqip}
+        loading="lazy"
         className="max-w-full h-auto object-contain"
       />
     </div>
-  )
+  );
 
   const renderLogos = () => {
     switch (layoutType) {
       case "slider":
         return (
-          <Carousel
-            className="w-full mx-auto overflow-hidden"
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {childImage.map((image, index) => (
-                <CarouselItem key={index} className={`md:basis-1/${columnNumber} items-center flex justify-center`}>
-                  {renderLogo(image, index)}
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        )
+          <LogoCloudSlider
+            images={childImage}
+            columnNumber={columnNumber}
+            autoplay={autoplay}
+            duration={duration}
+            autoplaySpeed={autoplaySpeed}
+          />
+        );
       case "grid":
       default:
         return (
@@ -86,18 +74,18 @@ export default function LogoCloudSection({
           >
             {childImage.map((image, index) => renderLogo(image, index))}
           </div>
-        )
+        );
     }
-  }
+  };
 
   return (
     <section>
       <div>
-        {renderContent}
-        <div className={cn("mx-auto", content && "mt-10")}>{renderLogos()}</div>
+        {content && renderContent}
+        <div className={cn("mx-auto", content && "mt-10")}>
+          {renderLogos()}
+        </div>
       </div>
     </section>
-  )
+  );
 }
-
-
