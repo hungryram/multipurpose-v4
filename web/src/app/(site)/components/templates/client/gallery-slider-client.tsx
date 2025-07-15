@@ -3,6 +3,7 @@
 import * as React from "react"
 import Autoplay from "embla-carousel-autoplay"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { cn } from "@/lib/utils"
 
 type BaseSliderProps = {
   slides: React.ReactNode[]
@@ -11,6 +12,8 @@ type BaseSliderProps = {
   autoplaySpeed?: number
   duration?: number
   disableNavigation?: boolean
+  className?: string
+  variant?: string
 }
 
 const basisClassMap: Record<number, string> = {
@@ -25,9 +28,11 @@ export default function BaseSlider({
   slides,
   slideNumber = 3,
   autoplay = true,
-  autoplaySpeed = 3000,
+  autoplaySpeed = 5000,
   duration = 50,
   disableNavigation = false,
+  className,
+  variant = "ghost"
 }: BaseSliderProps) {
   const plugin = React.useRef(
     Autoplay({ delay: autoplaySpeed, stopOnInteraction: true })
@@ -38,8 +43,6 @@ export default function BaseSlider({
   return (
     <Carousel
       plugins={autoplay ? [plugin.current] : []}
-      onMouseEnter={autoplay ? plugin.current.stop : undefined}
-      onMouseLeave={autoplay ? plugin.current.reset : undefined}
       opts={{
         align: "start",
         loop: true,
@@ -54,9 +57,9 @@ export default function BaseSlider({
         ))}
       </CarouselContent>
       {!disableNavigation && (
-        <div className="flex items-center md:justify-start justify-center gap-4 mt-8">
-          <CarouselPrevious className="relative !left-0 top-5 cursor-pointer" variant={'ghost'} size={"lg"} />
-          <CarouselNext className="relative !right-0 top-5 cursor-pointer" variant={'ghost'} size={"lg"} />
+        <div className={cn('flex items-center md:justify-start justify-center gap-4 mt-8', className)}>
+          <CarouselPrevious className="relative !left-0 top-5 cursor-pointer" variant={variant} size={"lg"}/>
+          <CarouselNext className="relative !right-0 top-5 cursor-pointer" variant={variant} size={"lg"} />
         </div>
       )}
     </Carousel>

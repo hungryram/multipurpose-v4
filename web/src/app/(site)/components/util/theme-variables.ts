@@ -21,12 +21,12 @@ export function buildThemeVariables(data: any): Record<string, string> {
     'mobile-bg-color': data?.appearances?.mobileMenu?.mobileBgDrawer ?? '#000000',
     'mobile-nav-color': data?.appearances?.mobileMenu?.mobileNavColor ?? '#ffffff',
 
-    'loading-background-color': data?.appearances?.loaderColor ?? '#0e0e0e',
+    'loading-background-color': data?.appearances?.loaderColor,
     'loading-image': `url(${data?.appearances?.loaderImage ?? ''})`,
 
-    'website-body-color': data?.appearances?.websiteBodyColor ?? '#ffffff',
-    'website-text-color': data?.appearances?.websiteTextColor ?? '#222222',
-    'website-heading-color': data?.appearances?.websiteHeadingColor ?? '#000000',
+    'website-body-color': data?.appearances?.websiteBodyColor,
+    'website-text-color': data?.appearances?.websiteTextColor,
+    'website-heading-color': data?.appearances?.websiteHeadingColor,
 
     'button-radius': `${data?.appearances?.buttonRadius ?? 6}px`,
     'button-y-padding': `${data?.appearances?.buttonYPadding ?? 8}px`,

@@ -72,7 +72,7 @@ export default function HeroCarousel({
                                         blurDataURL={slide.asset.lqip ?? baseEncode}
                                         fill
                                         className="object-cover"
-                                        priority={index === 0}
+                                        priority
                                     />
                                 </div>
                             </div>

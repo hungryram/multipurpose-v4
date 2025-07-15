@@ -1,6 +1,6 @@
 import {defineType} from 'sanity'
 import {textAlign} from '../lib/classes'
-import blockstoText from "../lib/block-to-text"
+import blockstoText from '../lib/block-to-text'
 
 export default defineType({
   title: 'Hero',
@@ -18,6 +18,7 @@ export default defineType({
       options: {
         list: [
           {title: 'Hero', value: 'hero'},
+          {title: 'Slider', value: 'slider'},
           {title: 'Full Width Full Image', value: 'fullWidthFullImage'},
           {title: 'Containered Full Image', value: 'fullImageContainer'},
           {title: 'Side by Side Carousel', value: 'sideBysideCarousel'},
@@ -58,7 +59,7 @@ export default defineType({
       title: 'Images',
       name: 'images',
       type: 'array',
-      hidden: ({parent}) => parent.layoutType !== 'sideBysideCarousel',
+      hidden: ({parent}) => !['sideBysideCarousel', 'slider'].includes(parent?.layoutType),
       of: [
         {
           title: 'Image',
@@ -91,12 +92,13 @@ export default defineType({
       name: 'image',
       type: 'image',
       group: 'content',
-      hidden: ({parent}) => parent?.layoutType === 'sideBysideCarousel',
+      hidden: ({parent}) =>
+        parent?.layoutType === 'sideBysideCarousel' || parent?.layoutType === 'slider',
     },
     {
       title: 'Image Overlay Color',
       name: 'imageOverlayColor',
-      hidden: ({parent}) => parent?.layoutType !== 'hero',
+      hidden: ({parent}) => !['hero', 'slider'].includes(parent?.layoutType),
       type: 'color',
     },
     {
@@ -126,8 +128,6 @@ export default defineType({
       name: 'textColor',
       type: 'color',
       group: 'settings',
-      hidden: ({parent}) =>
-        parent?.layoutType !== 'hero' || parent?.layoutType !== 'sideBysideCarousel',
     },
     {
       title: 'Padding Top',

@@ -143,7 +143,8 @@ export default function PageBuilder({
           (section._type === "hero" && section.layoutType === "hero") ||
           section.layoutType === "sideBysideCarousel" ||
           (section._type === "ctaSection" && section.layoutType === "fullWidthTextImage") ||
-          (section._type === "hero" && section.layoutType === "fullWidthFullImage")
+          (section._type === "hero" && section.layoutType === "fullWidthFullImage") ||
+          (section._type === "hero" && section.layoutType === "slider")
         )
 
         return (
