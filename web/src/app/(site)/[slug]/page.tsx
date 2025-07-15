@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return generatePageMetadata({
     slug: param.slug,
     fetcher: getPage,
-    mainKey: "blog",
-    type: 'page'
+    mainKey: "pages",
+    type: 'pages'
   });
 }
 
