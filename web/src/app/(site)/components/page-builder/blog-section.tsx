@@ -153,13 +153,13 @@ function BlogCard({
 }) {
   return (
     <Card className="h-full flex flex-col">
-      <div className="relative h-60">
+      <div className="relative h-60 w-full">
         {image && (
           <Image
             src={image || "/placeholder.svg"}
             alt={altText || title}
             fill
-            className="object-coverg"
+            className="object-cover"
             placeholder={"blur"}
             blurDataURL={blurData || baseEncode}
           />
