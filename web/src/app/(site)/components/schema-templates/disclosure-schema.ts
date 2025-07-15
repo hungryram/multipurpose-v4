@@ -1,4 +1,4 @@
-import { DisclosureSectionProps, Block, BlockChild } from "@/lib/types"
+import { DisclosureSectionProps, Block } from "@/lib/types"
 
 export function toPlainText(blocks: Block[] = []): string {
   return blocks

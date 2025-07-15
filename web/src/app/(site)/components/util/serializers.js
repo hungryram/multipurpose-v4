@@ -6,7 +6,7 @@ import { toPlainText } from "@portabletext/react";
 import { FaPhone, FaMapMarkerAlt, FaEnvelope } from "react-icons/fa";
 import { PiCaretCircleLeftBold, PiCaretCircleRightBold } from "react-icons/pi";
 import Link from "next/link";
-import { cn } from "@/lib/utils"; // ✅ Helps with conditional class merging
+import { cn } from "@/lib/utils"; 
 
 const LinkableHeader = ({ children, value }) => {
     const slug = slugify(toPlainText(value).toLowerCase());
