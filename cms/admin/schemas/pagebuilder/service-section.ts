@@ -7,7 +7,8 @@ import {
   secondaryButton,
   textAlign,
 } from '../lib/classes'
-import {toPlainText} from 'next-sanity'
+import blockstoText from "../lib/block-to-text"
+
 // UPDATED FEATURES
 export default defineType({
   title: 'Services Display',
@@ -65,7 +66,7 @@ export default defineType({
       content: 'content',
     },
     prepare({content}) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       return {
         title: 'Services Section',

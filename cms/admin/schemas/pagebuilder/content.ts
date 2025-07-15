@@ -7,7 +7,7 @@ import {
   secondaryButton,
   textAlign,
 } from '../lib/classes'
-import {toPlainText} from 'next-sanity'
+import blockstoText from "../lib/block-to-text"
 
 export default defineType({
   title: 'Content Field',
@@ -92,7 +92,7 @@ export default defineType({
       content: 'content',
     },
     prepare({content}) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       return {
         title: 'Content Field',

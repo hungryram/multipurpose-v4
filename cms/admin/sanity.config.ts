@@ -1,7 +1,7 @@
-import { defineConfig } from 'sanity'
-import {deskTool} from 'sanity/desk'
-import { colorInput } from "@sanity/color-input";
-import { MdOutlineDesignServices, MdPersonOutline } from "react-icons/md"
+import {defineConfig} from 'sanity'
+import {structureTool} from 'sanity/structure'
+import {colorInput} from '@sanity/color-input'
+import {MdOutlineDesignServices, MdPersonOutline} from 'react-icons/md'
 import {media} from 'sanity-plugin-media'
 
 //  DOCUMENTS
@@ -16,7 +16,7 @@ import teamDocument from '../admin/schemas/documents/team'
 import navigationDocument from '../admin/schemas/documents/navigation'
 import servicesDocument from '../admin/schemas/documents/services'
 import legalDocument from '../admin/schemas/documents/legal'
-import pageSettingsDocument from "../admin/schemas/documents/page-settings"
+import pageSettingsDocument from '../admin/schemas/documents/page-settings'
 
 // OBJECTS
 import contentObject from '../admin/schemas/objects/content'
@@ -106,10 +106,10 @@ export default defineConfig({
       servicesSectionBuilder,
       contentBuilder,
       logosBuilder,
-    ]
+    ],
   },
   plugins: [
-    deskTool({
+    structureTool({
       structure: (S) => {
         const profileListItem = // A singleton not using `documentListItem`, eg no built-in preview
           S.listItem()
@@ -119,7 +119,7 @@ export default defineConfig({
               S.editor()
                 .id(profileDocument.name)
                 .schemaType(profileDocument.name)
-                .documentId(profileDocument.name)
+                .documentId(profileDocument.name),
             )
 
         const appearanceListItem = // A singleton not using `documentListItem`, eg no built-in preview
@@ -130,7 +130,7 @@ export default defineConfig({
               S.editor()
                 .id(appearanceDocument.name)
                 .schemaType(appearanceDocument.name)
-                .documentId(appearanceDocument.name)
+                .documentId(appearanceDocument.name),
             )
 
         const PageSettingsListItem = // A singleton not using `documentListItem`, eg no built-in preview
@@ -140,29 +140,37 @@ export default defineConfig({
               S.editor()
                 .id(pageSettingsDocument.name)
                 .schemaType(pageSettingsDocument.name)
-                .documentId(pageSettingsDocument.name)
+                .documentId(pageSettingsDocument.name),
             )
 
         // The default root list items (except custom ones)
         const defaultListItems = S.documentTypeListItems().filter((listItem) => {
-          const listItemID = listItem.getId();
+          const listItemID = listItem.getId()
           return (
             listItemID &&
-            ![appearanceDocument.name, pageSettingsDocument.name, 'media.tag', profileDocument.name].includes(listItemID)
-          );
-        });
+            ![
+              appearanceDocument.name,
+              pageSettingsDocument.name,
+              'media.tag',
+              profileDocument.name,
+            ].includes(listItemID)
+          )
+        })
 
         return S.list()
           .title('Content')
-          .items([profileListItem, appearanceListItem, PageSettingsListItem, S.divider(), ...defaultListItems])
+          .items([
+            profileListItem,
+            appearanceListItem,
+            PageSettingsListItem,
+            S.divider(),
+            ...defaultListItems,
+          ])
       },
-
     }),
     // settingsPlugin({ types: [appearanceDocument.name, pageSettingsDocument.name, profileDocument.name] }),
     // PreviewPlugin({ types: ['pages', 'team', 'legal', 'services', 'blog', 'homeDesign'] }),
     colorInput(),
-    // Vision is a tool that lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
     media(),
   ],
 })

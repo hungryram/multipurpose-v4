@@ -1,6 +1,7 @@
 import { defineType } from "sanity";
 import { colorOptions, paddingBottom, paddingTop, primaryButton, secondaryButton, textAlign } from "../lib/classes";
-import { toPlainText } from "next-sanity";
+import blockstoText from "../lib/block-to-text"
+
 
 export default defineType({
   title: 'Lead Form',
@@ -77,7 +78,7 @@ export default defineType({
       content: 'content',
     },
     prepare({ content }) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       return {
         title: 'Lead Form',

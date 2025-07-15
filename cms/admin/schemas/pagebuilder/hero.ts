@@ -1,6 +1,6 @@
 import {defineType} from 'sanity'
 import {textAlign} from '../lib/classes'
-import {toPlainText} from 'next-sanity'
+import blockstoText from "../lib/block-to-text"
 
 export default defineType({
   title: 'Hero',
@@ -153,7 +153,7 @@ export default defineType({
       images: 'images',
     },
     prepare({content, image, images}) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       const mediaImage = image?.asset || (images && images[0]?.asset)
 

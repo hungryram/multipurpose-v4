@@ -7,7 +7,8 @@ import {
   secondaryButton,
   textAlign,
 } from '../lib/classes'
-import { toPlainText } from 'next-sanity'
+import blockstoText from "../lib/block-to-text"
+
 
 export default defineType({
   title: 'Featured Grid',
@@ -150,7 +151,7 @@ export default defineType({
       blocks: 'blocks',
     },
     prepare({ content, blocks }) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       // Use the first block's image if it exists
       const mediaImage = blocks && blocks.length > 0 && blocks[0].image?.asset

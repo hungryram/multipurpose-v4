@@ -1,5 +1,5 @@
 import {defineType} from 'sanity'
-import {toPlainText} from 'next-sanity'
+import blockstoText from "../lib/block-to-text"
 
 import {
   colorOptions,
@@ -88,7 +88,7 @@ preview: {
     image: 'image',
   },
   prepare({ content, image }) {
-    const plain = content ? toPlainText(content) : ''
+    const plain = content ? blockstoText(content) : ''
 
     return {
       title: 'Call to Action',

@@ -1,6 +1,6 @@
 import { defineType } from "sanity";
 import { colorOptions, paddingBottom, paddingTop, textAlign } from "../lib/classes";
-import { toPlainText } from "next-sanity";
+import blockstoText from "../lib/block-to-text"
 
 export default defineType({
   title: 'Logos',
@@ -67,7 +67,7 @@ export default defineType({
       images: 'images',
     },
     prepare({ content, images }) {
-      const plain = content ? toPlainText(content) : ''
+      const plain = content ? blockstoText(content) : ''
 
       const mediaImage = images && images.length > 0 && images[0].asset
 
