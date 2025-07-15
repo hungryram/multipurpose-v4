@@ -24,6 +24,7 @@ export default function Hero({ section }: { section: HeroProps }) {
     textColor,
     itemsEnd,
     imageHeight = "large",
+    priority
   } = section || {}
 
   const getImageHeight = (h: "large" | "medium" | "small") =>
@@ -44,7 +45,7 @@ export default function Hero({ section }: { section: HeroProps }) {
       blurDataURL={imageData?.asset?.lqip || baseEncode}
       className="object-cover object-center"
       fill
-      priority
+      priority={priority === true}
     />
   )
 
@@ -131,7 +132,7 @@ export default function Hero({ section }: { section: HeroProps }) {
           width={2000}
           height={2000}
           sizes="100vw"
-          priority
+          priority={priority === true}
         />
       )
     case "fullWidthFullImage":
@@ -146,7 +147,7 @@ export default function Hero({ section }: { section: HeroProps }) {
             height={2000}
             sizes="100vw"
             className="w-full"
-            priority
+            priority={priority === true}
           />
         </div>
 

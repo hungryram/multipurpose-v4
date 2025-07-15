@@ -96,6 +96,13 @@ export default defineType({
         parent?.layoutType === 'sideBysideCarousel' || parent?.layoutType === 'slider',
     },
     {
+      title: 'Priority',
+      name: 'priority',
+      type: 'boolean',
+      description:
+        'Should this image be loaded with high priority? Use only for the main above-the-fold hero.',
+    },
+    {
       title: 'Image Overlay Color',
       name: 'imageOverlayColor',
       hidden: ({parent}) => !['hero', 'slider'].includes(parent?.layoutType),
