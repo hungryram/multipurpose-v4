@@ -3,7 +3,6 @@
 import { format, parseISO } from "date-fns"
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { CalendarIcon, ArrowRight } from "lucide-react"

@@ -511,21 +511,14 @@ export const homePageData = groq`
 `
 
 // app/blog/page.tsx
-export async function blogPage(lastId?: number) {
-  if (lastId == null) {
+export async function blogPage(lastId?: number){
+  if(lastId == null) {
     return client.fetch(groq`
     {
       ${metaDataProfile}
       'pageSetting': *[_type == 'pageSetting'][0]{
         blog {
-          ...,
-                  'imageData': image {
-        asset-> {
-                  altText,
-          'lqip':metadata.lqip,
-          url
-        }
-        },
+          ...
         }
       },
       'blog': *[_type == 'blog'] | order(date desc){
@@ -553,12 +546,17 @@ export async function blogPage(lastId?: number) {
             url
           }
         },
+        'categories': categories[]->{
+          title,
+          'slug': slug.current,
+          'color': color.hex
+        }
       }
     }
-  `, { next: { revalidate: 60 } })
+  `, {}, { next: { revalidate: 60 } })
   }
 
-  return client.fetch(groq`
+   return client.fetch(groq`
    {
      ${metaDataProfile}
      'pageSetting': *[_type == 'pageSetting'][0]{
@@ -592,8 +590,9 @@ export async function blogPage(lastId?: number) {
        },
      }
    }
- `, { lastId });
+ `, {lastId});
 }
+
 
 // FOR app/services/page.tsx
 export const servicesPage = groq`
