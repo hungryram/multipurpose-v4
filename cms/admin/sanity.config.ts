@@ -17,6 +17,7 @@ import navigationDocument from '../admin/schemas/documents/navigation'
 import servicesDocument from '../admin/schemas/documents/services'
 import legalDocument from '../admin/schemas/documents/legal'
 import pageSettingsDocument from '../admin/schemas/documents/page-settings'
+import category from './schemas/category'
 
 // OBJECTS
 import contentObject from '../admin/schemas/objects/content'
@@ -69,6 +70,7 @@ export default defineConfig({
       servicesDocument,
       teamDocument,
       testimonialsDocument,
+      category,
       // pressDocument,
       postType,
       authorType,

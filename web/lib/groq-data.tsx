@@ -511,14 +511,21 @@ export const homePageData = groq`
 `
 
 // app/blog/page.tsx
-export async function blogPage(lastId?: number){
-  if(lastId == null) {
+export async function blogPage(lastId?: number) {
+  if (lastId == null) {
     return client.fetch(groq`
     {
       ${metaDataProfile}
       'pageSetting': *[_type == 'pageSetting'][0]{
         blog {
-          ...
+          ...,
+                  'imageData': image {
+        asset-> {
+                  altText,
+          'lqip':metadata.lqip,
+          url
+        }
+        },
         }
       },
       'blog': *[_type == 'blog'] | order(date desc){
@@ -551,7 +558,7 @@ export async function blogPage(lastId?: number){
   `, { next: { revalidate: 60 } })
   }
 
-   return client.fetch(groq`
+  return client.fetch(groq`
    {
      ${metaDataProfile}
      'pageSetting': *[_type == 'pageSetting'][0]{
@@ -585,7 +592,7 @@ export async function blogPage(lastId?: number){
        },
      }
    }
- `, {lastId});
+ `, { lastId });
 }
 
 // FOR app/services/page.tsx
@@ -908,5 +915,90 @@ export const getAllPages = groq`
     'slug': slug.current,
     _updatedAt
   },
+    'categories': *[_type == 'category']{
+    'slug': slug.current,
+    title,
+    _updatedAt
+  },
 }
 `
+
+// FOR /app/blog/category/[slug]/page.tsx
+export async function getCategoryPosts(slug: string) {
+  return client.fetch(groq`
+    {
+      ${metaDataProfile}
+      'pageSetting': *[_type == 'pageSetting'][0]{
+        blog {
+          ...
+        }
+      },
+      'category': *[_type == "category" && slug.current == $slug][0]{
+        _id,
+        title,
+        description,
+        'slug': slug.current,
+        seo {
+          title_tag,
+          meta_description,
+          noIndex
+        },
+        'imageData': coverImage {
+          asset-> {
+            altText,
+            'lqip':metadata.lqip,
+            url
+          }
+        },
+        'color': color.hex
+      },
+      'posts': *[_type == 'blog' && references(*[_type == 'category' && slug.current == $slug]._id)] | order(date desc){
+        _id,
+        title,
+        date,
+        excerpt,
+        _updatedAt,
+        'slug': slug.current,
+        "author": author->{
+          name,
+          'avatar': picture{
+            asset->{
+              url,
+            }
+          }
+        },
+        seo {
+          meta_description
+        },
+        'imageData': coverImage {
+          asset-> {
+            altText,
+            'lqip':metadata.lqip,
+            url
+          }
+        },
+        'categories': categories[]->{
+          title,
+          'slug': slug.current,
+          'color': color.hex
+        }
+      }
+    }
+  `, { slug }, { next: { revalidate: 60 } })
+}
+
+
+
+// Get all categories for navigation/listing
+export async function getAllCategories() {
+  return client.fetch(groq`
+    *[_type == 'category'] | order(title asc) {
+      _id,
+      title,
+      description,
+      'slug': slug.current,
+      'color': color.hex,
+      'postCount': count(*[_type == 'blog' && references(^._id)])
+    }
+  `, {}, { next: { revalidate: 60 } })
+}

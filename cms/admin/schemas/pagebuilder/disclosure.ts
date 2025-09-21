@@ -47,6 +47,12 @@ export default defineType({
         list: textAlign,
       },
     },
+    {
+      title: 'Not FAQ',
+      name: 'notFaq',
+      type: 'boolean',
+      description: 'Check this box if this disclosure section is NOT a FAQ. This will disable FAQ schema markup.',
+    },
     primaryButton,
     secondaryButton,
     {

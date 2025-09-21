@@ -25,6 +25,11 @@ export default defineType({
                     type: 'contentEditor',
                 },
                 {
+                    title: 'Image',
+                    name: 'image',
+                    type: 'image'
+                },
+                {
                     title: 'Search Engine Optimization',
                     name: 'seo',
                     type: 'seo'

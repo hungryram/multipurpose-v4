@@ -12,12 +12,13 @@ export default function DisclosureSection({ section }) {
         primaryButton,
         secondaryButton,
         textColor,
-        layoutType
+        layoutType,
+        notFaq
     } = section || {}
 
     return (
         <>
-            <StructuredData data={schemaMarkup} />
+            {!notFaq && <StructuredData data={schemaMarkup} />}
             {/* SSR the static header */}
             {layoutType !== "contentSide" && (
                 <div className="mb-12" style={{ color: textColor }}>

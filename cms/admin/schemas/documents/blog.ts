@@ -1,7 +1,8 @@
-import { MdOutlineArticle } from 'react-icons/md'
-import { defineType } from 'sanity'
+import {MdOutlineArticle} from 'react-icons/md'
+import {defineType} from 'sanity'
 
 import authorType from './author'
+import ContentEditorWithWordCount from '../components/ContentEditorWithWordCount'
 
 /**
  * This file is the schema definition for a post.
@@ -47,6 +48,9 @@ export default defineType({
       title: 'Content',
       group: 'content',
       type: 'contentEditor',
+      components: {
+        input: ContentEditorWithWordCount,
+      },
     },
     {
       name: 'excerpt',
@@ -54,7 +58,7 @@ export default defineType({
       group: 'content',
       description: 'A brief introduction to your blog post.',
       type: 'text',
-      validation: Rule => Rule.error().max(300)
+      validation: (Rule) => Rule.error().max(300),
     },
     {
       name: 'coverImage',
@@ -62,8 +66,8 @@ export default defineType({
       type: 'image',
       group: 'content',
       options: {
-        hotspot: true
-      }
+        hotspot: true,
+      },
     },
     {
       name: 'date',
@@ -76,14 +80,14 @@ export default defineType({
       title: 'Author',
       type: 'reference',
       group: 'content',
-      to: [{ type: authorType.name }],
+      to: [{type: authorType.name}],
     },
     {
       title: 'Search Engine Optimization',
       name: 'seo',
       type: 'seo',
-      group: 'settings'
-    }
+      group: 'settings',
+    },
   ],
   preview: {
     select: {
@@ -93,8 +97,8 @@ export default defineType({
       group: 'content',
     },
     prepare(selection) {
-      const { author } = selection
-      return { ...selection, subtitle: author && `by ${author}` }
+      const {author} = selection
+      return {...selection, subtitle: author && `by ${author}`}
     },
   },
 })

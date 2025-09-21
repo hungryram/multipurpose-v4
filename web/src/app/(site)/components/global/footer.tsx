@@ -159,6 +159,7 @@ export default function Footer({
                   href={link.externalUrl}
                   target={link.newTab ? "_blank" : undefined}
                   className="text-sm hover:underline"
+                  style={{ color: footerData?.appearances?.footerText }}
                 >
                   {link.text}
                 </a>
@@ -178,6 +179,7 @@ export default function Footer({
       </ul>
     </div>
   )
+
 
   const renderFooterText = (
     footerData?.appearances?.footer?.footerText &&
@@ -245,6 +247,7 @@ export default function Footer({
       <div>
         {renderLogo()}
         {renderSocial()}
+        {renderFooterText}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {footerData?.appearances?.footer?.quickLinks && renderQuickLinks(footerData?.appearances?.footer?.quickLinks, footerData?.appearances?.footer?.quickLinksHeading || "Quick Links")}
